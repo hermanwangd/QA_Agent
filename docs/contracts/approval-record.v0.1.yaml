@@ -1,0 +1,24 @@
+approval_record_version: v0.1
+approval_id: APR-001
+release_id: REL-YYYYMMDD-001
+approved_by:
+  name: ""
+  role: Human Release Quality Owner
+approved_at: "2026-07-05T00:00:00+08:00"
+
+approval_scope:
+  - ac_interpretation
+  - expected_result
+  - data_setup_cleanup
+  - approved_for_regression
+
+approved_artifacts:
+  - artifact_id: TC-001
+    artifact_path: test_case.yaml
+    artifact_hash: sha256:example
+
+rejected_artifacts: []
+
+conditions:
+  - condition_id: COND-001
+    description: Run only in isolated test schema.

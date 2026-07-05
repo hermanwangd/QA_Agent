@@ -1,0 +1,36 @@
+dry_run_report_version: v0.1
+release_id: REL-YYYYMMDD-001
+suite_id: SUITE-001
+status: blocked
+ready_for_human_review: false
+ready_for_regression_execution: false
+
+artifact_state_status:
+  status: failed
+  findings:
+    - artifact: test_case.yaml
+      state: generated_requires_review
+      required_state_for_run: approved_for_regression
+      owner_action: Approve artifact before regression execution.
+
+reference_status:
+  unresolved_refs:
+    - ref: expected_results/order_created.json
+      owner_action: Add expected result artifact or mark as proposed_requires_review.
+
+provider_status:
+  missing_bindings:
+    - provider_id: payment-api
+      binding_key: base_url
+      owner_action: Add environment binding for payment-api.base_url.
+
+operation_status:
+  unsupported_operations: []
+
+secret_guardrail:
+  status: passed
+  findings: []
+
+owner_action_summary:
+  - Approve expected result before execution.
+  - Add missing environment binding.

@@ -1,0 +1,74 @@
+input_version: v0.1
+release_id: REL-YYYYMMDD-001
+source_ref:
+  spec_doc: docs/product/spec.md
+  change_ticket: JIRA-123
+owner:
+  product_owner: ""
+  tech_owner: ""
+  release_quality_owner: ""
+last_updated_at: "2026-07-05T00:00:00+08:00"
+
+release_change:
+  changed_features:
+    - feature_id: ""
+      summary: ""
+  changed_acceptance_criteria:
+    - ac_id: ""
+  changed_components:
+    - component: ""
+  known_risks:
+    - risk_id: ""
+      description: ""
+      severity: P0
+  must_test_flows:
+    - flow_id: ""
+      reason: ""
+
+acceptance_criteria:
+  - ac_id: AC-001
+    priority: P0
+    given: ""
+    when: ""
+    then: ""
+    business_rule: ""
+    expected_result: ""
+    error_behavior: ""
+    source_ref: ""
+
+test_data_contract:
+  reference_tables:
+    - table: ""
+      access: read_only
+  seed_tables:
+    - table: ""
+      seed_strategy: insert_new_rows
+  verify_tables:
+    - table: ""
+      verification_hint: ""
+  cleanup:
+    order:
+      - table: ""
+    safety_rule: delete_by_test_run_id_only
+  forbidden_mutations:
+    - table: ""
+  open_questions:
+    - question: ""
+
+interface_contract:
+  apis:
+    - name: ""
+      method: POST
+      path: ""
+      request_schema_ref: ""
+      response_schema_ref: ""
+  events:
+    - provider: nats
+      subject: ""
+      payload_schema_ref: ""
+  dependencies:
+    - provider: wiremock
+      behavior: ""
+      stub_required: true
+  db_verification_hints:
+    - query_ref: ""
