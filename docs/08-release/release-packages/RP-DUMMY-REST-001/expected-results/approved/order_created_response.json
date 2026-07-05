@@ -1,0 +1,7 @@
+{
+  "customer_id": "CUST-001",
+  "id": "ORD-0001",
+  "status": "ACCEPTED",
+  "sku": "SKU-PI-RUN",
+  "quantity": 2
+}

@@ -1,0 +1,6 @@
+contract_version: v0.2
+suite_id: dummy-rest-rp
+purpose: RP-mode suite for the local dummy order REST app.
+profile: local_dummy
+tests:
+  - DUMMY-REST-TC-001.yaml

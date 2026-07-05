@@ -1,0 +1,90 @@
+run_id: RUN-003
+batch_id: BATCH-002
+rp_id: RP-DUMMY-REST-001
+test_case_id: DUMMY-REST-TC-001
+ac_id: RP-DUMMY-REST-001-AC-001
+parameter_case_id:
+parameter_values:
+  []
+status: passed
+provider_runtime_started: true
+execution_mode:
+environment_ref: local_dummy
+ru_refs:
+  - order_api
+resolved_dependencies:
+  []
+resolved_bindings:
+  - binding_name: order_request
+    binding_type: api_payload
+    ref: fixtures/order_request.json
+provider_contracts_used:
+  - contract_type: provider
+    provider_name: order_api
+    provider_contract_kind: request_response
+    provider_type: rest
+    registry_status: supported
+    runtime_status: supported
+    affected_ru: order_api
+    capability: order_api
+    contract_path: generated-framework/provider_contracts/request_response.yaml#providers.order_api
+    source_level: generated
+  - contract_type: binding
+    provider_name: api_payload
+    provider_contract_kind: request_response
+    provider_type: request_body
+    registry_status: supported
+    runtime_status: supported
+    affected_ru: order_api
+    capability: api_payload
+    contract_path: generated-framework/provider_contracts/request_response.yaml#bindings.api_payload
+    source_level: generated
+provider_evidence:
+  request_response: request_response.yaml
+exit_code: 0
+timeout: false
+stdout: logs/stdout.log
+stderr: logs/stderr.log
+actual_output: actual/order_response.json
+assertion_status: passed
+assertions: assertions.yaml
+cleanup_result:
+dsl_runtime:
+  dsl_version: v0.2
+  targets:
+    - target_id: order_api
+      provider_id: order_api
+      provider: order_api
+  setup_fixtures:
+    []
+  execute_steps:
+    - step_id: submit_order
+      target: order_api
+      operation: http_request
+      outputs:
+        status: response.status
+        headers: response.headers
+        body: response.body
+        duration_ms: response.duration_ms
+  data:
+    - data_id: order_request
+      ref: fixtures/order_request.json
+    - data_id: expected_response
+      ref: expected-results/approved/order_created_response.json
+  verify_rules:
+    - verify_id: order_body_status
+      type: json_path_equals
+      actual: ${execute.submit_order.outputs.body}
+      expected: ACCEPTED
+    - verify_id: order_body_customer
+      type: json_path_equals
+      actual: ${execute.submit_order.outputs.body}
+      expected: CUST-001
+  evidence_required:
+    - ${execute.submit_order.outputs.body}
+    - ${verify.order_body_status.result}
+    - ${verify.order_body_customer.result}
+  runtime:
+    timeout: PT30S
+    retry:
+      max_attempts: 0

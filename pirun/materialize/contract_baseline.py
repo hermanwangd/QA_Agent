@@ -1,0 +1,555 @@
+from __future__ import annotations
+
+import json
+import shutil
+from typing import Optional
+from pathlib import Path
+
+import yaml
+
+from pirun.framework_paths import DEFAULT_FRAMEWORK_VERSION, usage_kit_samples_root
+
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+USAGE_KIT_SAMPLES = usage_kit_samples_root(DEFAULT_FRAMEWORK_VERSION, repo_root=REPO_ROOT)
+NATS_SOURCE = USAGE_KIT_SAMPLES / "provider_capability" / "nats"
+WIREMOCK_SOURCE = USAGE_KIT_SAMPLES / "provider_capability" / "wiremock"
+JDBC_SOURCE = USAGE_KIT_SAMPLES / "provider_capability" / "jdbc"
+CONTRACT_BASELINE_SOURCE = USAGE_KIT_SAMPLES / "contract_baseline"
+NATS_PROVIDER_ID = "local-nats-event-bus"
+WIREMOCK_PROVIDER_ID = "wiremock-payment-api"
+JDBC_PROVIDER_ID = "oracle-like-db"
+
+
+def materialize_nats_only(
+    *,
+    run_dir: Path,
+    nats_subject: str,
+    profile: str = "ci",
+    samples_root: Optional[Path] = None,
+) -> None:
+    _copy_source(_source(samples_root, "provider_capability", "nats"), run_dir)
+
+    _rename_profile_file(run_dir / "environment_bindings", "local_nats.yaml", f"{profile}.yaml")
+    _rename_profile_file(run_dir / "env_profiles", "local_nats.yaml", f"{profile}.yaml")
+    _rename_profile_file(run_dir / "execution_profiles", "local_nats.yaml", f"{profile}.yaml")
+
+    suite_path = run_dir / "suite_manifest.yaml"
+    test_case_path = run_dir / "test_case.yaml"
+    provider_instance_path = run_dir / "provider_instances" / "local_nats.yaml"
+    env_binding_path = run_dir / "environment_bindings" / f"{profile}.yaml"
+    env_profile_path = run_dir / "env_profiles" / f"{profile}.yaml"
+    execution_profile_path = run_dir / "execution_profiles" / f"{profile}.yaml"
+    expected_path = run_dir / "expected_results" / "event_expected.json"
+
+    suite = yaml.safe_load(suite_path.read_text()) or {}
+    suite["profile"] = profile
+    suite["purpose"] = "Project-provisioned Docker NATS capability verification POC."
+    suite["evidence_policy"] = _local_evidence_policy()
+    suite_path.write_text(yaml.safe_dump(suite, sort_keys=False), encoding="utf-8")
+
+    test_case = yaml.safe_load(test_case_path.read_text()) or {}
+    test_case["compatible_profiles"] = [profile]
+    labels = test_case.setdefault("labels", {})
+    labels["evidence_classification"] = "local_ci_ephemeral_only"
+    labels["project_provisioned_dependency"] = "docker_nats"
+    test_case_path.write_text(yaml.safe_dump(test_case, sort_keys=False), encoding="utf-8")
+
+    provider_instance = yaml.safe_load(provider_instance_path.read_text()) or {}
+    provider_instance["runtime_modes"] = ["ephemeral"]
+    provider_instance.setdefault("labels", {})["evidence_classification"] = "local_ci_ephemeral_only"
+    provider_instance_path.write_text(yaml.safe_dump(provider_instance, sort_keys=False), encoding="utf-8")
+
+    expected = json.loads(expected_path.read_text())
+    expected["subject"] = nats_subject
+    expected_path.write_text(json.dumps(expected, indent=2), encoding="utf-8")
+
+    env_binding = yaml.safe_load(env_binding_path.read_text()) or {}
+    env_binding["environment_id"] = f"{profile}-project-docker-nats"
+    env_binding["profile"] = profile
+    env_binding["provider_bindings"] = [
+        {
+            "provider_id": NATS_PROVIDER_ID,
+            "provider_instance_ref": "provider_instances/local_nats.yaml",
+            "runtime_mode": "ephemeral",
+            "binding_values": {
+                "connection": {"secret_ref": "env://PIRUN_NATS_CONNECTION"},
+                "subject": nats_subject,
+                "timeout": "PT5S",
+                "poll_interval": "PT0.05S",
+                "masking_policy": {"redact": ["connection", "password", "secret", "token", "authorization"]},
+            },
+        }
+    ]
+    env_binding["evidence_policy"] = {
+        **_local_evidence_policy(),
+    }
+    env_binding_path.write_text(yaml.safe_dump(env_binding, sort_keys=False), encoding="utf-8")
+
+    env_profile = yaml.safe_load(env_profile_path.read_text()) or {}
+    env_profile["env_profile_id"] = profile
+    env_profile["dependency_policy"] = {
+        "require_readiness_evidence": True,
+        "allow_framework_managed_dependencies": False,
+    }
+    env_profile["dependency_substitution_policy"] = {"allowed_runtime_modes": ["ephemeral"]}
+    env_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["project_docker"],
+        "startup_policy": "project_before_framework",
+        "readiness_policy": "project_tcp_connect",
+        "cleanup_scope": "project_finally",
+    }
+    env_profile["providers"] = {
+        NATS_PROVIDER_ID: {
+            "runtime_mode": "ephemeral",
+            "binding_keys": {
+                "connection": {"secret_ref": "env://PIRUN_NATS_CONNECTION"},
+                "subject": {"value": nats_subject},
+                "timeout": {"value": "PT5S"},
+                "poll_interval": {"value": "PT0.05S"},
+                "masking_policy": {"value": {"redact": ["connection", "password", "secret", "token", "authorization"]}},
+            },
+        }
+    }
+    env_profile_path.write_text(yaml.safe_dump(env_profile, sort_keys=False), encoding="utf-8")
+
+    execution_profile = yaml.safe_load(execution_profile_path.read_text()) or {}
+    execution_profile["profile_id"] = profile
+    execution_profile["environment_binding_ref"] = f"environment_bindings/{profile}.yaml"
+    execution_profile["dependency_policy"] = {
+        "require_readiness_evidence": True,
+        "allow_framework_managed_dependencies": False,
+    }
+    execution_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["project_docker"],
+        "dependency_types": ["nats_event_bus"],
+        "startup_policy": "project_before_framework",
+        "readiness_policy": "tcp_connect",
+        "cleanup_scope": "project_finally",
+        "output_binding_keys": ["connection.secret_ref", "subject"],
+    }
+    execution_profile["evidence_policy"] = _local_evidence_policy()
+    execution_profile_path.write_text(yaml.safe_dump(execution_profile, sort_keys=False), encoding="utf-8")
+
+
+def materialize_wiremock_only(
+    *,
+    run_dir: Path,
+    base_url: str,
+    profile: str = "ci",
+    samples_root: Optional[Path] = None,
+) -> None:
+    _copy_source(_source(samples_root, "provider_capability", "wiremock"), run_dir)
+    _rename_profile_file(run_dir / "environment_bindings", "local_wiremock.yaml", f"{profile}.yaml")
+    _rename_profile_file(run_dir / "env_profiles", "local_wiremock.yaml", f"{profile}.yaml")
+    _rename_profile_file(run_dir / "execution_profiles", "local_wiremock.yaml", f"{profile}.yaml")
+
+    suite_path = run_dir / "suite_manifest.yaml"
+    test_case_path = run_dir / "test_case.yaml"
+    provider_instance_path = run_dir / "provider_instances" / "wiremock_payment_api.yaml"
+    env_binding_path = run_dir / "environment_bindings" / f"{profile}.yaml"
+    env_profile_path = run_dir / "env_profiles" / f"{profile}.yaml"
+    execution_profile_path = run_dir / "execution_profiles" / f"{profile}.yaml"
+
+    _write_suite_policy(
+        suite_path,
+        profile=profile,
+        purpose="Project-provisioned Docker WireMock capability verification POC.",
+    )
+    _write_test_labels(test_case_path, profile=profile, dependency="docker_wiremock")
+    _write_provider_labels(provider_instance_path)
+
+    env_binding = yaml.safe_load(env_binding_path.read_text()) or {}
+    env_binding["environment_id"] = f"{profile}-project-docker-wiremock"
+    env_binding["profile"] = profile
+    env_binding["provider_bindings"] = [
+        {
+            "provider_id": WIREMOCK_PROVIDER_ID,
+            "provider_instance_ref": "provider_instances/wiremock_payment_api.yaml",
+            "runtime_mode": "mock",
+            "binding_values": {
+                "port_strategy": "dynamic",
+                "mappings_ref": "fixtures/",
+            },
+        }
+    ]
+    env_binding["evidence_policy"] = _local_evidence_policy()
+    env_binding_path.write_text(yaml.safe_dump(env_binding, sort_keys=False), encoding="utf-8")
+
+    env_profile = yaml.safe_load(env_profile_path.read_text()) or {}
+    env_profile["env_profile_id"] = profile
+    env_profile["dependency_policy"] = {
+        "require_readiness_evidence": True,
+        "allow_framework_managed_dependencies": False,
+    }
+    env_profile["dependency_substitution_policy"] = {"allowed_runtime_modes": ["mock"]}
+    env_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["project_docker"],
+        "startup_policy": "project_before_framework",
+        "readiness_policy": "project_http_get",
+        "cleanup_scope": "project_finally",
+    }
+    env_profile["providers"] = {
+        WIREMOCK_PROVIDER_ID: {
+            "runtime_mode": "mock",
+            "binding_keys": {
+                "port_strategy": {"value": "dynamic"},
+                "mappings_ref": {"ref": "fixtures/"},
+            },
+        }
+    }
+    env_profile_path.write_text(yaml.safe_dump(env_profile, sort_keys=False), encoding="utf-8")
+
+    execution_profile = yaml.safe_load(execution_profile_path.read_text()) or {}
+    execution_profile["profile_id"] = profile
+    execution_profile["environment_binding_ref"] = f"environment_bindings/{profile}.yaml"
+    execution_profile["dependency_policy"] = {
+        "require_readiness_evidence": True,
+        "allow_framework_managed_dependencies": False,
+    }
+    execution_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["project_docker"],
+        "dependency_types": ["wiremock_http_mock"],
+        "startup_policy": "project_before_framework",
+        "readiness_policy": "http_get",
+        "cleanup_scope": "project_finally",
+        "output_binding_keys": ["base_url"],
+    }
+    execution_profile["evidence_policy"] = _local_evidence_policy()
+    execution_profile_path.write_text(yaml.safe_dump(execution_profile, sort_keys=False), encoding="utf-8")
+    _write_project_binding(
+        run_dir,
+        provider_id=WIREMOCK_PROVIDER_ID,
+        provider_type="wiremock_http_mock",
+        values={"base_url": base_url},
+        framework_consumption_status="external_base_url_not_consumed_by_framework_provider_capability",
+    )
+
+
+def materialize_jdbc_lightweight(
+    *,
+    run_dir: Path,
+    connection_secret_ref: str,
+    profile: str = "ci",
+    samples_root: Optional[Path] = None,
+) -> None:
+    _copy_source(_source(samples_root, "provider_capability", "jdbc"), run_dir)
+    _rename_profile_file(run_dir / "environment_bindings", "local_jdbc.yaml", f"{profile}.yaml")
+    _rename_profile_file(run_dir / "env_profiles", "local_jdbc.yaml", f"{profile}.yaml")
+    _rename_profile_file(run_dir / "execution_profiles", "local_jdbc.yaml", f"{profile}.yaml")
+
+    suite_path = run_dir / "suite_manifest.yaml"
+    test_case_path = run_dir / "test_case.yaml"
+    provider_instance_path = run_dir / "provider_instances" / "oracle_like.yaml"
+    env_binding_path = run_dir / "environment_bindings" / f"{profile}.yaml"
+    env_profile_path = run_dir / "env_profiles" / f"{profile}.yaml"
+    execution_profile_path = run_dir / "execution_profiles" / f"{profile}.yaml"
+
+    _write_suite_policy(
+        suite_path,
+        profile=profile,
+        purpose="Project-selected lightweight JDBC/H2 capability verification POC.",
+    )
+    _write_test_labels(test_case_path, profile=profile, dependency="framework_embedded_h2")
+    _write_provider_labels(provider_instance_path)
+
+    env_binding = yaml.safe_load(env_binding_path.read_text()) or {}
+    env_binding["environment_id"] = f"{profile}-project-jdbc-lightweight"
+    env_binding["profile"] = profile
+    env_binding["provider_bindings"] = [
+        {
+            "provider_id": JDBC_PROVIDER_ID,
+            "provider_instance_ref": "provider_instances/oracle_like.yaml",
+            "runtime_mode": "ephemeral",
+            "binding_values": {
+                "connection": {"secret_ref": connection_secret_ref},
+                "dialect": "oracle",
+                "schema": "PUBLIC",
+                "strict_params": True,
+                "query_timeout": "PT10S",
+                "masking_policy": {"redact": ["connection", "password", "secret", "token"]},
+            },
+        },
+        {
+            "provider_id": "db2-like-db",
+            "provider_instance_ref": "provider_instances/db2_like.yaml",
+            "runtime_mode": "ephemeral",
+            "binding_values": {
+                "connection": {"secret_ref": "generated://provider-capability/db2-like/connection"},
+                "dialect": "db2",
+                "schema": "PUBLIC",
+                "strict_params": True,
+                "query_timeout": "PT10S",
+                "masking_policy": {"redact": ["connection", "password", "secret", "token"]},
+            },
+        }
+    ]
+    env_binding["evidence_policy"] = _local_evidence_policy()
+    env_binding_path.write_text(yaml.safe_dump(env_binding, sort_keys=False), encoding="utf-8")
+
+    env_profile = yaml.safe_load(env_profile_path.read_text()) or {}
+    env_profile["env_profile_id"] = profile
+    env_profile["dependency_policy"] = {
+        "require_readiness_evidence": False,
+        "allow_framework_managed_dependencies": True,
+    }
+    env_profile["dependency_substitution_policy"] = {"allowed_runtime_modes": ["ephemeral"]}
+    env_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["framework_embedded_h2"],
+        "startup_policy": "framework_runtime",
+        "readiness_policy": "framework_runtime",
+        "cleanup_scope": "framework_runtime",
+    }
+    env_profile["providers"] = {
+        JDBC_PROVIDER_ID: {
+            "runtime_mode": "ephemeral",
+            "binding_keys": {
+                "connection": {"secret_ref": connection_secret_ref},
+                "dialect": {"value": "oracle"},
+                "schema": {"value": "PUBLIC"},
+                "strict_params": {"value": True},
+                "query_timeout": {"value": "PT10S"},
+                "masking_policy": {"value": {"redact": ["connection", "password", "secret", "token"]}},
+            },
+        },
+        "db2-like-db": {
+            "runtime_mode": "ephemeral",
+            "binding_keys": {
+                "connection": {"secret_ref": "generated://provider-capability/db2-like/connection"},
+                "dialect": {"value": "db2"},
+                "schema": {"value": "PUBLIC"},
+                "strict_params": {"value": True},
+                "query_timeout": {"value": "PT10S"},
+                "masking_policy": {"value": {"redact": ["connection", "password", "secret", "token"]}},
+            },
+        },
+    }
+    env_profile_path.write_text(yaml.safe_dump(env_profile, sort_keys=False), encoding="utf-8")
+
+    execution_profile = yaml.safe_load(execution_profile_path.read_text()) or {}
+    execution_profile["profile_id"] = profile
+    execution_profile["environment_binding_ref"] = f"environment_bindings/{profile}.yaml"
+    execution_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["framework_embedded_h2"],
+        "dependency_types": ["jdbc_h2_oracle_compat"],
+        "startup_policy": "framework_runtime",
+        "cleanup_scope": "framework_runtime",
+    }
+    execution_profile["evidence_policy"] = _local_evidence_policy()
+    execution_profile_path.write_text(yaml.safe_dump(execution_profile, sort_keys=False), encoding="utf-8")
+
+
+def materialize_full_contract_baseline(
+    *,
+    run_dir: Path,
+    nats_connection_secret_ref: str,
+    wiremock_base_url: str,
+    jdbc_connection_secret_ref: str,
+    profile: str = "ci",
+    samples_root: Optional[Path] = None,
+) -> None:
+    _copy_source(_source(samples_root, "contract_baseline"), run_dir)
+    suite_path = run_dir / "suite_manifest.yaml"
+    test_case_path = run_dir / "test_case.yaml"
+    env_binding_path = run_dir / "environment_bindings" / f"{profile}.yaml"
+    env_profile_path = run_dir / "env_profiles" / f"{profile}.yaml"
+
+    _write_suite_policy(
+        suite_path,
+        profile=profile,
+        purpose="Project-materialized full contract baseline with NATS, WireMock, and lightweight JDBC.",
+    )
+    _write_test_labels(test_case_path, profile=profile, dependency="docker_wiremock+docker_nats+framework_embedded_h2")
+
+    env_binding = yaml.safe_load(env_binding_path.read_text()) or {}
+    env_binding["environment_id"] = f"{profile}-project-full-contract-baseline"
+    env_binding["profile"] = profile
+    env_binding["provider_bindings"] = [
+        {
+            "provider_id": "wiremock-payment-api",
+            "provider_instance_ref": "provider_instances/wiremock_payment_api.yaml",
+            "runtime_mode": "mock",
+            "binding_values": {
+                "port_strategy": "dynamic",
+                "mappings_ref": "fixtures/wiremock/payment-api/",
+            },
+        },
+        {
+            "provider_id": "oracle-database",
+            "provider_instance_ref": "provider_instances/oracle_database.yaml",
+            "runtime_mode": "ephemeral",
+            "binding_values": {
+                "connection": {"secret_ref": jdbc_connection_secret_ref},
+                "dialect": "oracle",
+                "schema": "PUBLIC",
+                "strict_params": True,
+                "query_timeout": "PT10S",
+            },
+        },
+        {
+            "provider_id": "nats-event-bus",
+            "provider_instance_ref": "provider_instances/nats_event_bus.yaml",
+            "runtime_mode": "ephemeral",
+            "binding_values": {
+                "connection": {"secret_ref": nats_connection_secret_ref},
+                "subject": "payments.accepted",
+                "timeout": "PT5S",
+                "poll_interval": "PT0.05S",
+            },
+        },
+    ]
+    env_binding["evidence_policy"] = _local_evidence_policy()
+    env_binding_path.write_text(yaml.safe_dump(env_binding, sort_keys=False), encoding="utf-8")
+
+    env_profile = yaml.safe_load(env_profile_path.read_text()) or {}
+    env_profile["env_profile_id"] = profile
+    env_profile["providers"] = {
+        "wiremock-payment-api": {
+            "runtime_mode": "mock",
+            "binding_keys": {
+                "port_strategy": {"value": "dynamic"},
+                "mappings_ref": {"ref": "fixtures/wiremock/payment-api/"},
+            },
+        },
+        "oracle-database": {
+            "runtime_mode": "ephemeral",
+            "binding_keys": {
+                "connection": {"secret_ref": jdbc_connection_secret_ref},
+                "dialect": {"value": "oracle"},
+                "schema": {"value": "PUBLIC"},
+                "strict_params": {"value": True},
+                "query_timeout": {"value": "PT10S"},
+            },
+        },
+        "nats-event-bus": {
+            "runtime_mode": "ephemeral",
+            "binding_keys": {
+                "connection": {"secret_ref": nats_connection_secret_ref},
+                "subject": {"value": "payments.accepted"},
+                "timeout": {"value": "PT5S"},
+                "poll_interval": {"value": "PT0.05S"},
+            },
+        },
+    }
+    env_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["project_docker", "framework_embedded_h2"],
+        "startup_policy": "project_before_framework",
+        "cleanup_scope": "project_finally",
+    }
+    env_profile_path.write_text(yaml.safe_dump(env_profile, sort_keys=False), encoding="utf-8")
+
+    _ensure_full_contract_fixtures(run_dir)
+    _write_project_binding(
+        run_dir,
+        provider_id="wiremock-payment-api",
+        provider_type="wiremock_http_mock",
+        values={"base_url": wiremock_base_url},
+        framework_consumption_status="external_base_url_not_consumed_by_framework_provider_capability",
+    )
+
+
+def _copy_source(source: Path, run_dir: Path) -> None:
+    if run_dir.exists():
+        shutil.rmtree(run_dir)
+    shutil.copytree(source, run_dir)
+
+
+def _source(samples_root: Optional[Path], *parts: str) -> Path:
+    return (samples_root or USAGE_KIT_SAMPLES).joinpath(*parts)
+
+
+def _local_evidence_policy() -> dict:
+    return {
+        "evidence_classification": "local_ci_ephemeral_only",
+        "downstream_release_evidence": False,
+    }
+
+
+def _write_suite_policy(suite_path: Path, *, profile: str, purpose: str) -> None:
+    suite = yaml.safe_load(suite_path.read_text()) or {}
+    suite["profile"] = profile
+    suite["purpose"] = purpose
+    suite["evidence_policy"] = _local_evidence_policy()
+    suite_path.write_text(yaml.safe_dump(suite, sort_keys=False), encoding="utf-8")
+
+
+def _write_test_labels(test_case_path: Path, *, profile: str, dependency: str) -> None:
+    test_case = yaml.safe_load(test_case_path.read_text()) or {}
+    test_case["compatible_profiles"] = [profile]
+    labels = test_case.setdefault("labels", {})
+    labels["evidence_classification"] = "local_ci_ephemeral_only"
+    labels["downstream_release_evidence"] = False
+    labels["project_provisioned_dependency"] = dependency
+    test_case_path.write_text(yaml.safe_dump(test_case, sort_keys=False), encoding="utf-8")
+
+
+def _write_provider_labels(provider_instance_path: Path) -> None:
+    provider_instance = yaml.safe_load(provider_instance_path.read_text()) or {}
+    labels = provider_instance.setdefault("labels", {})
+    labels["evidence_classification"] = "local_ci_ephemeral_only"
+    labels["downstream_release_evidence"] = False
+    provider_instance_path.write_text(yaml.safe_dump(provider_instance, sort_keys=False), encoding="utf-8")
+
+
+def _ensure_full_contract_fixtures(run_dir: Path) -> None:
+    wiremock_dir = run_dir / "fixtures" / "wiremock" / "payment-api"
+    wiremock_dir.mkdir(parents=True, exist_ok=True)
+    mappings_path = wiremock_dir / "mappings.yaml"
+    if not mappings_path.exists():
+        mappings_path.write_text(
+            yaml.safe_dump(
+                {
+                    "stubs": [
+                        {
+                            "id": "payment-success",
+                            "request": {"method": "POST", "path": "/payments"},
+                            "response": {"status": 202},
+                        }
+                    ]
+                },
+                sort_keys=False,
+            ),
+            encoding="utf-8",
+        )
+
+    sql_dir = run_dir / "fixtures" / "sql"
+    sql_dir.mkdir(parents=True, exist_ok=True)
+    query_path = sql_dir / "find_order.sql"
+    if not query_path.exists():
+        query_path.write_text(
+            "SELECT order_id, status\nFROM orders\nWHERE order_id = :order_id\n",
+            encoding="utf-8",
+        )
+
+
+def _write_project_binding(
+    run_dir: Path,
+    *,
+    provider_id: str,
+    provider_type: str,
+    values: dict,
+    framework_consumption_status: str,
+) -> None:
+    project_binding_dir = run_dir / "project_bindings"
+    project_binding_dir.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "provider_id": provider_id,
+        "provider_type": provider_type,
+        "binding_values": values,
+        "framework_consumption_status": framework_consumption_status,
+        "evidence_classification": "local_ci_ephemeral_only",
+    }
+    (project_binding_dir / f"{provider_id}.yaml").write_text(
+        yaml.safe_dump(payload, sort_keys=False),
+        encoding="utf-8",
+    )
+
+
+def _rename_profile_file(directory: Path, old_name: str, new_name: str) -> None:
+    old_path = directory / old_name
+    new_path = directory / new_name
+    if old_path == new_path or not old_path.exists():
+        return
+    if new_path.exists():
+        new_path.unlink()
+    old_path.rename(new_path)

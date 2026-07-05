@@ -1,0 +1,67 @@
+dsl_version: v0.2
+test_case_id: DUMMY-REST-TC-001
+title: Submit a deterministic order to the dummy REST app in RP mode
+status: active
+revision: 1
+source_refs:
+  acceptance_criteria: acceptance_criteria.md#RP-DUMMY-REST-001-AC-001
+  pi_run_acceptance: reports/feature_coverage_matrix.md#rp-mode-rest
+labels:
+  rp_id: RP-DUMMY-REST-001
+  capability: rp_mode_request_response_rest
+  evidence_classification: pi_run_acceptance
+  downstream_release_evidence: false
+tags: [pi-run, dummy-app, rest-client, rp-mode]
+compatible_profiles: [local_dummy]
+targets:
+  order_api:
+    provider_id: order_api
+    provider: order_api
+    ru_id: order_api
+    environment_ref: local_dummy
+data:
+  order_request:
+    ref: fixtures/order_request.json
+  expected_response:
+    ref: expected-results/approved/order_created_response.json
+setup:
+  operations: []
+execute:
+  operations:
+    - id: submit_order
+      target: order_api
+      operation: http_request
+      with:
+        order_request:
+          bind_as: api_payload
+          ref: fixtures/order_request.json
+      outputs:
+        status: response.status
+        headers: response.headers
+        body: response.body
+        duration_ms: response.duration_ms
+verify:
+  checks:
+    - id: order_body_status
+      type: json_path_equals
+      actual: ${execute.submit_order.outputs.body}
+      path: $.status
+      expected: ACCEPTED
+      expected_value: ACCEPTED
+    - id: order_body_customer
+      type: json_path_equals
+      actual: ${execute.submit_order.outputs.body}
+      path: $.customer_id
+      expected: CUST-001
+      expected_value: CUST-001
+cleanup:
+  operations: []
+evidence:
+  required:
+    - ${execute.submit_order.outputs.body}
+    - ${verify.order_body_status.result}
+    - ${verify.order_body_customer.result}
+runtime:
+  timeout: PT30S
+  retry:
+    max_attempts: 0

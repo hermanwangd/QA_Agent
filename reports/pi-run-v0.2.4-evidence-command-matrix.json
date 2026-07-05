@@ -1,0 +1,329 @@
+{
+  "results": [
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate-evidence",
+        "--result",
+        "samples/evidence_hardening/valid_result.json"
+      ],
+      "category": "validate-evidence-positive",
+      "command": [
+        "validate-evidence",
+        "--result",
+        "samples/evidence_hardening/valid_result.json"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "id": "validate-evidence-valid",
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "evidence_validation_status: passed\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\ntest_count: 1\npass_count: 1\nfail_count: 0\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 0\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  - provider_type: jdbc\n    provider_id: oracle-like-db\n    evidence_count: 5\n  - provider_type: nats\n    provider_id: local-nats-event-bus\n    evidence_count: 1\n  - provider_type: wiremock_http_mock\n    provider_id: wiremock-payment-api\n    evidence_count: 2\nmasking_status: passed\nfindings:\n  []\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate-evidence",
+        "--result",
+        "samples/evidence_hardening/invalid_missing_evidence_result.json"
+      ],
+      "category": "validate-evidence-negative",
+      "command": [
+        "validate-evidence",
+        "--result",
+        "samples/evidence_hardening/invalid_missing_evidence_result.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "id": "validate-evidence-missing-evidence",
+      "status": "EXPECTED_FAIL",
+      "stderr": "",
+      "stdout": "evidence_validation_status: failed\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\ntest_count: 1\npass_count: 1\nfail_count: 0\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 1\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  []\nmasking_status: passed\nfindings:\n  - file_path: samples/evidence_hardening/evidence/missing_evidence_index.yaml\n    field_path: evidence_index_ref\n    reason: missing_evidence_index\n    failure_code: EVIDENCE_MISSING_EVIDENCE_INDEX\n    category: EVIDENCE_ERROR\n    owner_action: Create evidence/evidence_index.yaml and reference it from result JSON.\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate-evidence",
+        "--result",
+        "samples/evidence_hardening/invalid_secret_leak_result.json"
+      ],
+      "category": "validate-evidence-negative",
+      "command": [
+        "validate-evidence",
+        "--result",
+        "samples/evidence_hardening/invalid_secret_leak_result.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "id": "validate-evidence-secret-leak",
+      "status": "EXPECTED_FAIL",
+      "stderr": "",
+      "stdout": "evidence_validation_status: failed\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\ntest_count: 1\npass_count: 0\nfail_count: 1\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 0\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  - provider_type: jdbc\n    provider_id: oracle-like-db\n    evidence_count: 5\n  - provider_type: nats\n    provider_id: local-nats-event-bus\n    evidence_count: 1\n  - provider_type: wiremock_http_mock\n    provider_id: wiremock-payment-api\n    evidence_count: 2\nmasking_status: failed\nfindings:\n  - file_path: samples/evidence_hardening/invalid_secret_leak_result.json\n    field_path: result\n    reason: raw_secret\n    failure_code: SECRET_GUARDRAIL_RAW_SECRET\n    category: SECRET_GUARDRAIL_ERROR\n    owner_action: Mask passwords, tokens, JDBC URLs, credentials, Authorization headers, and private keys in result JSON.\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/valid_result.json",
+        "--format",
+        "text"
+      ],
+      "category": "report-positive",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/valid_result.json",
+        "--format",
+        "text"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "id": "report-valid-text",
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "report_status: review_ready\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\nstatus: passed\ntest_case_id: EVIDENCE-HARDENING-TC-001\nprofile: local_evidence\nprovider_results_count: 3\nverify_results_count: 2\nrelease_evidence_eligible: false\ncoverage_percent: 100.0\ntest_count: 1\npass_count: 1\nfail_count: 0\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 0\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  - provider_type: jdbc\n    provider_id: oracle-like-db\n    evidence_count: 5\n  - provider_type: nats\n    provider_id: local-nats-event-bus\n    evidence_count: 1\n  - provider_type: wiremock_http_mock\n    provider_id: wiremock-payment-api\n    evidence_count: 2\nmasking_status: passed\nfindings:\n  []\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/valid_result.json",
+        "--format",
+        "yaml"
+      ],
+      "category": "report-positive",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/valid_result.json",
+        "--format",
+        "yaml"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "id": "report-valid-yaml",
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "report_status: review_ready\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\nstatus: passed\ntest_case_id: EVIDENCE-HARDENING-TC-001\nprofile: local_evidence\nprovider_results_count: 3\nverify_results_count: 2\nrelease_evidence_eligible: false\ncoverage_percent: 100.0\ntest_count: 1\npass_count: 1\nfail_count: 0\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 0\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  - provider_type: jdbc\n    provider_id: oracle-like-db\n    evidence_count: 5\n  - provider_type: nats\n    provider_id: local-nats-event-bus\n    evidence_count: 1\n  - provider_type: wiremock_http_mock\n    provider_id: wiremock-payment-api\n    evidence_count: 2\nmasking_status: passed\nfindings:\n  []\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/valid_result.json",
+        "--format",
+        "json"
+      ],
+      "category": "report-positive",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/valid_result.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 2,
+      "expected_exit": 0,
+      "id": "report-valid-json",
+      "status": "BLOCKED_FRAMEWORK_UNSUPPORTED_FORMAT",
+      "stderr": "Unsupported --format: json\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_missing_evidence_result.json",
+        "--format",
+        "text"
+      ],
+      "category": "report-negative",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_missing_evidence_result.json",
+        "--format",
+        "text"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "id": "report-missing-evidence-text",
+      "status": "EXPECTED_FAIL",
+      "stderr": "",
+      "stdout": "report_status: invalid\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\nstatus: passed\ntest_case_id: EVIDENCE-HARDENING-TC-001\nprofile: local_evidence\nprovider_results_count: 0\nverify_results_count: 0\nrelease_evidence_eligible: false\ncoverage_percent: 100.0\ntest_count: 1\npass_count: 1\nfail_count: 0\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 1\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  []\nmasking_status: passed\nfindings:\n  - file_path: samples/evidence_hardening/evidence/missing_evidence_index.yaml\n    field_path: evidence_index_ref\n    reason: missing_evidence_index\n    failure_code: EVIDENCE_MISSING_EVIDENCE_INDEX\n    category: EVIDENCE_ERROR\n    owner_action: Create evidence/evidence_index.yaml and reference it from result JSON.\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_missing_evidence_result.json",
+        "--format",
+        "yaml"
+      ],
+      "category": "report-negative",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_missing_evidence_result.json",
+        "--format",
+        "yaml"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "id": "report-missing-evidence-yaml",
+      "status": "EXPECTED_FAIL",
+      "stderr": "",
+      "stdout": "report_status: invalid\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\nstatus: passed\ntest_case_id: EVIDENCE-HARDENING-TC-001\nprofile: local_evidence\nprovider_results_count: 0\nverify_results_count: 0\nrelease_evidence_eligible: false\ncoverage_percent: 100.0\ntest_count: 1\npass_count: 1\nfail_count: 0\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 1\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  []\nmasking_status: passed\nfindings:\n  - file_path: samples/evidence_hardening/evidence/missing_evidence_index.yaml\n    field_path: evidence_index_ref\n    reason: missing_evidence_index\n    failure_code: EVIDENCE_MISSING_EVIDENCE_INDEX\n    category: EVIDENCE_ERROR\n    owner_action: Create evidence/evidence_index.yaml and reference it from result JSON.\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_missing_evidence_result.json",
+        "--format",
+        "json"
+      ],
+      "category": "report-negative",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_missing_evidence_result.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 2,
+      "expected_exit": 1,
+      "id": "report-missing-evidence-json",
+      "status": "BLOCKED_FRAMEWORK_UNSUPPORTED_FORMAT",
+      "stderr": "Unsupported --format: json\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_secret_leak_result.json",
+        "--format",
+        "text"
+      ],
+      "category": "report-negative",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_secret_leak_result.json",
+        "--format",
+        "text"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "id": "report-secret-leak-text",
+      "status": "EXPECTED_FAIL",
+      "stderr": "",
+      "stdout": "report_status: invalid\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\nstatus: failed\ntest_case_id: EVIDENCE-HARDENING-TC-001\nprofile: local_evidence\nprovider_results_count: 0\nverify_results_count: 0\nrelease_evidence_eligible: false\ncoverage_percent: 0.0\ntest_count: 1\npass_count: 0\nfail_count: 1\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 0\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  - provider_type: jdbc\n    provider_id: oracle-like-db\n    evidence_count: 5\n  - provider_type: nats\n    provider_id: local-nats-event-bus\n    evidence_count: 1\n  - provider_type: wiremock_http_mock\n    provider_id: wiremock-payment-api\n    evidence_count: 2\nmasking_status: failed\nfindings:\n  - file_path: samples/evidence_hardening/invalid_secret_leak_result.json\n    field_path: result\n    reason: raw_secret\n    failure_code: SECRET_GUARDRAIL_RAW_SECRET\n    category: SECRET_GUARDRAIL_ERROR\n    owner_action: Mask passwords, tokens, JDBC URLs, credentials, Authorization headers, and private keys in result JSON.\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_secret_leak_result.json",
+        "--format",
+        "yaml"
+      ],
+      "category": "report-negative",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_secret_leak_result.json",
+        "--format",
+        "yaml"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "id": "report-secret-leak-yaml",
+      "status": "EXPECTED_FAIL",
+      "stderr": "",
+      "stdout": "report_status: invalid\nsuite_id: EVIDENCE-HARDENING-v0.2\nbatch_id: BATCH-EVIDENCE-001\nrun_id: RUN-EVIDENCE-001\nstatus: failed\ntest_case_id: EVIDENCE-HARDENING-TC-001\nprofile: local_evidence\nprovider_results_count: 0\nverify_results_count: 0\nrelease_evidence_eligible: false\ncoverage_percent: 0.0\ntest_count: 1\npass_count: 0\nfail_count: 1\nevidence_folder_path: samples/evidence_hardening/evidence\nmissing_evidence_count: 0\nfailed_evidence_count: 0\nfailed_evidence_summary:\n  []\nprovider_evidence_summary:\n  - provider_type: jdbc\n    provider_id: oracle-like-db\n    evidence_count: 5\n  - provider_type: nats\n    provider_id: local-nats-event-bus\n    evidence_count: 1\n  - provider_type: wiremock_http_mock\n    provider_id: wiremock-payment-api\n    evidence_count: 2\nmasking_status: failed\nfindings:\n  - file_path: samples/evidence_hardening/invalid_secret_leak_result.json\n    field_path: result\n    reason: raw_secret\n    failure_code: SECRET_GUARDRAIL_RAW_SECRET\n    category: SECRET_GUARDRAIL_ERROR\n    owner_action: Mask passwords, tokens, JDBC URLs, credentials, Authorization headers, and private keys in result JSON.\n"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_secret_leak_result.json",
+        "--format",
+        "json"
+      ],
+      "category": "report-negative",
+      "command": [
+        "report",
+        "--result",
+        "samples/evidence_hardening/invalid_secret_leak_result.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 2,
+      "expected_exit": 1,
+      "id": "report-secret-leak-json",
+      "status": "BLOCKED_FRAMEWORK_UNSUPPORTED_FORMAT",
+      "stderr": "Unsupported --format: json\n",
+      "stdout": ""
+    }
+  ],
+  "summary": {
+    "blocked_framework_count": 3,
+    "case_count": 12,
+    "expected_fail_count": 6,
+    "pass_count": 3,
+    "report_supported_negative_missing_formats": [],
+    "report_supported_negative_status": "EXPECTED_FAIL",
+    "report_supported_positive_missing_formats": [],
+    "report_supported_positive_status": "PASS",
+    "unexpected_fail_count": 0,
+    "validate_evidence_negative_status": "EXPECTED_FAIL",
+    "validate_evidence_positive_status": "PASS"
+  }
+}

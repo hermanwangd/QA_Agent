@@ -1,0 +1,17 @@
+expected_result_id: RP-DUMMY-REST-001-ER-001
+rp_id: RP-DUMMY-REST-001
+ac_id: RP-DUMMY-REST-001-AC-001
+status: approved_for_regression
+source_refs:
+  - acceptance_criteria.md#RP-DUMMY-REST-001-AC-001
+input_refs:
+  - fixtures/order_request.json
+expected_outputs:
+  output_ref: expected-results/approved/order_created_response.json
+assumptions:
+  - Dummy app order IDs are deterministic per process and start at ORD-0001.
+unresolved_gaps: []
+approved_by: pi-run-acceptance
+approved_at: 2026-07-04T00:00:00+08:00
+approval_ref: local-pi-run-acceptance
+blocked_reason: null

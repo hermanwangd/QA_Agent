@@ -1,0 +1,5 @@
+rp_id: RP-DUMMY-REST-001
+batch_id: BATCH-002
+review_ready: true
+coverage_percent: 100.0
+unresolved_failures: 0

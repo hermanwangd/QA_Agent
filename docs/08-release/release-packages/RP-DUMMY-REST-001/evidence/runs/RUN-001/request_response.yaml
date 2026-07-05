@@ -1,0 +1,11 @@
+provider_contract_kind: request_response
+provider_type: rest
+status: passed
+timeout: false
+http_status: 201
+endpoint_ref: http://127.0.0.1:18080
+descriptor_ref:
+service:
+method: POST
+request_binding: order_request
+actual_output: actual/order_response.json

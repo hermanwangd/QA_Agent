@@ -1,0 +1,979 @@
+{
+  "blocked_rows": [
+    {
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "runtime_mode": "ephemeral"
+    },
+    {
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "ibm_mq",
+      "reason": "ibm_mq/ephemeral is contract-only in this framework release",
+      "runtime_mode": "ephemeral"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "ibm_mq",
+      "reason": "ibm_mq/native is contract-only in this framework release",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "kafka",
+      "reason": "kafka/ephemeral is contract-only in this framework release",
+      "runtime_mode": "ephemeral"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "kafka",
+      "reason": "kafka/native is contract-only in this framework release",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "external_runner",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "external_runner",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "stub"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "grpc_client",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "grpc_client",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "stub"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "kubernetes_runtime",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "kubernetes_runtime",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "polling_observer",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "ephemeral"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "rest_client",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "rest_client",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "stub"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "shell_command",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "shell_command",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "shell_command",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "stub"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "vm_runtime",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_USAGE_KIT_SAMPLE_GAP",
+      "provider_type": "vm_runtime",
+      "reason": "no direct or indirect usage-kit sample found for this provider",
+      "runtime_mode": "native"
+    }
+  ],
+  "suite_results": [
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/contract_baseline/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: RP-FWK-CONTRACT-SAMPLE-regression\nprovider_instances_used:\n  - nats-event-bus\n  - oracle-database\n  - wiremock-payment-api\nprovider_types_used:\n  - jdbc\n  - nats\n  - wiremock_http_mock\nfindings:\n  []\n",
+      "suite": "samples/contract_baseline/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/contract_baseline/suite_manifest.yaml",
+        "--profile",
+        "ci"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: RP-FWK-CONTRACT-SAMPLE-regression\nresolved_execution_plan:\n  - test_case_id: RP-FWK-CONTRACT-SAMPLE-TC-001\n    target: payment_api_mock\n    provider_id: wiremock-payment-api\n    provider_type: wiremock_http_mock\n    profile: ci\n    runtime_mode: mock\n  - test_case_id: RP-FWK-CONTRACT-SAMPLE-TC-001\n    target: payment_api_mock\n    provider_id: wiremock-payment-api\n    provider_type: wiremock_http_mock\n    profile: sit\n    runtime_mode: mock\n  - test_case_id: RP-FWK-CONTRACT-SAMPLE-TC-001\n    target: order_database\n    provider_id: oracle-database\n    provider_type: jdbc\n    profile: ci\n    runtime_mode: ephemeral\n  - test_case_id: RP-FWK-CONTRACT-SAMPLE-TC-001\n    target: order_database\n    provider_id: oracle-database\n    provider_type: jdbc\n    profile: sit\n    runtime_mode: native\n  - test_case_id: RP-FWK-CONTRACT-SAMPLE-TC-001\n    target: event_bus\n    provider_id: nats-event-bus\n    provider_type: nats\n    profile: ci\n    runtime_mode: ephemeral\n  - test_case_id: RP-FWK-CONTRACT-SAMPLE-TC-001\n    target: event_bus\n    provider_id: nats-event-bus\n    provider_type: nats\n    profile: sit\n    runtime_mode: native\nfindings:\n  []\n",
+      "suite": "samples/contract_baseline/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/contract_baseline/suite_manifest.yaml",
+        "--profile",
+        "ci"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "14:04:52.284 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:04:52.294 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@c87787d{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@1bea7b0{STOPPED}}. May not be supported in future releases.\n14:04:52.300 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:04:52.302 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@c87787d{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@1bea7b0{STARTED}}\n14:04:52.302 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:04:52.303 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@c87787d{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@1bea7b0{STARTED}}\n14:04:52.328 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@76ed7573{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@51df2a41{STARTED}}\n14:04:52.335 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:04:52.335 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@76ed7573{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@51df2a41{STARTED}}\n14:04:52.340 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@73ef110d{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61349}\n14:04:52.343 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@26612078{STARTING}[12.1.10,sto=1000] @60ms\n14:04:52.421 [qtp2077138148-41] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:04:52.657 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@26612078{STOPPING}[12.1.10,sto=1000]\n14:04:52.657 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@26612078{STOPPING}[12.1.10,sto=1000]\n14:04:52.659 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@73ef110d{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:04:52.661 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@76ed7573{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@51df2a41{STOPPED}}\n14:04:52.661 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@c87787d{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@1bea7b0{STOPPED}}\nrun_status: passed\nsuite_id: RP-FWK-CONTRACT-SAMPLE-regression\nbatch_id: BATCH-CONTRACT-20260705060451394-1\nrun_id: RUN-CONTRACT-20260705060451394-1\ntest_case_id: RP-FWK-CONTRACT-SAMPLE-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: ci\nprovider_runtime_executed: true\nprovider_types: wiremock_http_mock,jdbc,nats\nprovider_ids: wiremock-payment-api,oracle-database,nats-event-bus\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/contract_baseline/RP-FWK-CONTRACT-SAMPLE-regression/BATCH-CONTRACT-20260705060451394-1/RUN-CONTRACT-20260705060451394-1/result.json\nevidence_dir: target/provider-capability/contract_baseline/RP-FWK-CONTRACT-SAMPLE-regression/BATCH-CONTRACT-20260705060451394-1/RUN-CONTRACT-20260705060451394-1\nfindings:\n  []\n",
+      "suite": "samples/contract_baseline/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/compare/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: PROVIDER-CAPABILITY-COMPARE-v0.2\nprovider_instances_used:\n  - compare-engine\nprovider_types_used:\n  - common_verify\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/compare/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/compare/suite_manifest.yaml",
+        "--profile",
+        "local_compare"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: PROVIDER-CAPABILITY-COMPARE-v0.2\nresolved_execution_plan:\n  - test_case_id: PROVIDER-CAPABILITY-COMPARE-TC-001\n    target: compare_engine\n    provider_id: compare-engine\n    provider_type: common_verify\n    profile: local_compare\n    runtime_mode: stub\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/compare/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/compare/suite_manifest.yaml",
+        "--profile",
+        "local_compare"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "run_status: passed\nsuite_id: PROVIDER-CAPABILITY-COMPARE-v0.2\nbatch_id: BATCH-COMMON-1783231494960\nrun_id: RUN-COMMON-1783231494960\ntest_case_id: PROVIDER-CAPABILITY-COMPARE-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_compare\nprovider_runtime_executed: false\nprovider_type: common_verify\nprovider_id: compare-engine\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/common_verify/PROVIDER-CAPABILITY-COMPARE-v0.2/BATCH-COMMON-1783231494960/RUN-COMMON-1783231494960/result.json\nevidence_dir: target/provider-capability/common_verify/PROVIDER-CAPABILITY-COMPARE-v0.2/BATCH-COMMON-1783231494960/RUN-COMMON-1783231494960\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/compare/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/grpc_mock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: GRPC-MOCK-SAMPLE-v0.2\nprovider_instances_used:\n  - customer-grpc-client\n  - customer-grpc-mock\nprovider_types_used:\n  - grpc_client\n  - grpc_mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/grpc_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/grpc_mock/suite_manifest.yaml",
+        "--profile",
+        "local_grpc_mock"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: GRPC-MOCK-SAMPLE-v0.2\nresolved_execution_plan:\n  - test_case_id: GRPC-MOCK-TC-001\n    target: customer_grpc_mock\n    provider_id: customer-grpc-mock\n    provider_type: grpc_mock\n    profile: local_grpc_mock\n    runtime_mode: mock\n  - test_case_id: GRPC-MOCK-TC-001\n    target: customer_grpc_client\n    provider_id: customer-grpc-client\n    provider_type: grpc_client\n    profile: local_grpc_mock\n    runtime_mode: native\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/grpc_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/grpc_mock/suite_manifest.yaml",
+        "--profile",
+        "local_grpc_mock"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "14:04:58.025 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:04:58.038 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@4449b273{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@1fa18f87{STOPPED}}. May not be supported in future releases.\n14:04:58.044 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:04:58.047 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@4449b273{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@1fa18f87{STARTED}}\n14:04:58.048 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:04:58.050 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@4449b273{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@1fa18f87{STARTED}}\n14:04:58.078 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@32caae19{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@60e67c06{STARTED}}\n14:04:58.084 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:04:58.084 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@32caae19{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@60e67c06{STARTED}}\n14:04:58.089 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@1bea7b0{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61352}\n14:04:58.092 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@31433df9{STARTING}[12.1.10,sto=1000] @68ms\n14:04:58.178 [qtp1055317122-42] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:04:58.651 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@31433df9{STOPPING}[12.1.10,sto=1000]\n14:04:58.651 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@31433df9{STOPPING}[12.1.10,sto=1000]\n14:04:58.653 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@1bea7b0{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:04:58.654 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@32caae19{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@60e67c06{STOPPED}}\n14:04:58.655 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@4449b273{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@1fa18f87{STOPPED}}\nrun_status: passed\nsuite_id: GRPC-MOCK-SAMPLE-v0.2\nbatch_id: BATCH-GRPC-MOCK-20260705060457239-1\nrun_id: RUN-GRPC-MOCK-20260705060457239-1\ntest_case_id: GRPC-MOCK-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_grpc_mock\nprovider_runtime_executed: true\nprovider_types: grpc_mock,grpc_client\nprovider_ids: customer-grpc-mock,customer-grpc-client\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/grpc_mock/GRPC-MOCK-SAMPLE-v0-2/BATCH-GRPC-MOCK-20260705060457239-1/RUN-GRPC-MOCK-20260705060457239-1/result.json\nevidence_dir: target/provider-capability/grpc_mock/GRPC-MOCK-SAMPLE-v0-2/BATCH-GRPC-MOCK-20260705060457239-1/RUN-GRPC-MOCK-20260705060457239-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/grpc_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/ibm_mq/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: IBM-MQ-CAPABILITY-v0.2\nprovider_instances_used:\n  - payment-mq\nprovider_types_used:\n  - ibm_mq\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/ibm_mq/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/ibm_mq/suite_manifest.yaml",
+        "--profile",
+        "local_ibm_mq"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: IBM-MQ-CAPABILITY-v0.2\nresolved_execution_plan:\n  - test_case_id: IBM-MQ-CAPABILITY-TC-001\n    target: request_queue\n    provider_id: payment-mq\n    provider_type: ibm_mq\n    profile: local_ibm_mq\n    runtime_mode: mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/ibm_mq/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/ibm_mq/suite_manifest.yaml",
+        "--profile",
+        "local_ibm_mq"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "run_status: passed\nsuite_id: IBM-MQ-CAPABILITY-v0.2\nbatch_id: BATCH-IBMMQ-20260705060500985-1\nrun_id: RUN-IBMMQ-20260705060500985-1\ntest_case_id: IBM-MQ-CAPABILITY-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_ibm_mq\nprovider_runtime_executed: true\nprovider_type: ibm_mq\nprovider_id: payment-mq\nruntime_mode: mock\nqueue: PAYMENT.REQUEST.LOCAL\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/messaging-client/ibm_mq/IBM-MQ-CAPABILITY-v0.2/BATCH-IBMMQ-20260705060500985-1/RUN-IBMMQ-20260705060500985-1/result.json\nevidence_dir: target/provider-capability/messaging-client/ibm_mq/IBM-MQ-CAPABILITY-v0.2/BATCH-IBMMQ-20260705060500985-1/RUN-IBMMQ-20260705060500985-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/ibm_mq/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/jdbc/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: JDBC-CAPABILITY-v0.2\nprovider_instances_used:\n  - db2-like-db\n  - oracle-like-db\nprovider_types_used:\n  - jdbc\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/jdbc/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/jdbc/suite_manifest.yaml",
+        "--profile",
+        "local_jdbc"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: JDBC-CAPABILITY-v0.2\nresolved_execution_plan:\n  - test_case_id: JDBC-CAPABILITY-TC-001\n    target: oracle_like_db\n    provider_id: oracle-like-db\n    provider_type: jdbc\n    profile: local_jdbc\n    runtime_mode: ephemeral\n  - test_case_id: JDBC-CAPABILITY-TC-001\n    target: db2_like_db\n    provider_id: db2-like-db\n    provider_type: jdbc\n    profile: local_jdbc\n    runtime_mode: ephemeral\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/jdbc/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/jdbc/suite_manifest.yaml",
+        "--profile",
+        "local_jdbc"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "run_status: passed\nsuite_id: JDBC-CAPABILITY-v0.2\nbatch_id: BATCH-JDBC-20260705060503301-1\nrun_id: RUN-JDBC-20260705060503301-1\ntest_case_id: JDBC-CAPABILITY-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_jdbc\nprovider_runtime_executed: true\nprovider_type: jdbc\nprovider_id: oracle-like-db\nruntime_mode: ephemeral\ndialect: oracle\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/jdbc/JDBC-CAPABILITY-v0.2/BATCH-JDBC-20260705060503301-1/RUN-JDBC-20260705060503301-1/result.json\nevidence_dir: target/provider-capability/jdbc/JDBC-CAPABILITY-v0.2/BATCH-JDBC-20260705060503301-1/RUN-JDBC-20260705060503301-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/jdbc/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/kafka/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: KAFKA-CAPABILITY-v0.2\nprovider_instances_used:\n  - order-events\nprovider_types_used:\n  - kafka\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/kafka/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/kafka/suite_manifest.yaml",
+        "--profile",
+        "local_kafka"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: KAFKA-CAPABILITY-v0.2\nresolved_execution_plan:\n  - test_case_id: KAFKA-CAPABILITY-TC-001\n    target: event_bus\n    provider_id: order-events\n    provider_type: kafka\n    profile: local_kafka\n    runtime_mode: mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/kafka/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/kafka/suite_manifest.yaml",
+        "--profile",
+        "local_kafka"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "run_status: passed\nsuite_id: KAFKA-CAPABILITY-v0.2\nbatch_id: BATCH-KAFKA-20260705060505891-1\nrun_id: RUN-KAFKA-20260705060505891-1\ntest_case_id: KAFKA-CAPABILITY-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_kafka\nprovider_runtime_executed: true\nprovider_type: kafka\nprovider_id: order-events\nruntime_mode: mock\ntopic: orders.created\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/messaging-client/kafka/KAFKA-CAPABILITY-v0.2/BATCH-KAFKA-20260705060505891-1/RUN-KAFKA-20260705060505891-1/result.json\nevidence_dir: target/provider-capability/messaging-client/kafka/KAFKA-CAPABILITY-v0.2/BATCH-KAFKA-20260705060505891-1/RUN-KAFKA-20260705060505891-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/kafka/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/messaging_mixed/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: MIXED-MESSAGING-CAPABILITY-v0.2\nprovider_instances_used:\n  - order-events\n  - payment-mq\nprovider_types_used:\n  - ibm_mq\n  - kafka\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/messaging_mixed/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/messaging_mixed/suite_manifest.yaml",
+        "--profile",
+        "local_messaging"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: MIXED-MESSAGING-CAPABILITY-v0.2\nresolved_execution_plan:\n  - test_case_id: KAFKA-CAPABILITY-TC-001\n    target: event_bus\n    provider_id: order-events\n    provider_type: kafka\n    profile: local_messaging\n    runtime_mode: mock\n  - test_case_id: IBM-MQ-CAPABILITY-TC-001\n    target: request_queue\n    provider_id: payment-mq\n    provider_type: ibm_mq\n    profile: local_messaging\n    runtime_mode: mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/messaging_mixed/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/messaging_mixed/suite_manifest.yaml",
+        "--profile",
+        "local_messaging"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "run_status: passed\nsuite_id: MIXED-MESSAGING-CAPABILITY-v0.2\nbatch_id: BATCH-MESSAGING-20260705060508223-1\nrun_id: RUN-MESSAGING-20260705060508223-1\ntest_case_id: MIXED-MESSAGING-CAPABILITY-v0.2-MULTI\ntest_count: 2\npassed_count: 2\nfailed_count: 0\nprofile: local_messaging\nprovider_runtime_executed: true\nprovider_summary:\n  - provider_type: kafka\n    provider_id: order-events\n    runtime_mode: mock\n    topic: orders.created\n  - provider_type: ibm_mq\n    provider_id: payment-mq\n    runtime_mode: mock\n    queue: PAYMENT.REQUEST.LOCAL\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/messaging-client/messaging/MIXED-MESSAGING-CAPABILITY-v0.2/BATCH-MESSAGING-20260705060508223-1/RUN-MESSAGING-20260705060508223-1/result.json\nevidence_dir: target/provider-capability/messaging-client/messaging/MIXED-MESSAGING-CAPABILITY-v0.2/BATCH-MESSAGING-20260705060508223-1/RUN-MESSAGING-20260705060508223-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/messaging_mixed/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: MOCK-SERVER-CROSS-VERIFY-GRPC-v0.2\nprovider_instances_used:\n  - customer-grpc-client\n  - customer-grpc-mock\nprovider_types_used:\n  - grpc_client\n  - grpc_mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml",
+        "--profile",
+        "local_grpc_mock"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: MOCK-SERVER-CROSS-VERIFY-GRPC-v0.2\nresolved_execution_plan:\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-GRPC-TC-001\n    target: customer_grpc_mock\n    provider_id: customer-grpc-mock\n    provider_type: grpc_mock\n    profile: local_grpc_mock\n    runtime_mode: mock\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-GRPC-TC-001\n    target: customer_grpc_client\n    provider_id: customer-grpc-client\n    provider_type: grpc_client\n    profile: local_grpc_mock\n    runtime_mode: native\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-GRPC-TC-BOUNDARY-001\n    target: customer_grpc_mock\n    provider_id: customer-grpc-mock\n    provider_type: grpc_mock\n    profile: local_grpc_mock\n    runtime_mode: mock\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-GRPC-TC-BOUNDARY-001\n    target: customer_grpc_client\n    provider_id: customer-grpc-client\n    provider_type: grpc_client\n    profile: local_grpc_mock\n    runtime_mode: native\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml",
+        "--profile",
+        "local_grpc_mock"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "14:05:11.286 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:11.295 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@5e05a706{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@7831d1aa{STOPPED}}. May not be supported in future releases.\n14:05:11.300 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:11.302 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@5e05a706{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@7831d1aa{STARTED}}\n14:05:11.303 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:11.304 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@5e05a706{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@7831d1aa{STARTED}}\n14:05:11.322 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@3d57fb9e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@2c2e5e72{STARTED}}\n14:05:11.327 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:11.327 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@3d57fb9e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@2c2e5e72{STARTED}}\n14:05:11.331 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@6b12e206{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61361}\n14:05:11.333 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@21688427{STARTING}[12.1.10,sto=1000] @47ms\n14:05:11.393 [qtp124018276-42] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:11.869 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@21688427{STOPPING}[12.1.10,sto=1000]\n14:05:11.869 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@21688427{STOPPING}[12.1.10,sto=1000]\n14:05:11.871 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@6b12e206{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:11.873 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@3d57fb9e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@2c2e5e72{STOPPED}}\n14:05:11.873 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@5e05a706{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@7831d1aa{STOPPED}}\n14:05:11.882 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:11.883 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@49809275{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@68b3979d{STOPPED}}. May not be supported in future releases.\n14:05:11.884 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:11.885 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@49809275{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@68b3979d{STARTED}}\n14:05:11.885 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:11.885 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@49809275{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@68b3979d{STARTED}}\n14:05:11.886 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@5ff29e8b{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@7acfcfc4{STARTED}}\n14:05:11.886 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:11.886 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@5ff29e8b{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@7acfcfc4{STARTED}}\n14:05:11.886 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@61fa3583{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61364}\n14:05:11.886 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@709d2a6c{STARTING}[12.1.10,sto=1000] @3ms\n14:05:11.888 [qtp1837573438-61] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:11.905 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@709d2a6c{STOPPING}[12.1.10,sto=1000]\n14:05:11.905 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@709d2a6c{STOPPING}[12.1.10,sto=1000]\n14:05:11.906 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@61fa3583{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:11.906 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@5ff29e8b{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@7acfcfc4{STOPPED}}\n14:05:11.906 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@49809275{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@68b3979d{STOPPED}}\nrun_status: passed\nsuite_id: MOCK-SERVER-CROSS-VERIFY-GRPC-v0.2\nbatch_id: BATCH-GRPC-MOCK-20260705060510525-1\nrun_id: RUN-GRPC-MOCK-20260705060510525-1\ntest_case_id: MOCK-SERVER-CROSS-VERIFY-GRPC-v0.2-MULTI\ntest_count: 2\npassed_count: 2\nfailed_count: 0\nprofile: local_grpc_mock\nprovider_runtime_executed: true\nprovider_types: grpc_mock,grpc_client\nprovider_ids: customer-grpc-mock,customer-grpc-client\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/grpc_mock/MOCK-SERVER-CROSS-VERIFY-GRPC-v0-2/BATCH-GRPC-MOCK-20260705060510525-1/RUN-GRPC-MOCK-20260705060510525-1/result.json\nevidence_dir: target/provider-capability/grpc_mock/MOCK-SERVER-CROSS-VERIFY-GRPC-v0-2/BATCH-GRPC-MOCK-20260705060510525-1/RUN-GRPC-MOCK-20260705060510525-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: MOCK-SERVER-CROSS-VERIFY-REST-v0.2\nprovider_instances_used:\n  - payment-api-client\n  - wiremock-payment-api\nprovider_types_used:\n  - rest_client\n  - wiremock_http_mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml",
+        "--profile",
+        "local_wiremock_http"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: MOCK-SERVER-CROSS-VERIFY-REST-v0.2\nresolved_execution_plan:\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-REST-TC-001\n    target: payment_mock\n    provider_id: wiremock-payment-api\n    provider_type: wiremock_http_mock\n    profile: local_wiremock_http\n    runtime_mode: mock\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-REST-TC-001\n    target: payment_api\n    provider_id: payment-api-client\n    provider_type: rest_client\n    profile: local_wiremock_http\n    runtime_mode: native\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-REST-TC-BOUNDARY-001\n    target: payment_mock\n    provider_id: wiremock-payment-api\n    provider_type: wiremock_http_mock\n    profile: local_wiremock_http\n    runtime_mode: mock\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-REST-TC-BOUNDARY-001\n    target: payment_api\n    provider_id: payment-api-client\n    provider_type: rest_client\n    profile: local_wiremock_http\n    runtime_mode: native\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml",
+        "--profile",
+        "local_wiremock_http"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "14:05:14.896 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:14.905 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@70c31b17{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@40863800{STOPPED}}. May not be supported in future releases.\n14:05:14.909 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:14.912 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@70c31b17{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@40863800{STARTED}}\n14:05:14.912 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:14.914 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@70c31b17{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@40863800{STARTED}}\n14:05:14.931 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@32a4ea4e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@347b370c{STARTED}}\n14:05:14.937 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:14.937 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@32a4ea4e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@347b370c{STARTED}}\n14:05:14.941 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@25589735{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61367}\n14:05:14.943 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@46994f26{STARTING}[12.1.10,sto=1000] @48ms\n14:05:15.003 [qtp1645251795-42] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:15.240 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@46994f26{STOPPING}[12.1.10,sto=1000]\n14:05:15.240 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@46994f26{STOPPING}[12.1.10,sto=1000]\n14:05:15.244 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@25589735{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:15.246 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@32a4ea4e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@347b370c{STOPPED}}\n14:05:15.246 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@70c31b17{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@40863800{STOPPED}}\n14:05:15.256 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:15.257 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@1ae9d0e4{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@6acb45c1{STOPPED}}. May not be supported in future releases.\n14:05:15.259 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:15.259 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@1ae9d0e4{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@6acb45c1{STARTED}}\n14:05:15.259 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:15.259 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@1ae9d0e4{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@6acb45c1{STARTED}}\n14:05:15.260 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@688d619c{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@647ff23e{STARTED}}\n14:05:15.260 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:15.260 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@688d619c{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@647ff23e{STARTED}}\n14:05:15.261 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@1dead5e9{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61371}\n14:05:15.261 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@6a04d2a4{STARTING}[12.1.10,sto=1000] @4ms\n14:05:15.262 [qtp1608757336-59] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:15.276 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@6a04d2a4{STOPPING}[12.1.10,sto=1000]\n14:05:15.276 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@6a04d2a4{STOPPING}[12.1.10,sto=1000]\n14:05:15.277 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@1dead5e9{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:15.277 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@688d619c{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@647ff23e{STOPPED}}\n14:05:15.277 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@1ae9d0e4{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@6acb45c1{STOPPED}}\nrun_status: passed\nsuite_id: MOCK-SERVER-CROSS-VERIFY-REST-v0.2\nbatch_id: BATCH-WIREMOCK-HTTP-20260705060514274-1\nrun_id: RUN-WIREMOCK-HTTP-20260705060514274-1\ntest_case_id: MOCK-SERVER-CROSS-VERIFY-REST-v0.2-MULTI\ntest_count: 2\npassed_count: 2\nfailed_count: 0\nprofile: local_wiremock_http\nprovider_runtime_executed: true\nprovider_types: wiremock_http_mock,rest_client\nprovider_ids: wiremock-payment-api,payment-api-client\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/wiremock_http_request/MOCK-SERVER-CROSS-VERIFY-REST-v0.2/BATCH-WIREMOCK-HTTP-20260705060514274-1/RUN-WIREMOCK-HTTP-20260705060514274-1/result.json\nevidence_dir: target/provider-capability/wiremock_http_request/MOCK-SERVER-CROSS-VERIFY-REST-v0.2/BATCH-WIREMOCK-HTTP-20260705060514274-1/RUN-WIREMOCK-HTTP-20260705060514274-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: MOCK-SERVER-CROSS-VERIFY-SOAP-v0.2\nprovider_instances_used:\n  - payment-soap-client\n  - payment-soap-mock\nprovider_types_used:\n  - rest_client\n  - soap_mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml",
+        "--profile",
+        "local_soap_mock"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: MOCK-SERVER-CROSS-VERIFY-SOAP-v0.2\nresolved_execution_plan:\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-SOAP-TC-001\n    target: payment_soap_mock\n    provider_id: payment-soap-mock\n    provider_type: soap_mock\n    profile: local_soap_mock\n    runtime_mode: mock\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-SOAP-TC-001\n    target: payment_soap_client\n    provider_id: payment-soap-client\n    provider_type: rest_client\n    profile: local_soap_mock\n    runtime_mode: native\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-SOAP-TC-BOUNDARY-001\n    target: payment_soap_mock\n    provider_id: payment-soap-mock\n    provider_type: soap_mock\n    profile: local_soap_mock\n    runtime_mode: mock\n  - test_case_id: MOCK-SERVER-CROSS-VERIFY-SOAP-TC-BOUNDARY-001\n    target: payment_soap_client\n    provider_id: payment-soap-client\n    provider_type: rest_client\n    profile: local_soap_mock\n    runtime_mode: native\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml",
+        "--profile",
+        "local_soap_mock"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "14:05:18.209 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:18.218 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@457692cb{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@350342e0{STOPPED}}. May not be supported in future releases.\n14:05:18.222 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:18.225 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@457692cb{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@350342e0{STARTED}}\n14:05:18.225 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:18.227 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@457692cb{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@350342e0{STARTED}}\n14:05:18.245 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@65259c53{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@4bff28e7{STARTED}}\n14:05:18.251 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:18.251 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@65259c53{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@4bff28e7{STARTED}}\n14:05:18.255 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@5cb6ff5e{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61378}\n14:05:18.256 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@46591e98{STARTING}[12.1.10,sto=1000] @48ms\n14:05:18.524 [qtp100782741-40] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:18.586 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@46591e98{STOPPING}[12.1.10,sto=1000]\n14:05:18.586 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@46591e98{STOPPING}[12.1.10,sto=1000]\n14:05:18.589 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@5cb6ff5e{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:18.591 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@65259c53{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@4bff28e7{STOPPED}}\n14:05:18.591 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@457692cb{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@350342e0{STOPPED}}\n14:05:18.600 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:18.601 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@26712838{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@249a45fd{STOPPED}}. May not be supported in future releases.\n14:05:18.602 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:18.602 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@26712838{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@249a45fd{STARTED}}\n14:05:18.602 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:18.602 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@26712838{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@249a45fd{STARTED}}\n14:05:18.603 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@5d5ae6aa{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@2bc2e022{STARTED}}\n14:05:18.603 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:18.603 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@5d5ae6aa{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@2bc2e022{STARTED}}\n14:05:18.603 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@2210e466{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61381}\n14:05:18.604 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@be1c08a{STARTING}[12.1.10,sto=1000] @3ms\n14:05:18.613 [qtp678296096-50] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:18.618 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@be1c08a{STOPPING}[12.1.10,sto=1000]\n14:05:18.618 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@be1c08a{STOPPING}[12.1.10,sto=1000]\n14:05:18.619 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@2210e466{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:18.619 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@5d5ae6aa{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@2bc2e022{STOPPED}}\n14:05:18.619 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@26712838{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@249a45fd{STOPPED}}\nrun_status: passed\nsuite_id: MOCK-SERVER-CROSS-VERIFY-SOAP-v0.2\nbatch_id: BATCH-SOAP-MOCK-20260705060517562-1\nrun_id: RUN-SOAP-MOCK-20260705060517562-1\ntest_case_id: MOCK-SERVER-CROSS-VERIFY-SOAP-v0.2-MULTI\ntest_count: 2\npassed_count: 2\nfailed_count: 0\nprofile: local_soap_mock\nprovider_runtime_executed: true\nprovider_types: soap_mock,rest_client\nprovider_ids: payment-soap-mock,payment-soap-client\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/soap_mock/MOCK-SERVER-CROSS-VERIFY-SOAP-v0-2/BATCH-SOAP-MOCK-20260705060517562-1/RUN-SOAP-MOCK-20260705060517562-1/result.json\nevidence_dir: target/provider-capability/soap_mock/MOCK-SERVER-CROSS-VERIFY-SOAP-v0-2/BATCH-SOAP-MOCK-20260705060517562-1/RUN-SOAP-MOCK-20260705060517562-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/nats/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: NATS-CAPABILITY-v0.2\nprovider_instances_used:\n  - local-nats-event-bus\nprovider_types_used:\n  - nats\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/nats/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/nats/suite_manifest.yaml",
+        "--profile",
+        "local_nats"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: NATS-CAPABILITY-v0.2\nresolved_execution_plan:\n  - test_case_id: NATS-CAPABILITY-TC-001\n    target: event_bus\n    provider_id: local-nats-event-bus\n    provider_type: nats\n    profile: local_nats\n    runtime_mode: mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/nats/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/nats/suite_manifest.yaml",
+        "--profile",
+        "local_nats"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "run_status: passed\nsuite_id: NATS-CAPABILITY-v0.2\nbatch_id: BATCH-NATS-20260705060520877-1\nrun_id: RUN-NATS-20260705060520877-1\ntest_case_id: NATS-CAPABILITY-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_nats\nprovider_runtime_executed: true\nprovider_type: nats\nprovider_id: local-nats-event-bus\nruntime_mode: mock\nsubject: orders.ready\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/nats/NATS-CAPABILITY-v0.2/BATCH-NATS-20260705060520877-1/RUN-NATS-20260705060520877-1/result.json\nevidence_dir: target/provider-capability/nats/NATS-CAPABILITY-v0.2/BATCH-NATS-20260705060520877-1/RUN-NATS-20260705060520877-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/nats/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/polling/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: POLLING-CAPABILITY-v0.2\nprovider_instances_used:\n  - local-common-polling\nprovider_types_used:\n  - common_verify\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/polling/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/polling/suite_manifest.yaml",
+        "--profile",
+        "local_polling"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: POLLING-CAPABILITY-v0.2\nresolved_execution_plan:\n  - test_case_id: POLLING-CAPABILITY-TC-001\n    target: verifier\n    provider_id: local-common-polling\n    provider_type: common_verify\n    profile: local_polling\n    runtime_mode: stub\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/polling/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/polling/suite_manifest.yaml",
+        "--profile",
+        "local_polling"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "run_status: passed\nsuite_id: POLLING-CAPABILITY-v0.2\nbatch_id: BATCH-COMMON-1783231523245\nrun_id: RUN-COMMON-1783231523245\ntest_case_id: POLLING-CAPABILITY-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_polling\nprovider_runtime_executed: false\nprovider_type: common_verify\nprovider_id: local-common-polling\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/common_verify/POLLING-CAPABILITY-v0.2/BATCH-COMMON-1783231523245/RUN-COMMON-1783231523245/result.json\nevidence_dir: target/provider-capability/common_verify/POLLING-CAPABILITY-v0.2/BATCH-COMMON-1783231523245/RUN-COMMON-1783231523245\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/polling/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/soap_mock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: SOAP-MOCK-SAMPLE-v0.2\nprovider_instances_used:\n  - payment-soap-client\n  - payment-soap-mock\nprovider_types_used:\n  - rest_client\n  - soap_mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/soap_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/soap_mock/suite_manifest.yaml",
+        "--profile",
+        "local_soap_mock"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: SOAP-MOCK-SAMPLE-v0.2\nresolved_execution_plan:\n  - test_case_id: SOAP-MOCK-TC-001\n    target: payment_soap_mock\n    provider_id: payment-soap-mock\n    provider_type: soap_mock\n    profile: local_soap_mock\n    runtime_mode: mock\n  - test_case_id: SOAP-MOCK-TC-001\n    target: payment_soap_client\n    provider_id: payment-soap-client\n    provider_type: rest_client\n    profile: local_soap_mock\n    runtime_mode: native\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/soap_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/soap_mock/suite_manifest.yaml",
+        "--profile",
+        "local_soap_mock"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "14:05:26.236 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:26.246 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@631944d4{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@3d132bb6{STOPPED}}. May not be supported in future releases.\n14:05:26.250 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:26.253 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@631944d4{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@3d132bb6{STARTED}}\n14:05:26.254 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:26.255 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@631944d4{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@3d132bb6{STARTED}}\n14:05:26.271 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@661db63e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@5cf2f5d6{STARTED}}\n14:05:26.277 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:26.278 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@661db63e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@5cf2f5d6{STARTED}}\n14:05:26.282 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@569b2c90{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61384}\n14:05:26.283 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@18b04526{STARTING}[12.1.10,sto=1000] @48ms\n14:05:26.487 [qtp715570093-40] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:26.539 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@18b04526{STOPPING}[12.1.10,sto=1000]\n14:05:26.539 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@18b04526{STOPPING}[12.1.10,sto=1000]\n14:05:26.542 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@569b2c90{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:26.543 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@661db63e{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@5cf2f5d6{STOPPED}}\n14:05:26.544 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@631944d4{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@3d132bb6{STOPPED}}\nrun_status: passed\nsuite_id: SOAP-MOCK-SAMPLE-v0.2\nbatch_id: BATCH-SOAP-MOCK-20260705060525623-1\nrun_id: RUN-SOAP-MOCK-20260705060525623-1\ntest_case_id: SOAP-MOCK-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_soap_mock\nprovider_runtime_executed: true\nprovider_types: soap_mock,rest_client\nprovider_ids: payment-soap-mock,payment-soap-client\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/soap_mock/SOAP-MOCK-SAMPLE-v0-2/BATCH-SOAP-MOCK-20260705060525623-1/RUN-SOAP-MOCK-20260705060525623-1/result.json\nevidence_dir: target/provider-capability/soap_mock/SOAP-MOCK-SAMPLE-v0-2/BATCH-SOAP-MOCK-20260705060525623-1/RUN-SOAP-MOCK-20260705060525623-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/soap_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/wiremock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: WIREMOCK-CAPABILITY-v0.2\nprovider_instances_used:\n  - wiremock-payment-api\nprovider_types_used:\n  - wiremock_http_mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/wiremock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/wiremock/suite_manifest.yaml",
+        "--profile",
+        "local_wiremock"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: WIREMOCK-CAPABILITY-v0.2\nresolved_execution_plan:\n  - test_case_id: WIREMOCK-CAPABILITY-TC-001\n    target: payment_mock\n    provider_id: wiremock-payment-api\n    provider_type: wiremock_http_mock\n    profile: local_wiremock\n    runtime_mode: mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/wiremock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/wiremock/suite_manifest.yaml",
+        "--profile",
+        "local_wiremock"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "14:05:29.505 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:29.515 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@72a3462f{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@4ffa7041{STOPPED}}. May not be supported in future releases.\n14:05:29.520 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:29.523 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@72a3462f{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@4ffa7041{STARTED}}\n14:05:29.524 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:29.525 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@72a3462f{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@4ffa7041{STARTED}}\n14:05:29.549 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@6dcbbb49{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@35329a05{STARTED}}\n14:05:29.556 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:29.556 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@6dcbbb49{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@35329a05{STARTED}}\n14:05:29.560 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@5eff9ddc{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61390}\n14:05:29.562 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@5dd747c1{STARTING}[12.1.10,sto=1000] @58ms\n14:05:29.623 [qtp1777030223-41] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:29.848 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@5dd747c1{STOPPING}[12.1.10,sto=1000]\n14:05:29.848 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@5dd747c1{STOPPING}[12.1.10,sto=1000]\n14:05:29.852 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@5eff9ddc{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:29.853 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@6dcbbb49{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@35329a05{STOPPED}}\n14:05:29.854 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@72a3462f{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@4ffa7041{STOPPED}}\nrun_status: passed\nsuite_id: WIREMOCK-CAPABILITY-v0.2\nbatch_id: BATCH-WIREMOCK-20260705060528872-1\nrun_id: RUN-WIREMOCK-20260705060528872-1\ntest_case_id: WIREMOCK-CAPABILITY-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_wiremock\nprovider_runtime_executed: true\nprovider_type: wiremock_http_mock\nprovider_id: wiremock-payment-api\nbase_url: http://localhost:61390\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/wiremock/WIREMOCK-CAPABILITY-v0.2/BATCH-WIREMOCK-20260705060528872-1/RUN-WIREMOCK-20260705060528872-1/result.json\nevidence_dir: target/provider-capability/wiremock/WIREMOCK-CAPABILITY-v0.2/BATCH-WIREMOCK-20260705060528872-1/RUN-WIREMOCK-20260705060528872-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/wiremock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "validation_status: passed\nsuite_id: WIREMOCK-HTTP-REQUEST-SAMPLE-v0.2\nprovider_instances_used:\n  - payment-api-client\n  - wiremock-payment-api\nprovider_types_used:\n  - rest_client\n  - wiremock_http_mock\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--dry-run",
+        "--suite",
+        "samples/provider_capability/wiremock_http_request/suite_manifest.yaml",
+        "--profile",
+        "local_wiremock_http"
+      ],
+      "command": "run --dry-run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "provider_runtime_invoked: false\nrun_status: dry_run_ready\nsuite_id: WIREMOCK-HTTP-REQUEST-SAMPLE-v0.2\nresolved_execution_plan:\n  - test_case_id: WIREMOCK-HTTP-REQUEST-TC-001\n    target: payment_mock\n    provider_id: wiremock-payment-api\n    provider_type: wiremock_http_mock\n    profile: local_wiremock_http\n    runtime_mode: mock\n  - test_case_id: WIREMOCK-HTTP-REQUEST-TC-001\n    target: payment_api\n    provider_id: payment-api-client\n    provider_type: rest_client\n    profile: local_wiremock_http\n    runtime_mode: native\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+        "run",
+        "--suite",
+        "samples/provider_capability/wiremock_http_request/suite_manifest.yaml",
+        "--profile",
+        "local_wiremock_http"
+      ],
+      "command": "run",
+      "exit_code": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "14:05:32.775 [main] INFO org.eclipse.jetty.server.Server -- jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 23.0.2\n14:05:32.785 [main] WARN org.eclipse.jetty.ee11.servlet.ServletContextHandler -- BaseResource [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/] is aliased to null in oeje11s.ServletContextHandler@61ad30f6{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=STOPPED,h=oeje11s.ServletHandler@312f3050{STOPPED}}. May not be supported in future releases.\n14:05:32.790 [main] WARN org.eclipse.jetty.server.handler.ContextHandler -- /__admin Base Resource should not be an alias (100% of requests to context are subject to Security/Alias Checks): [jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/]\n14:05:32.793 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@61ad30f6{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@312f3050{STARTED}}\n14:05:32.794 [main] WARN org.eclipse.jetty.util.DeprecationWarning -- Using @Deprecated Class org.eclipse.jetty.ee11.servlets.CrossOriginFilter\n14:05:32.795 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@61ad30f6{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@312f3050{STARTED}}\n14:05:32.821 [main] INFO org.eclipse.jetty.server.handler.ContextHandler -- Started oeje11s.ServletContextHandler@5fc1e4fb{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@29aa4bc9{STARTED}}\n14:05:32.829 [main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.StubRequestHandler. Normalized mapped under returned 'null'\n14:05:32.829 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Started oeje11s.ServletContextHandler@5fc1e4fb{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@29aa4bc9{STARTED}}\n14:05:32.834 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Started oejs.NetworkTrafficServerConnector@25835821{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:61392}\n14:05:32.836 [main] INFO org.eclipse.jetty.server.Server -- Started oejs.Server@f49e81a{STARTING}[12.1.10,sto=1000] @61ms\n14:05:32.901 [qtp917847816-42] INFO org.eclipse.jetty.server.handler.ContextHandler.___admin -- RequestHandlerClass from context returned com.github.tomakehurst.wiremock.http.AdminRequestHandler. Normalized mapped under returned 'null'\n14:05:33.135 [main] INFO org.eclipse.jetty.server.Server -- Stopped oejs.Server@f49e81a{STOPPING}[12.1.10,sto=1000]\n14:05:33.135 [main] INFO org.eclipse.jetty.server.Server -- Shutdown oejs.Server@f49e81a{STOPPING}[12.1.10,sto=1000]\n14:05:33.139 [main] INFO org.eclipse.jetty.server.AbstractConnector -- Stopped oejs.NetworkTrafficServerConnector@25835821{HTTP/1.1, (http/1.1, h2c)}{0.0.0.0:0}\n14:05:33.140 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@5fc1e4fb{ROOT,/,b=null,a=AVAILABLE,h=oeje11s.ServletHandler@29aa4bc9{STOPPED}}\n14:05:33.141 [main] INFO org.eclipse.jetty.ee11.servlet.ServletContextHandler -- Stopped oeje11s.ServletContextHandler@61ad30f6{/__admin,/__admin,b=[jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/, jar:nested:///Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar/!BOOT-INF/lib/wiremock-4.0.0-beta.38.jar!/assets/],a=AVAILABLE,h=oeje11s.ServletHandler@312f3050{STOPPED}}\nrun_status: passed\nsuite_id: WIREMOCK-HTTP-REQUEST-SAMPLE-v0.2\nbatch_id: BATCH-WIREMOCK-HTTP-20260705060532112-1\nrun_id: RUN-WIREMOCK-HTTP-20260705060532112-1\ntest_case_id: WIREMOCK-HTTP-REQUEST-TC-001\ntest_count: 1\npassed_count: 1\nfailed_count: 0\nprofile: local_wiremock_http\nprovider_runtime_executed: true\nprovider_types: wiremock_http_mock,rest_client\nprovider_ids: wiremock-payment-api,payment-api-client\nevidence_classification: framework_provider_capability_only\nresult_json: target/provider-capability/wiremock_http_request/WIREMOCK-HTTP-REQUEST-SAMPLE-v0.2/BATCH-WIREMOCK-HTTP-20260705060532112-1/RUN-WIREMOCK-HTTP-20260705060532112-1/result.json\nevidence_dir: target/provider-capability/wiremock_http_request/WIREMOCK-HTTP-REQUEST-SAMPLE-v0.2/BATCH-WIREMOCK-HTTP-20260705060532112-1/RUN-WIREMOCK-HTTP-20260705060532112-1\nfindings:\n  []\n",
+      "suite": "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+    }
+  ],
+  "summary": {
+    "blocked_row_count": 21,
+    "executed_command_count": 45,
+    "planned_command_count": 45,
+    "planned_suite_count": 15,
+    "unexpected_failures": 0
+  }
+}

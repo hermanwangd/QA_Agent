@@ -1,0 +1,31 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+**/.DS_Store
+
+# Downloaded release assets and exploratory extraction output.
+artifacts/release-assets/
+artifacts/usage-kits/
+artifacts/jar-inspect/
+artifacts/acceptance-workspaces/
+artifacts/target/
+release-assets/
+release-assets-v*/
+jar-inspect/
+jar-inspect-v*/
+usage-kit-v*/
+acceptance-workspace*/
+
+# Framework runtime output.
+target/
+**/target/
+
+# Local process artifacts.
+*.log
+*.pid
+
+# PI-run project runtime artifacts and local secrets.
+.pirun/runs/
+.pirun/secrets/*
+!.pirun/secrets/.gitkeep

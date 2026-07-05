@@ -1,0 +1,7 @@
+rp_id: RP-DUMMY-REST-001
+package_type: service
+title: Dummy order REST app PI-run acceptance package
+owner: pi-run-acceptance
+status: test_only
+notes:
+  - Local package used to validate v0.2.1 RP-mode runtime against a deterministic dummy app.

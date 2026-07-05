@@ -1,0 +1,29 @@
+provider_contracts:
+  bindings:
+    api_payload:
+      provider_contract_kind: request_response
+      provider_type: request_body
+      bind_as: api_payload
+      endpoint_ref: local://request-body
+      timeout_seconds: 10
+      outputs:
+        actual_output_ref: actual/request_body.json
+      actions:
+        http_request:
+          method: POST
+          path: /orders
+          request_binding: order_request
+  providers:
+    order_api:
+      provider_contract_kind: request_response
+      provider_type: rest
+      endpoint_ref: http://127.0.0.1:18080
+      timeout_seconds: 10
+      outputs:
+        actual_output_ref: actual/order_response.json
+      actions:
+        http_request:
+          method: POST
+          path: /orders
+          request_binding: order_request
+          timeout_seconds: 10

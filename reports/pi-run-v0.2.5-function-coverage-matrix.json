@@ -1,0 +1,852 @@
+{
+  "matrix_rows": [
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "artifact_compare",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "stub",
+      "runtime_modes": [
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/verification/artifact_compare/suite_manifest.yaml",
+        "samples/provider_capability/compare/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "common_verify",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "stub",
+      "runtime_modes": [
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/verification/artifact_compare/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/verification/common_verify/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/verification/polling_observer/suite_manifest.yaml",
+        "samples/provider_capability/common_verify/suite_manifest.yaml",
+        "samples/provider_capability/compare/suite_manifest.yaml",
+        "samples/provider_capability/polling/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "external_runner",
+      "reason": "external_runner/native is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "native",
+        "stub"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "external_runner",
+      "reason": "external_runner/stub is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "stub",
+      "runtime_modes": [
+        "native",
+        "stub"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "grpc_client",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/rpc/grpc_mock/suite_manifest.yaml",
+        "samples/provider_capability/grpc_mock/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "grpc_client",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/rpc/grpc_mock/suite_manifest.yaml",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml",
+        "samples/provider_capability/grpc_mock/suite_manifest.yaml",
+        "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "grpc_client",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "stub",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/rpc/grpc_mock/suite_manifest.yaml",
+        "samples/provider_capability/grpc_mock/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "grpc_mock",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "mock"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/rpc/grpc_mock/suite_manifest.yaml",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml",
+        "samples/provider_capability/grpc_mock/suite_manifest.yaml",
+        "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "ibm_mq",
+      "reason": "ibm_mq/ephemeral is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "ephemeral",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "ibm_mq",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [
+        "java -jar spec-driven-auto-regression-0.2.5.jar validate --suite usage-kit/samples/20-provider-capability-p0/messaging/ibm_mq/suite_manifest.yaml --profile ci_ibm_mq_external"
+      ],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/messaging/ibm_mq/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/messaging/kafka_ibm_mq_mixed/suite_manifest.yaml",
+        "samples/provider_capability/ibm_mq/suite_manifest.yaml",
+        "samples/provider_capability/messaging_mixed/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "ibm_mq",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [
+        "java -jar spec-driven-auto-regression-0.2.5.jar validate --suite usage-kit/samples/20-provider-capability-p0/messaging/ibm_mq/suite_manifest.yaml --profile ci_ibm_mq_external"
+      ],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/messaging/ibm_mq/suite_manifest.yaml",
+        "samples/provider_capability/ibm_mq/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "jdbc",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "ephemeral",
+      "runtime_modes": [
+        "ephemeral",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/10-contract-baseline/mixed_wiremock_jdbc_nats/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/data/jdbc/suite_manifest.yaml",
+        "samples/contract_baseline/suite_manifest.yaml",
+        "samples/provider_capability/jdbc/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "jdbc",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "ephemeral",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/10-contract-baseline/mixed_wiremock_jdbc_nats/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/data/jdbc/suite_manifest.yaml",
+        "samples/contract_baseline/suite_manifest.yaml",
+        "samples/provider_capability/jdbc/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "kafka",
+      "reason": "kafka/ephemeral is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "ephemeral",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "kafka",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [
+        "java -jar spec-driven-auto-regression-0.2.5.jar validate --suite usage-kit/samples/20-provider-capability-p0/messaging/kafka/suite_manifest.yaml --profile ci_kafka_external"
+      ],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/messaging/kafka/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/messaging/kafka_ibm_mq_mixed/suite_manifest.yaml",
+        "samples/provider_capability/kafka/suite_manifest.yaml",
+        "samples/provider_capability/messaging_mixed/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "kafka",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [
+        "java -jar spec-driven-auto-regression-0.2.5.jar validate --suite usage-kit/samples/20-provider-capability-p0/messaging/kafka/suite_manifest.yaml --profile ci_kafka_external"
+      ],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/messaging/kafka/suite_manifest.yaml",
+        "samples/provider_capability/kafka/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": false,
+      "runtime_mode": "ephemeral",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "deprecated_alias",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": false,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "deprecated_alias",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": false,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "deprecated_alias",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "kubernetes_runtime",
+      "reason": "kubernetes_runtime/mock is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "mock",
+        "native"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "kubernetes_runtime",
+      "reason": "kubernetes_runtime/native is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "mock",
+        "native"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "nats",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "ephemeral",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/10-contract-baseline/mixed_wiremock_jdbc_nats/suite_manifest.yaml",
+        "samples/contract_baseline/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "nats",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/messaging/nats/suite_manifest.yaml",
+        "samples/provider_capability/nats/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "nats",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "ephemeral",
+        "mock",
+        "native"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/10-contract-baseline/mixed_wiremock_jdbc_nats/suite_manifest.yaml",
+        "samples/contract_baseline/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "polling_observer",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "ephemeral",
+      "runtime_modes": [
+        "ephemeral",
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/verification/polling_observer/suite_manifest.yaml",
+        "samples/provider_capability/polling/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "polling_observer",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "stub",
+      "runtime_modes": [
+        "ephemeral",
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/provider_capability/polling/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "rest_client",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/http/rest_client_with_wiremock/suite_manifest.yaml",
+        "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "rest_client",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/http/rest_client_with_wiremock/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/rpc/soap_mock/suite_manifest.yaml",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml",
+        "samples/90-compatibility/dummy_rest/suite_manifest.yaml",
+        "samples/provider_capability/dummy_rest/suite_manifest.yaml",
+        "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml",
+        "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml",
+        "samples/provider_capability/soap_mock/suite_manifest.yaml",
+        "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "rest_client",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "stub",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/http/rest_client_with_wiremock/suite_manifest.yaml",
+        "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": false,
+      "owner": "project/pi-run",
+      "provider_type": "sample_fake_provider",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [
+        "java -jar spec-driven-auto-regression-0.2.5.jar validate --suite usage-kit/samples/00-getting-started/golden_e2e/suite_manifest.yaml",
+        "java -jar spec-driven-auto-regression-0.2.5.jar run --suite usage-kit/samples/00-getting-started/golden_e2e/suite_manifest.yaml"
+      ],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "stub",
+      "runtime_modes": [
+        "stub"
+      ],
+      "runtime_status": "unsupported",
+      "sample_paths": [
+        "samples/00-getting-started/golden_e2e/suite_manifest.yaml",
+        "samples/golden_e2e/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "shell_command",
+      "reason": "shell_command/mock is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "shell_command",
+      "reason": "shell_command/native is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "shell_command",
+      "reason": "shell_command/stub is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "stub",
+      "runtime_modes": [
+        "mock",
+        "native",
+        "stub"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "soap_mock",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "mock"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/20-provider-capability-p0/rpc/soap_mock/suite_manifest.yaml",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml",
+        "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml",
+        "samples/provider_capability/soap_mock/suite_manifest.yaml"
+      ]
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "vm_runtime",
+      "reason": "vm_runtime/mock is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "mock",
+        "native"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": false,
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "indirect_sample": false,
+      "owner": "framework_or_project_gate",
+      "provider_type": "vm_runtime",
+      "reason": "vm_runtime/native is contract-only in this framework release",
+      "release_verification_command": [],
+      "resource_class": "heavy_or_external",
+      "runnable_now": false,
+      "runtime_mode": "native",
+      "runtime_modes": [
+        "mock",
+        "native"
+      ],
+      "runtime_status": "contract_only",
+      "sample_paths": []
+    },
+    {
+      "contract_exists": true,
+      "direct_sample": true,
+      "expected_status": "PASS",
+      "indirect_sample": true,
+      "owner": "project/pi-run",
+      "provider_type": "wiremock_http_mock",
+      "reason": "release usage-kit sample is present",
+      "release_verification_command": [],
+      "resource_class": "lightweight",
+      "runnable_now": true,
+      "runtime_mode": "mock",
+      "runtime_modes": [
+        "mock"
+      ],
+      "runtime_status": "supported",
+      "sample_paths": [
+        "samples/10-contract-baseline/mixed_wiremock_jdbc_nats/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/http/rest_client_with_wiremock/suite_manifest.yaml",
+        "samples/20-provider-capability-p0/http/wiremock_http_mock/suite_manifest.yaml",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml",
+        "samples/contract_baseline/suite_manifest.yaml",
+        "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml",
+        "samples/provider_capability/wiremock/suite_manifest.yaml",
+        "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+      ]
+    }
+  ],
+  "summary": {
+    "contract_count": 18,
+    "contracts_without_registry": [],
+    "matrix_row_count": 37,
+    "missing_release_verification_commands": [
+      "report",
+      "validate-evidence"
+    ],
+    "present_release_verification_commands": [
+      "run",
+      "validate"
+    ],
+    "registry_provider_count": 18,
+    "registry_without_contract": [],
+    "sample_suite_count": 40,
+    "sample_test_case_count": 62,
+    "source_archive_used": false,
+    "usage_kit_root": "/Users/herman_mbp2023/Documents/test_framework_pirun/artifacts/usage-kits/usage-kit-v0.2.5/usage-kit"
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Auto Regression Test Framework"
+  short_description: "Author and run framework test suites."
+  default_prompt: "Use $auto-regression-test-framework to create a suite-mode test case and run it with the Auto Regression Test Framework."

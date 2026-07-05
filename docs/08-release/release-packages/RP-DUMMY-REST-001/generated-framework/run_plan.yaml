@@ -1,0 +1,5 @@
+contract_version: v0.2
+rp_id: RP-DUMMY-REST-001
+execution_mode: local_fixture
+environment_binding_ref: environment_bindings/local_dummy.yaml
+target_dependencies: {}

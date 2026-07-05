@@ -1,0 +1,709 @@
+{
+  "blocked_rows": [
+    {
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "runtime_mode": "ephemeral"
+    },
+    {
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_DEPRECATED_ALIAS",
+      "provider_type": "kafka_messaging",
+      "reason": "deprecated compatibility alias; new artifacts must use canonical provider type",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "external_runner",
+      "reason": "external_runner/native is contract-only in this framework release",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "external_runner",
+      "reason": "external_runner/stub is contract-only in this framework release",
+      "runtime_mode": "stub"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "ibm_mq",
+      "reason": "ibm_mq/ephemeral is contract-only in this framework release",
+      "runtime_mode": "ephemeral"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "kafka",
+      "reason": "kafka/ephemeral is contract-only in this framework release",
+      "runtime_mode": "ephemeral"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "kubernetes_runtime",
+      "reason": "kubernetes_runtime/mock is contract-only in this framework release",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "kubernetes_runtime",
+      "reason": "kubernetes_runtime/native is contract-only in this framework release",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "shell_command",
+      "reason": "shell_command/mock is contract-only in this framework release",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "shell_command",
+      "reason": "shell_command/native is contract-only in this framework release",
+      "runtime_mode": "native"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "shell_command",
+      "reason": "shell_command/stub is contract-only in this framework release",
+      "runtime_mode": "stub"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "vm_runtime",
+      "reason": "vm_runtime/mock is contract-only in this framework release",
+      "runtime_mode": "mock"
+    },
+    {
+      "expected_status": "BLOCKED_FRAMEWORK_CONTRACT_ONLY",
+      "provider_type": "vm_runtime",
+      "reason": "vm_runtime/native is contract-only in this framework release",
+      "runtime_mode": "native"
+    }
+  ],
+  "suite_results": [
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/00-getting-started/golden_e2e/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/00-getting-started/golden_e2e/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/10-contract-baseline/mixed_wiremock_jdbc_nats/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/10-contract-baseline/mixed_wiremock_jdbc_nats/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/data/jdbc/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/data/jdbc/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/http/rest_client_with_wiremock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/http/rest_client_with_wiremock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/http/wiremock_http_mock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/http/wiremock_http_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/messaging/ibm_mq/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/messaging/ibm_mq/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/messaging/kafka/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/messaging/kafka/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/messaging/kafka_ibm_mq_mixed/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/messaging/kafka_ibm_mq_mixed/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/messaging/nats/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/messaging/nats/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/rpc/grpc_mock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/rpc/grpc_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/rpc/soap_mock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/rpc/soap_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/verification/artifact_compare/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/verification/artifact_compare/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/verification/common_verify/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/verification/common_verify/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/20-provider-capability-p0/verification/polling_observer/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/20-provider-capability-p0/verification/polling_observer/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/30-cross-provider-groups/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/30-cross-provider-groups/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/30-cross-provider-groups/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/30-cross-provider-groups/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/90-compatibility/dummy_rest/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/90-compatibility/dummy_rest/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/contract_baseline/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/contract_baseline/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/golden_e2e/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/golden_e2e/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/common_verify/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/common_verify/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/compare/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/compare/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/dummy_rest/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/dummy_rest/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/grpc_mock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/grpc_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/ibm_mq/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/ibm_mq/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/jdbc/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/jdbc/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/kafka/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/kafka/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/messaging_mixed/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/messaging_mixed/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/mock_server_cross_verify/grpc_mock_grpc_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/mock_server_cross_verify/rest_wiremock_http/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/mock_server_cross_verify/soap_mock_http_client/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/nats/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/nats/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/polling/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/polling/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/soap_mock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/soap_mock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/wiremock/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/wiremock/suite_manifest.yaml"
+    },
+    {
+      "argv": [
+        "java",
+        "-Xmx512m",
+        "-jar",
+        "/Users/herman_mbp2023/Documents/test_framework_pirun/release-assets-v0.2.4/spec-driven-auto-regression-0.2.4.jar",
+        "validate",
+        "--suite",
+        "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+      ],
+      "command": "validate",
+      "exit_code": null,
+      "status": "PLANNED",
+      "stderr": "",
+      "stdout": "",
+      "suite": "samples/provider_capability/wiremock_http_request/suite_manifest.yaml"
+    }
+  ],
+  "summary": {
+    "blocked_row_count": 14,
+    "executed_command_count": 0,
+    "planned_command_count": 36,
+    "planned_suite_count": 36,
+    "unexpected_failures": 0
+  }
+}

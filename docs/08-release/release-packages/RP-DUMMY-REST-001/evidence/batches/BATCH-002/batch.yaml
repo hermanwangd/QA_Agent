@@ -1,0 +1,12 @@
+batch_id: BATCH-002
+rp_id: RP-DUMMY-REST-001
+status: passed
+execution_mode: local_fixture
+environment_ref: local_dummy
+started_at: 2026-07-04T19:43:12.203651+08:00
+finished_at: 2026-07-04T19:43:12.259465+08:00
+runs:
+  - run_id: RUN-003
+    test_case_id: DUMMY-REST-TC-001
+    ac_id: RP-DUMMY-REST-001-AC-001
+    status: passed

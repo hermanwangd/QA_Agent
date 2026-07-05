@@ -1,0 +1,11 @@
+environment_id: local-dummy
+profile: local_dummy
+provider_bindings:
+  - provider_id: dummy-order-api
+    provider_instance_ref: provider_instances/dummy_order_api.yaml
+    runtime_mode: native
+    binding_values:
+      base_url: http://127.0.0.1:18080
+evidence_policy:
+  evidence_classification: framework_provider_capability_only
+  downstream_release_evidence: false

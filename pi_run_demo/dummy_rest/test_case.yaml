@@ -1,0 +1,65 @@
+dsl_version: v0.2
+test_case_id: DUMMY-REST-TC-001
+title: Submit a deterministic order to the dummy REST app
+status: active
+revision: 1
+source_refs:
+  pi_run_acceptance: reports/feature_coverage_matrix.md#rest-client-native
+labels:
+  capability: rest_client_native
+  evidence_classification: framework_provider_capability_only
+  downstream_release_evidence: false
+  tags: [pi-run, dummy-app, rest-client]
+compatible_profiles: [local_dummy]
+targets:
+  order_api:
+    provider_id: dummy-order-api
+data:
+  order_request:
+    ref: fixtures/order_request.json
+execute:
+  operations:
+    - id: submit_order
+      target: order_api
+      operation: http_request
+      inputs:
+        request.method:
+          value: POST
+        request.path:
+          value: /orders
+        request.headers.content-type:
+          value: application/json
+        request.body:
+          ref: ${data.order_request}
+      outputs:
+        response.status: response.status
+        response.headers: response.headers
+        response.body: response.body
+        response.duration_ms: response.duration_ms
+verify:
+  checks:
+    - id: order_created_status
+      type: value_equals
+      actual:
+        ref: ${execute.submit_order.outputs.response.status}
+      expected: 201
+    - id: order_created_body
+      type: json_match
+      actual:
+        ref: ${execute.submit_order.outputs.response.body}
+      expected_ref: expected_results/order_created_response.json
+cleanup:
+  operations: []
+evidence:
+  required:
+    - evidence_index.yaml
+    - logs/execution.log
+    - provider-evidence/http/request.json
+    - provider-evidence/http/response.json
+    - assertions/order_created_status.yaml
+    - assertions/order_created_body.json
+    - batch/batch.yaml
+runtime:
+  timeout: PT30S
+  retry:
+    max_attempts: 0

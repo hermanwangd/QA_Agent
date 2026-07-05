@@ -1,0 +1,7 @@
+traceability:
+  - rp_id: RP-DUMMY-REST-001
+    ac_id: RP-DUMMY-REST-001-AC-001
+    test_case_id: DUMMY-REST-TC-001
+    batch_id: BATCH-002
+    run_id: RUN-003
+    evidence_ref: evidence/runs/RUN-003

@@ -1,0 +1,11 @@
+environment_id: local-dummy
+profile: local_dummy
+targets:
+  order_api:
+    target_id: order_api
+    provider: order_api
+    provider_contract_ref: provider_contracts/request_response.yaml#providers.order_api
+    environment_ref: local_dummy
+evidence_policy:
+  evidence_classification: pi_run_acceptance
+  downstream_release_evidence: false

@@ -1,0 +1,19 @@
+contract_version: v0.2
+suite_id: DUMMY-REST-PI-RUN-v0.2
+purpose: Self-authored PI-run suite against the local dummy order REST app.
+profile: local_dummy
+selection:
+  mode: suite
+  suite: dummy-rest-pi-run
+tests:
+  - test_case.yaml
+artifact_roots:
+  provider_instances: provider_instances/
+  env_profiles: env_profiles/
+  execution_profiles: execution_profiles/
+  environment_bindings: environment_bindings/
+  expected_results: expected_results/
+  fixtures: fixtures/
+evidence_policy:
+  evidence_classification: framework_provider_capability_only
+  downstream_release_evidence: false

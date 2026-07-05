@@ -1,0 +1,67 @@
+{
+  "asset_dir": "release-assets-v0.2.3",
+  "assets": [
+    {
+      "actual_sha256": "b670c3ce92cedb8c9077568c0d561d4b9c1704636900b64cf6531318c2df919f",
+      "certificate_issuer": "issuer= /O=sigstore.dev/CN=sigstore-intermediate",
+      "certificate_subject": "subject=",
+      "checksum_status": "PASS",
+      "expected_sha256": "b670c3ce92cedb8c9077568c0d561d4b9c1704636900b64cf6531318c2df919f",
+      "name": "bom.json",
+      "path": "release-assets-v0.2.3/bom.json",
+      "signature_reason": "Verified OK",
+      "signature_status": "PASS"
+    },
+    {
+      "actual_sha256": "60fe1937975b5eacd34929ae39caadcb70f21a5b0fd24bd7da959324127be108",
+      "certificate_issuer": "issuer= /O=sigstore.dev/CN=sigstore-intermediate",
+      "certificate_subject": "subject=",
+      "checksum_status": "PASS",
+      "expected_sha256": "60fe1937975b5eacd34929ae39caadcb70f21a5b0fd24bd7da959324127be108",
+      "name": "bom.xml",
+      "path": "release-assets-v0.2.3/bom.xml",
+      "signature_reason": "Verified OK",
+      "signature_status": "PASS"
+    },
+    {
+      "actual_sha256": "89b540af54f01c136d68e7ba728241ed66a0355e9a8cbf0d88bce327917d815d",
+      "certificate_issuer": "issuer= /O=sigstore.dev/CN=sigstore-intermediate",
+      "certificate_subject": "subject=",
+      "checksum_status": "PASS",
+      "expected_sha256": "89b540af54f01c136d68e7ba728241ed66a0355e9a8cbf0d88bce327917d815d",
+      "name": "spec-driven-auto-regression-0.2.3-usage-kit.zip",
+      "path": "release-assets-v0.2.3/spec-driven-auto-regression-0.2.3-usage-kit.zip",
+      "signature_reason": "Verified OK",
+      "signature_status": "PASS"
+    },
+    {
+      "actual_sha256": "d9a0a672be58efa8ffa0aeebed1af0b2b4a8a686a00ffe94cfaa30368ca24175",
+      "certificate_issuer": "issuer= /O=sigstore.dev/CN=sigstore-intermediate",
+      "certificate_subject": "subject=",
+      "checksum_status": "PASS",
+      "expected_sha256": "d9a0a672be58efa8ffa0aeebed1af0b2b4a8a686a00ffe94cfaa30368ca24175",
+      "name": "spec-driven-auto-regression-0.2.3.jar",
+      "path": "release-assets-v0.2.3/spec-driven-auto-regression-0.2.3.jar",
+      "signature_reason": "Verified OK",
+      "signature_status": "PASS"
+    },
+    {
+      "actual_sha256": "d412f26e7a396ecf4bb7f668b7abb6ab305dc2f7171f1fd7705b387c6f30cd47",
+      "certificate_issuer": "issuer= /O=sigstore.dev/CN=sigstore-intermediate",
+      "certificate_subject": "subject=",
+      "checksum_status": "NOT_APPLICABLE",
+      "expected_sha256": null,
+      "name": "checksums.sha256",
+      "path": "release-assets-v0.2.3/checksums.sha256",
+      "signature_reason": "Verified OK",
+      "signature_status": "PASS"
+    }
+  ],
+  "certificate_chain_trust_verification": "NOT_PERFORMED",
+  "checksum_verification": "PASS",
+  "release_asset_verification_version": "v0.1",
+  "signature_method": "openssl dgst -sha256 using release-provided certificate public key",
+  "signature_verification": "PASS",
+  "source_archive_indicators": [],
+  "source_archive_used": false
+}

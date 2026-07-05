@@ -1,0 +1,19 @@
+assertions:
+  - test_case_id: DUMMY-REST-TC-001
+    ac_id: RP-DUMMY-REST-001-AC-001
+    type: json_path_equals
+    status: passed
+    oracle: inline
+    expected_ref: inline:ACCEPTED
+    actual_ref: actual/order_response.json
+    decision_rule: json_path_equals
+    diff_summary: json path `$.status` matched `ACCEPTED`
+  - test_case_id: DUMMY-REST-TC-001
+    ac_id: RP-DUMMY-REST-001-AC-001
+    type: json_path_equals
+    status: passed
+    oracle: inline
+    expected_ref: inline:CUST-001
+    actual_ref: actual/order_response.json
+    decision_rule: json_path_equals
+    diff_summary: json path `$.customer_id` matched `CUST-001`
