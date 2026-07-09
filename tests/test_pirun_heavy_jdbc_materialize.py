@@ -63,6 +63,50 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
             self.assertEqual(provider_binding["binding_values"]["connection"]["secret_ref"], "env://PIRUN_JDBC_CONNECTION")
             self.assertIn("project_sql_probe", combined)
 
+    def test_materialize_db2_retargets_test_case_and_writes_db2_seed_sql(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp) / "jdbc_db2_container"
+            materialize_heavy_jdbc_container(
+                run_dir=run_dir,
+                provider_id="db2-like-db",
+                dialect="db2",
+                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                profile="ci",
+            )
+
+            test_case = yaml.safe_load((run_dir / "test_case.yaml").read_text())
+            seed_sql = (run_dir / "fixtures" / "db_seed.sql").read_text()
+
+        self.assertEqual(test_case["targets"], {"db2_like_db": {"provider_id": "db2-like-db"}})
+        self.assertEqual(test_case["setup"]["operations"][0]["target"], "db2_like_db")
+        self.assertEqual(test_case["execute"]["operations"][0]["target"], "db2_like_db")
+        self.assertEqual(
+            test_case["execute"]["operations"][0]["inputs"]["query_ref"]["ref"],
+            "queries/order_exists_db2.sql",
+        )
+        self.assertEqual(test_case["verify"]["checks"][0]["target"], "db2_like_db")
+        self.assertEqual(test_case["verify"]["checks"][0]["query"]["ref"], "queries/order_exists_db2.sql")
+        self.assertEqual(test_case["cleanup"]["operations"][0]["target"], "db2_like_db")
+        self.assertIn("merge into ORDERS as t", seed_sql)
+        self.assertNotIn("create table if not exists", seed_sql)
+
+    def test_materialize_oracle_writes_real_oracle_seed_sql(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp) / "jdbc_oracle_container"
+            materialize_heavy_jdbc_container(
+                run_dir=run_dir,
+                provider_id="oracle-like-db",
+                dialect="oracle",
+                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                profile="ci",
+            )
+
+            seed_sql = (run_dir / "fixtures" / "db_seed.sql").read_text()
+
+        self.assertIn("merge into ORDERS t", seed_sql)
+        self.assertIn("from dual", seed_sql)
+        self.assertNotIn("create table if not exists", seed_sql)
+
 
 if __name__ == "__main__":
     unittest.main()

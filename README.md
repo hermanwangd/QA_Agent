@@ -10,6 +10,7 @@ Release-asset-only PI-run workspace for the Auto Regression Test Framework.
 - `docs/`: supporting plans, architecture notes, and release-package evidence.
 - `dummy_app/` and `pi_run_demo/`: local dummy application material used by framework acceptance.
 - `tools/`: one-off or version-specific PI-run utilities.
+- `testcontainers-heavy-jdbc/`: project-owned Maven harness for Oracle/DB2 Testcontainers JDBC provider acceptance.
 - `skills/`: repo-local Codex skills for using this test framework.
 - `.pirun/runs/`: local runtime output for orchestrated PI-runs.
 - `artifacts/`: ignored local cache for downloaded or generated assets.
@@ -64,3 +65,16 @@ python3 pirun/run_heavy_jdbc_container.py --db db2 --framework-version 0.2.5
 ```
 
 On an 8 GB local machine, run only Oracle after Docker has at least 4 GB available. Run DB2 on a dedicated runner with at least 16 GB host RAM and Docker memory configured to 8 GB or more.
+
+Strict Testcontainers-library path:
+
+```bash
+cd testcontainers-heavy-jdbc
+PIRUN_ENABLE_TESTCONTAINERS_HEAVY_JDBC=1 \
+PIRUN_ENABLE_ORACLE_TESTCONTAINER=1 \
+PIRUN_FRAMEWORK_VERSION=0.2.5 \
+MAVEN_OPTS="-Xmx1024m" \
+mvn -Dtest=HeavyJdbcProviderTestcontainersIT#oracleContainerMustBeConsumedByFrameworkJdbcProvider test
+```
+
+DB2 requires a larger runner and explicit license/elevated-capability opt-ins; see `testcontainers-heavy-jdbc/README.md`.

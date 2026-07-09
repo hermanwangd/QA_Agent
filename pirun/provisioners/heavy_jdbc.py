@@ -187,6 +187,7 @@ def dialect_probe_exec_command(engine: str, *, password: str) -> list[str]:
     if engine == "oracle":
         sql = (
             "printf 'set heading off feedback off\\n"
+            "create table ORDERS (ORDER_ID varchar2(64) primary key, STATUS varchar2(32));\\n"
             "select 1 from dual;\\n"
             "exit\\n' | sqlplus -L -S APP/"
             f"{password}@localhost/FREEPDB1"
@@ -196,6 +197,7 @@ def dialect_probe_exec_command(engine: str, *, password: str) -> list[str]:
         sql = (
             "su - db2inst1 -c \""
             f"db2 connect to testdb user db2inst1 using {password} >/dev/null && "
+            "db2 -x 'create table ORDERS (ORDER_ID varchar(64) not null primary key, STATUS varchar(32))' >/dev/null && "
             "db2 -x 'select 1 from sysibm.sysdummy1'\""
         )
         return ["bash", "-lc", sql]

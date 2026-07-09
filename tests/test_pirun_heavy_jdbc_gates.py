@@ -125,8 +125,10 @@ class HeavyJdbcGateTests(unittest.TestCase):
         db2 = " ".join(dialect_probe_exec_command("db2", password="Secret-12345"))
 
         self.assertIn("select 1 from dual", oracle)
+        self.assertIn("create table ORDERS", oracle)
         self.assertIn("sqlplus", oracle)
         self.assertIn("select 1 from sysibm.sysdummy1", db2)
+        self.assertIn("create table ORDERS", db2)
         self.assertIn("db2 connect to testdb", db2)
 
 

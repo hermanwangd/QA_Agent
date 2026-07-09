@@ -367,6 +367,8 @@ def materialize_heavy_jdbc_container(
         purpose=f"Project-provisioned Docker {dialect.upper()} JDBC capability verification.",
     )
     _write_test_labels(test_case_path, profile=profile, dependency=f"docker_jdbc_{dialect}")
+    _retarget_heavy_jdbc_test_case(run_dir, provider_id=provider_id, dialect=dialect)
+    _write_heavy_jdbc_sql(run_dir, dialect=dialect)
     if provider_instance_path.exists():
         _write_provider_labels(provider_instance_path)
 
@@ -584,6 +586,69 @@ def _write_test_labels(test_case_path: Path, *, profile: str, dependency: str) -
     labels["downstream_release_evidence"] = False
     labels["project_provisioned_dependency"] = dependency
     test_case_path.write_text(yaml.safe_dump(test_case, sort_keys=False), encoding="utf-8")
+
+
+def _retarget_heavy_jdbc_test_case(run_dir: Path, *, provider_id: str, dialect: str) -> None:
+    test_case_path = run_dir / "test_case.yaml"
+    test_case = yaml.safe_load(test_case_path.read_text()) or {}
+    target_key = "db2_like_db" if dialect == "db2" else "oracle_like_db"
+    query_name = f"order_exists_{dialect}.sql"
+    query_operation_id = f"query_order_{dialect}"
+
+    test_case["targets"] = {target_key: {"provider_id": provider_id}}
+    for operation in test_case.get("setup", {}).get("operations", []):
+        operation["target"] = target_key
+    for operation in test_case.get("execute", {}).get("operations", []):
+        operation["id"] = query_operation_id
+        operation["target"] = target_key
+        operation.setdefault("inputs", {}).setdefault("query_ref", {})["ref"] = f"queries/{query_name}"
+    for check in test_case.get("verify", {}).get("checks", []):
+        check["target"] = target_key
+        check.setdefault("query", {})["ref"] = f"queries/{query_name}"
+    for operation in test_case.get("cleanup", {}).get("operations", []):
+        operation["target"] = target_key
+    test_case.setdefault("evidence", {})["required"] = [
+        f"provider-evidence/jdbc/query_{query_operation_id}.yaml",
+        "provider-evidence/jdbc/seed_seed_order.yaml",
+        "provider-evidence/jdbc/cleanup_cleanup_order.yaml",
+    ]
+
+    test_case_path.write_text(yaml.safe_dump(test_case, sort_keys=False), encoding="utf-8")
+
+
+def _write_heavy_jdbc_sql(run_dir: Path, *, dialect: str) -> None:
+    seed_path = run_dir / "fixtures" / "db_seed.sql"
+    if dialect == "oracle":
+        seed_path.write_text(
+            "\n".join(
+                [
+                    "merge into ORDERS t",
+                    "using (select :order_id ORDER_ID, 'READY' STATUS from dual) s",
+                    "on (t.ORDER_ID = s.ORDER_ID)",
+                    "when matched then update set t.STATUS = s.STATUS",
+                    "when not matched then insert (ORDER_ID, STATUS) values (s.ORDER_ID, s.STATUS)",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
+        return
+    if dialect == "db2":
+        seed_path.write_text(
+            "\n".join(
+                [
+                    "merge into ORDERS as t",
+                    "using (values (cast(:order_id as varchar(64)), cast('READY' as varchar(32)))) as s(ORDER_ID, STATUS)",
+                    "on t.ORDER_ID = s.ORDER_ID",
+                    "when matched then update set STATUS = s.STATUS",
+                    "when not matched then insert (ORDER_ID, STATUS) values (s.ORDER_ID, s.STATUS)",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
+        return
+    raise ValueError(f"unsupported heavy JDBC dialect: {dialect}")
 
 
 def _write_provider_labels(provider_instance_path: Path) -> None:
