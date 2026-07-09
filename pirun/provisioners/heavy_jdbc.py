@@ -4,6 +4,8 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
+from pirun.docker_cli import build_docker_run_command
+
 
 BYTES_PER_GIB = 1024 * 1024 * 1024
 
@@ -115,6 +117,61 @@ def parse_docker_port(output: str) -> int:
     if not text or ":" not in text:
         raise ValueError(f"cannot parse docker port output: {output!r}")
     return int(text.rsplit(":", 1)[1])
+
+
+def container_name(run_id: str, engine: str) -> str:
+    return f"pirun-{run_id}-{engine}"
+
+
+def image_for_engine(engine: str, env: dict[str, str] | None = None) -> str:
+    config = config_for_engine(engine)
+    env = env or {}
+    if engine == "oracle":
+        return env.get("PIRUN_ORACLE_IMAGE", config.default_image)
+    if engine == "db2":
+        return env.get("PIRUN_DB2_IMAGE", config.default_image)
+    return config.default_image
+
+
+def build_heavy_jdbc_run_command(
+    engine: str,
+    *,
+    run_id: str,
+    image: str,
+    password: str,
+) -> list[str]:
+    config = config_for_engine(engine)
+    if engine == "oracle":
+        env = {
+            "ORACLE_PASSWORD": password,
+            "APP_USER": "APP",
+            "APP_USER_PASSWORD": password,
+        }
+    elif engine == "db2":
+        env = {
+            "LICENSE": "accept",
+            "DB2INSTANCE": "db2inst1",
+            "DB2INST1_PASSWORD": password,
+            "DBNAME": "testdb",
+            "BLU": "false",
+            "ENABLE_ORACLE_COMPATIBILITY": "false",
+            "TO_CREATE_SAMPLEDB": "false",
+            "REPODB": "false",
+        }
+    else:
+        raise ValueError(f"unsupported heavy JDBC engine: {engine}")
+
+    return build_docker_run_command(
+        run_id=run_id,
+        suite=config.suite_dir,
+        name=container_name(run_id, engine),
+        image=image,
+        ports={config.container_port: 0},
+        memory=config.container_memory,
+        env=env,
+        shm_size=config.shm_size,
+        privileged=config.privileged,
+    )
 
 
 class HeavyJdbcLock:

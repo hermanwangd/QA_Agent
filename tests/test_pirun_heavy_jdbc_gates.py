@@ -5,6 +5,7 @@ from pathlib import Path
 from pirun.provisioners.heavy_jdbc import (
     BYTES_PER_GIB,
     HeavyJdbcLock,
+    build_heavy_jdbc_run_command,
     evaluate_resource_gate,
     parse_docker_port,
 )
@@ -75,6 +76,40 @@ class HeavyJdbcGateTests(unittest.TestCase):
                 second.acquire()
             first.release()
             self.assertFalse(lock_path.exists())
+
+    def test_oracle_run_command_uses_faststart_image_shm_and_app_user(self):
+        command = build_heavy_jdbc_run_command(
+            "oracle",
+            run_id="RUN-ORACLE",
+            image="gvenzl/oracle-free:23-slim-faststart",
+            password="Secret-12345",
+        )
+        joined = " ".join(command)
+
+        self.assertIn("--memory 3g", joined)
+        self.assertIn("--shm-size 1g", joined)
+        self.assertIn("ORACLE_PASSWORD=Secret-12345", joined)
+        self.assertIn("APP_USER=APP", joined)
+        self.assertIn("APP_USER_PASSWORD=Secret-12345", joined)
+        self.assertIn("gvenzl/oracle-free:23-slim-faststart", joined)
+        self.assertNotIn("--privileged", command)
+
+    def test_db2_run_command_requires_privileged_license_and_password(self):
+        command = build_heavy_jdbc_run_command(
+            "db2",
+            run_id="RUN-DB2",
+            image="icr.io/db2_community/db2",
+            password="Secret-12345",
+        )
+        joined = " ".join(command)
+
+        self.assertIn("--privileged", command)
+        self.assertIn("--memory 6g", joined)
+        self.assertIn("LICENSE=accept", joined)
+        self.assertIn("DB2INSTANCE=db2inst1", joined)
+        self.assertIn("DB2INST1_PASSWORD=Secret-12345", joined)
+        self.assertIn("DBNAME=testdb", joined)
+        self.assertIn("icr.io/db2_community/db2", joined)
 
 
 if __name__ == "__main__":
