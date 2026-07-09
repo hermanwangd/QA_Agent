@@ -37,3 +37,28 @@ python3 pirun/inspect_usage_kit.py --framework-version 0.2.5 --output-dir report
 ## Key Reports
 
 - `reports/pi-run-heavy-jdbc-container-proposal.md`: isolated Oracle/DB2 JDBC container PI-run proposal with resource gates, runtime boundary, and framework-consumption evidence rules.
+
+## Heavy JDBC Container PI-run
+
+Oracle and DB2 container runs are manual opt-in checks. They are not part of the default unit test suite or `full-contract-baseline`, and provisioning is owned by this PI-run project rather than the framework jar.
+
+Oracle:
+
+```bash
+PIRUN_ENABLE_HEAVY_DB_CONTAINERS=1 \
+PIRUN_ORACLE_IMAGE=gvenzl/oracle-free:23-slim-faststart \
+PYTHONDONTWRITEBYTECODE=1 \
+python3 pirun/run_heavy_jdbc_container.py --db oracle --framework-version 0.2.5
+```
+
+DB2:
+
+```bash
+PIRUN_ENABLE_HEAVY_DB_CONTAINERS=1 \
+PIRUN_ACCEPT_DB2_LICENSE=1 \
+PIRUN_ALLOW_PRIVILEGED_DB2=1 \
+PYTHONDONTWRITEBYTECODE=1 \
+python3 pirun/run_heavy_jdbc_container.py --db db2 --framework-version 0.2.5
+```
+
+On an 8 GB local machine, run only Oracle after Docker has at least 4 GB available. Run DB2 on a dedicated runner with at least 16 GB host RAM and Docker memory configured to 8 GB or more.

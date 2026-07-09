@@ -301,3 +301,11 @@ DB2 acceptance:
 - IBM Db2 Community Edition Docker docs state preset/usage limits of `16GB` memory and `4` cores and show `--privileged=true`.
   https://www.ibm.com/docs/en/db2/11.5.x?topic=system-macos
   https://www.ibm.com/docs/en/db2/11.5.x?topic=system-linux
+
+## Implementation Plan
+
+The implementation plan is tracked in:
+
+```text
+docs/superpowers/plans/2026-07-09-heavy-jdbc-container-pirun.md
+```
