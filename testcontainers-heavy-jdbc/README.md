@@ -28,6 +28,12 @@ Optional image override:
 PIRUN_ORACLE_TESTCONTAINER_IMAGE=gvenzl/oracle-free:23-slim-faststart
 ```
 
+Candidate framework jar override:
+
+```bash
+PIRUN_FRAMEWORK_JAR="/path/to/spec-driven-auto-regression-0.2.5.jar"
+```
+
 ## DB2
 
 ```bash

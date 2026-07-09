@@ -6,9 +6,84 @@ Date: 2026-07-09 Asia/Taipei
 
 Validate whether project-owned Oracle Free and DB2 Testcontainers runtimes can be used to test the released framework JDBC provider in `spec-driven-auto-regression-0.2.5.jar`.
 
-The test framework release jar does not provision Oracle or DB2. This PI-run project provisions the database container, injects vendor JDBC drivers through the Maven harness, materializes a native JDBC suite, and invokes the released framework jar.
+The test framework jar does not provision Oracle or DB2. This PI-run project provisions the database container, injects vendor JDBC drivers through the Maven harness, materializes a native JDBC suite, and invokes the selected framework jar.
 
-## Current Rerun Summary (2026-07-09 21:00 Asia/Taipei)
+## Candidate Target Jar Rerun Summary (2026-07-09 21:26 Asia/Taipei)
+
+This rerun used the locally built candidate jar provided by the framework project, not the GitHub release asset jar.
+
+Candidate jar:
+
+```text
+/Users/herman_mbp2023/ClawProjects/skills/Spec Driven Auto Regression/target/spec-driven-auto-regression-0.2.5.jar
+```
+
+Candidate jar SHA-256:
+
+```text
+22f7cbb3511bb2bd3eb1d1f6097e89f4c134b1c0ed7c5f9257c60a7210efa5f8
+```
+
+The candidate jar differs from the downloaded v0.2.5 release asset jar, whose SHA-256 is:
+
+```text
+cc5bf11f14fab0f0ee019de405a391f8f6b9146dae478c5d3d59906522580a8b
+```
+
+Candidate command:
+
+```bash
+cd testcontainers-heavy-jdbc
+PATH="/Applications/Docker.app/Contents/Resources/bin:/usr/local/bin:$PATH" \
+DOCKER_CONFIG=/tmp/pirun-docker-config \
+PIRUN_ENABLE_TESTCONTAINERS_HEAVY_JDBC=1 \
+PIRUN_ENABLE_ORACLE_TESTCONTAINER=1 \
+PIRUN_FRAMEWORK_VERSION=0.2.5 \
+PIRUN_FRAMEWORK_JAR="/Users/herman_mbp2023/ClawProjects/skills/Spec Driven Auto Regression/target/spec-driven-auto-regression-0.2.5.jar" \
+PIRUN_ORACLE_TESTCONTAINER_IMAGE=gvenzl/oracle-free:23-slim-faststart \
+PIRUN_REPO_ROOT=/Users/herman_mbp2023/Documents/test_framework_pirun \
+MAVEN_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=384m" \
+./mvnw -Dtest=HeavyJdbcProviderTestcontainersIT#oracleContainerMustBeConsumedByFrameworkJdbcProvider test
+```
+
+Candidate result:
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Harness jar selection | PASS | `framework_invocation.json` contains the candidate target jar path and does not contain the release asset jar path. |
+| Oracle Testcontainers provisioning | PASS | Oracle Free image `gvenzl/oracle-free:23-slim-faststart`; dialect probe passed. |
+| Oracle framework JDBC provider consumption | PASS | Framework exited `0`; `run_status: passed`; `provider_runtime_executed: true`; `provider_id: oracle-like-db`. |
+| Docker cleanup | PASS | No containers left after the run. |
+
+Candidate Oracle evidence:
+
+```text
+.pirun/runs/PIRUN-TC-ORACLE-1783603594174/jdbc_oracle_testcontainers/framework_stdout.txt
+.pirun/runs/PIRUN-TC-ORACLE-1783603594174/jdbc_oracle_testcontainers/environment_bindings/ci.yaml
+.pirun/runs/PIRUN-TC-ORACLE-1783603594174/jdbc_oracle_testcontainers/framework_invocation.json
+testcontainers-heavy-jdbc/target/surefire-reports/pirun.heavyjdbc.HeavyJdbcProviderTestcontainersIT.txt
+```
+
+Candidate Oracle framework stdout:
+
+```text
+run_status: passed
+provider_runtime_executed: true
+provider_type: jdbc
+provider_id: oracle-like-db
+runtime_mode: native
+dialect: oracle
+findings:
+  []
+```
+
+Candidate conclusion:
+
+- The target jar fixes Oracle JDBC `env://JDBC_CONNECTION` consumption for project-provisioned Testcontainers.
+- DB2 was not rerun on this local 8 GiB-class Docker setup.
+- This is candidate-build evidence, not published release-asset evidence.
+
+## Release Asset Rerun Summary (2026-07-09 21:00 Asia/Taipei)
 
 This rerun used the Java Testcontainers harness, the local Docker Desktop daemon, and the v0.2.5 release asset already stored under `artifacts/release-assets/release-assets-v0.2.5/`.
 
@@ -19,7 +94,7 @@ This rerun used the Java Testcontainers harness, the local Docker Desktop daemon
 | Oracle framework JDBC provider consumption | FAIL, framework issue | Harness materialized `env://JDBC_CONNECTION`, set `JDBC_CONNECTION` in the framework process env, and framework exited `1` with `SECRET_RESOLUTION_ERROR`. |
 | DB2 Testcontainers provisioning | NOT RUN on this machine | Project gate skipped because DB2 license/privileged opt-ins were not set; Docker memory `8218316800` bytes is also below the 8 GiB DB2 gate. |
 
-Current Oracle Testcontainers evidence:
+Release asset Oracle Testcontainers evidence:
 
 ```text
 .pirun/runs/PIRUN-TC-ORACLE-1783602028780/jdbc_oracle_testcontainers/framework_stdout.txt
@@ -27,7 +102,7 @@ Current Oracle Testcontainers evidence:
 testcontainers-heavy-jdbc/target/surefire-reports/pirun.heavyjdbc.HeavyJdbcProviderTestcontainersIT.txt
 ```
 
-Current Oracle framework stdout:
+Release asset Oracle framework stdout:
 
 ```text
 run_status: failed
@@ -40,13 +115,13 @@ failure_code: SECRET_RESOLUTION_ERROR
 failure_reason: JDBC secret_ref `env://JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
 ```
 
-Current DB2 gate report:
+Release asset DB2 gate report:
 
 ```text
 .pirun/runs/PIRUN-V025-DB2-GATE-20260709/jdbc_db2_container/project_report.json
 ```
 
-Current conclusion:
+Release asset conclusion:
 
 - Oracle proves the Testcontainers harness can provision a real database and reach the framework JDBC runtime.
 - v0.2.5 still fails the framework acceptance condition because the JDBC provider runtime does not resolve project-provided `env://` connection refs.
@@ -102,7 +177,7 @@ MAVEN_OPTS="-Xmx1024m" \
 
 ## Historical Full Heavy-JDBC Result
 
-This section records the prior full Oracle and DB2 attempts already captured in this report. Use the current rerun summary above for the 2026-07-09 local-machine acceptance status.
+This section records the prior full Oracle and DB2 attempts already captured in this report. Use the candidate and release asset rerun summaries above for the 2026-07-09 local-machine acceptance status.
 
 Classification: `FRAMEWORK_ISSUE_SECRET_RESOLUTION`
 
@@ -160,15 +235,17 @@ testcontainers-heavy-jdbc/target/surefire-reports/pirun.heavyjdbc.HeavyJdbcProvi
 
 ## Finding
 
-`v0.2.5` cannot complete project-provisioned Oracle or DB2 JDBC provider acceptance because the framework JDBC provider runtime does not resolve `env://JDBC_CONNECTION`.
+The published v0.2.5 release asset cannot complete project-provisioned Oracle or DB2 JDBC provider acceptance because the framework JDBC provider runtime does not resolve `env://JDBC_CONNECTION`.
 
-The project can provision Oracle and DB2, prove direct JDBC connectivity, create the `ORDERS` table, inject vendor JDBC drivers, and materialize framework-valid native JDBC suites. The released framework still only accepts its local/generated JDBC secret path for provider capability execution.
+The project can provision Oracle and DB2, prove direct JDBC connectivity, create the `ORDERS` table, inject vendor JDBC drivers, and materialize framework-valid native JDBC suites. The published release asset still only accepts its local/generated JDBC secret path for provider capability execution.
+
+The local candidate target jar passes the Oracle Testcontainers acceptance path for `env://JDBC_CONNECTION`. DB2 remains unproven on this local machine.
 
 This is a framework issue, not a project provisioning issue.
 
 ## Framework Fix Required
 
-Add JDBC provider secret resolution support for project-supplied environment secret refs:
+For the published release asset, add JDBC provider secret resolution support for project-supplied environment secret refs:
 
 ```yaml
 connection:
@@ -186,6 +263,6 @@ Acceptance for the framework fix:
 
 ## Project Status
 
-The project-side Testcontainers harness is ready to rerun after the framework supports JDBC `env://` secret refs.
+The project-side Testcontainers harness is ready to rerun against a published release after the framework supports JDBC `env://` secret refs.
 
-For the current 2026-07-09 rerun, Oracle reached the framework and failed on `SECRET_RESOLUTION_ERROR`; DB2 was intentionally not started on this 8 GiB-class local Docker setup.
+For the 2026-07-09 candidate target jar rerun, Oracle reached the framework and passed. DB2 was intentionally not started on this 8 GiB-class local Docker setup.

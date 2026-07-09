@@ -89,6 +89,12 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
         self.assertIn("provider_ids:", it_text)
         self.assertIn("fail(", it_text)
 
+    def test_framework_invocation_can_use_candidate_jar_override(self):
+        cli_text = CLI_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("PIRUN_FRAMEWORK_JAR", cli_text)
+        self.assertIn("candidate jar", cli_text)
+
     def test_framework_output_artifacts_are_redacted(self):
         self.assertTrue(REDACTOR_PATH.exists(), "Redactor.java must exist")
         cli_text = CLI_PATH.read_text(encoding="utf-8")

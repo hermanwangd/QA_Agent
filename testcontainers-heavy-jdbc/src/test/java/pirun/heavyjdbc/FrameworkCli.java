@@ -24,9 +24,10 @@ final class FrameworkCli {
         String username,
         String password
     ) throws IOException, InterruptedException {
-        Path frameworkJar = repoRoot
-            .resolve("artifacts/release-assets/release-assets-v" + frameworkVersion)
-            .resolve("spec-driven-auto-regression-" + frameworkVersion + ".jar");
+        Path frameworkJar = frameworkJar(repoRoot, frameworkVersion);
+        if (!Files.isRegularFile(frameworkJar)) {
+            throw new IOException("framework jar does not exist: " + frameworkJar);
+        }
         Path usageKitRoot = repoRoot
             .resolve("artifacts/usage-kits/usage-kit-v" + frameworkVersion)
             .resolve("usage-kit");
@@ -76,6 +77,17 @@ final class FrameworkCli {
 
     private static String javaBinary() {
         return Path.of(System.getProperty("java.home"), "bin", "java").toString();
+    }
+
+    private static Path frameworkJar(Path repoRoot, String frameworkVersion) {
+        // PIRUN_FRAMEWORK_JAR lets PI-run verify a candidate jar without overwriting release assets.
+        String candidateJar = System.getenv("PIRUN_FRAMEWORK_JAR");
+        if (candidateJar != null && !candidateJar.isBlank()) {
+            return Path.of(candidateJar).toAbsolutePath().normalize();
+        }
+        return repoRoot
+            .resolve("artifacts/release-assets/release-assets-v" + frameworkVersion)
+            .resolve("spec-driven-auto-regression-" + frameworkVersion + ".jar");
     }
 
     private static String toLoaderPath(String javaClasspath) {
