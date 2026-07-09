@@ -1,7 +1,7 @@
 # pi-run v0.2.5 Raw Secret Scan
 
 - Raw secret scan: `PASS`
-- Scanned file count: `766`
+- Scanned file count: `805`
 - Finding count: `0`
 
 ## Findings

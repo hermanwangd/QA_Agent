@@ -8,6 +8,48 @@ Validate whether project-owned Oracle Free and DB2 Testcontainers runtimes can b
 
 The test framework release jar does not provision Oracle or DB2. This PI-run project provisions the database container, injects vendor JDBC drivers through the Maven harness, materializes a native JDBC suite, and invokes the released framework jar.
 
+## Current Rerun Summary (2026-07-09 20:52 Asia/Taipei)
+
+This rerun used the local Docker Desktop daemon and the v0.2.5 release asset already stored under `artifacts/release-assets/release-assets-v0.2.5/`.
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Docker daemon | PASS | Docker Server `28.4.0`; `MemTotal=8218316800`; no containers left after the run. |
+| Oracle Testcontainers provisioning | PASS | Oracle Free image `gvenzl/oracle-free:23-slim-faststart`; 3 GiB container memory; dialect probe passed; cleanup passed. |
+| Oracle framework JDBC provider consumption | FAIL, framework issue | Framework exited `1` with `SECRET_RESOLUTION_ERROR` for `env://PIRUN_JDBC_CONNECTION`. |
+| DB2 Testcontainers provisioning | NOT RUN on this machine | Project gate skipped because DB2 license/privileged opt-ins were not set; Docker memory `8218316800` bytes is also below the 8 GiB DB2 gate. |
+
+Current Oracle project report:
+
+```text
+.pirun/runs/PIRUN-V025-ORACLE-GATE-20260709/jdbc_oracle_container/project_report.json
+```
+
+Current Oracle framework stdout:
+
+```text
+run_status: failed
+provider_runtime_executed: true
+provider_type: jdbc
+provider_id: oracle-like-db
+runtime_mode: native
+dialect: oracle
+failure_code: SECRET_RESOLUTION_ERROR
+failure_reason: JDBC secret_ref `env://PIRUN_JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
+```
+
+Current DB2 gate report:
+
+```text
+.pirun/runs/PIRUN-V025-DB2-GATE-20260709/jdbc_db2_container/project_report.json
+```
+
+Current conclusion:
+
+- Oracle proves the Testcontainers harness can provision a real database and reach the framework JDBC runtime.
+- v0.2.5 still fails the framework acceptance condition because the JDBC provider runtime does not resolve project-provided `env://` connection refs.
+- DB2 should be rerun on CI or a larger local Docker allocation after explicit DB2 license/privileged opt-in.
+
 ## Commands
 
 Wrapper and compile gate:
@@ -56,7 +98,9 @@ MAVEN_OPTS="-Xmx1024m" \
 - DB2 container memory limit in harness: 6 GiB.
 - Java/Maven heap guardrail: `MAVEN_OPTS="-Xmx1024m"` and forked framework JVM `-Xmx512m`.
 
-## Result
+## Historical Full Heavy-JDBC Result
+
+This section records the prior full Oracle and DB2 attempts already captured in this report. Use the current rerun summary above for the 2026-07-09 local-machine acceptance status.
 
 Classification: `FRAMEWORK_ISSUE_SECRET_RESOLUTION`
 
@@ -141,3 +185,5 @@ Acceptance for the framework fix:
 ## Project Status
 
 The project-side Testcontainers harness is ready to rerun after the framework supports JDBC `env://` secret refs.
+
+For the current 2026-07-09 rerun, Oracle reached the framework and failed on `SECRET_RESOLUTION_ERROR`; DB2 was intentionally not started on this 8 GiB-class local Docker setup.
