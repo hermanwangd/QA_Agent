@@ -53,6 +53,9 @@ def build_docker_run_command(
     image: str,
     ports: dict[str, int],
     memory: str,
+    env: dict[str, str] | None = None,
+    shm_size: str | None = None,
+    privileged: bool = False,
 ) -> list[str]:
     cmd = [
         DOCKER,
@@ -67,12 +70,30 @@ def build_docker_run_command(
         "--memory",
         memory,
     ]
+    if shm_size:
+        cmd.extend(["--shm-size", shm_size])
+    if privileged:
+        cmd.append("--privileged")
+    for key, value in sorted((env or {}).items()):
+        cmd.extend(["--env", f"{key}={value}"])
     for container_port, host_port in sorted(ports.items()):
         port = container_port.split("/", 1)[0]
         host = f"127.0.0.1:{host_port}:{port}" if host_port else f"127.0.0.1::{port}"
         cmd.extend(["-p", host])
     cmd.append(image)
     return cmd
+
+
+def build_docker_exec_command(container: str, command: list[str]) -> list[str]:
+    return [DOCKER, "exec", container, *command]
+
+
+def docker_port(container: str, container_port: str) -> CommandResult:
+    return run_command([DOCKER, "port", container, container_port], timeout=30)
+
+
+def docker_info_mem_total() -> CommandResult:
+    return run_command([DOCKER, "info", "--format", "{{.MemTotal}}"], timeout=30)
 
 
 def remove_by_label(run_id: str) -> CommandResult:
