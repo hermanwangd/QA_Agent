@@ -52,7 +52,7 @@ final class FrameworkCli {
         ProcessBuilder pb = new ProcessBuilder(command);
         pb.directory(usageKitRoot.toFile());
         Map<String, String> env = pb.environment();
-        env.put("PIRUN_JDBC_CONNECTION", jdbcConnection);
+        env.put("JDBC_CONNECTION", jdbcConnection);
         env.put("PIRUN_JDBC_USERNAME", username);
         env.put("PIRUN_JDBC_PASSWORD", password);
         List<String> secrets = List.of(jdbcConnection, password);

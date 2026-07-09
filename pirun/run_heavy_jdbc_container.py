@@ -287,14 +287,14 @@ def main() -> int:
             run_dir=run_root,
             provider_id=config.provider_id,
             dialect=config.dialect,
-            connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+            connection_secret_ref="env://JDBC_CONNECTION",
             profile=args.profile,
         )
 
         if project_provisioned:
             paths = resolve_framework_paths(args.framework_version, repo_root=REPO_ROOT)
             framework_env = env.copy()
-            framework_env["PIRUN_JDBC_CONNECTION"] = jdbc_connection_url(
+            framework_env["JDBC_CONNECTION"] = jdbc_connection_url(
                 args.db,
                 host_port,
                 service_name=config.service_name,

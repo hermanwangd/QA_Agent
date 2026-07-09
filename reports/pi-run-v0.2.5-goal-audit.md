@@ -30,7 +30,7 @@ Status: Verified for release-asset-only project-side pi-run. Framework-owned lim
 | Project-provisioned NATS | `PASS` | `PIRUN-V025-NATS-1` executed with `framework_runtime_executed`. |
 | Project-provisioned WireMock external `base_url` | `NOT_PROVEN_WITH_FRAMEWORK_ISSUE` | Project WireMock starts and framework run passes, but external `base_url` is still not consumed by framework capability runtime. |
 | Lightweight JDBC | `PASS` | `PIRUN-V025-JDBC-1` executed with `framework_runtime_executed`; no Oracle XE class container used. |
-| Project-provisioned Oracle/DB2 heavy JDBC | `NOT_PROVEN_WITH_FRAMEWORK_ISSUE` | Oracle and DB2 Testcontainers reached framework invocation, but both failed with `SECRET_RESOLUTION_ERROR` for `env://PIRUN_JDBC_CONNECTION`. |
+| Project-provisioned Oracle/DB2 heavy JDBC | `NOT_PROVEN_WITH_FRAMEWORK_ISSUE` | Oracle and DB2 Testcontainers reached framework invocation, but both failed with `SECRET_RESOLUTION_ERROR` for `env://JDBC_CONNECTION`. |
 | Full contract baseline | `PASS_WITH_WIREMOCK_LIMITATION` | NATS and JDBC consumed; WireMock external `base_url` still not consumed. |
 | Docker cleanup | `PASS` | 0 leftover containers for all final v0.2.5 run IDs. |
 | Raw secret scan | `PASS` | 766 files scanned, 0 findings. |
@@ -58,7 +58,7 @@ These do not block the project-side pi-run result because they are recorded as e
 - Release verification docs still miss `report` and `validate-evidence` commands.
 - `report --format json` still exits `2` and is recorded as `BLOCKED_FRAMEWORK_UNSUPPORTED_FORMAT`.
 - Project-provisioned WireMock external `base_url` still is not consumed by framework runtime evidence.
-- Project-provisioned Oracle/DB2 JDBC external `env://PIRUN_JDBC_CONNECTION` is not resolved by framework provider capability runtime.
+- Project-provisioned Oracle/DB2 JDBC external `env://JDBC_CONNECTION` is not resolved by framework provider capability runtime.
 - 11 provider/runtime rows remain `BLOCKED_FRAMEWORK_CONTRACT_ONLY`:
   - `external_runner/native`
   - `external_runner/stub`

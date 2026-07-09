@@ -15,7 +15,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
                 run_dir=run_dir,
                 provider_id="oracle-like-db",
                 dialect="oracle",
-                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                connection_secret_ref="env://JDBC_CONNECTION",
                 profile="ci",
             )
 
@@ -26,7 +26,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
             project_binding = run_dir / "project_bindings" / "oracle-like-db.yaml"
 
             combined = "\n".join(p.read_text() for p in [env_binding, env_profile, execution_profile, test_case])
-            self.assertIn("env://PIRUN_JDBC_CONNECTION", combined)
+            self.assertIn("env://JDBC_CONNECTION", combined)
             self.assertIn("dialect: oracle", combined)
             self.assertIn("provider_instance_ref: provider_instances/oracle_like.yaml", combined)
             self.assertIn("runtime_mode: native", combined)
@@ -44,7 +44,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
                 run_dir=run_dir,
                 provider_id="db2-like-db",
                 dialect="db2",
-                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                connection_secret_ref="env://JDBC_CONNECTION",
                 profile="ci",
             )
 
@@ -63,7 +63,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
             self.assertEqual(provider_binding["provider_instance_ref"], "provider_instances/db2_like.yaml")
             self.assertEqual(provider_binding["runtime_mode"], "native")
             self.assertEqual(provider_binding["binding_values"]["dialect"], "db2")
-            self.assertEqual(provider_binding["binding_values"]["connection"]["secret_ref"], "env://PIRUN_JDBC_CONNECTION")
+            self.assertEqual(provider_binding["binding_values"]["connection"]["secret_ref"], "env://JDBC_CONNECTION")
             self.assertIn("project_sql_probe", combined)
 
     def test_materialize_db2_retargets_test_case_and_writes_db2_seed_sql(self):
@@ -73,7 +73,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
                 run_dir=run_dir,
                 provider_id="db2-like-db",
                 dialect="db2",
-                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                connection_secret_ref="env://JDBC_CONNECTION",
                 profile="ci",
             )
 
@@ -100,7 +100,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
                 run_dir=run_dir,
                 provider_id="oracle-like-db",
                 dialect="oracle",
-                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                connection_secret_ref="env://JDBC_CONNECTION",
                 profile="ci",
             )
 

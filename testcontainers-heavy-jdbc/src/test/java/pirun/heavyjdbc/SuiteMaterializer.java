@@ -43,7 +43,7 @@ final class SuiteMaterializer {
                 run_dir=Path(sys.argv[2]),
                 provider_id=sys.argv[3],
                 dialect=sys.argv[4],
-                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                connection_secret_ref="env://JDBC_CONNECTION",
                 profile=sys.argv[5],
                 samples_root=Path(sys.argv[6]),
             )

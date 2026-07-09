@@ -107,7 +107,7 @@ Expected status model:
 |---|---|
 | Project provisioning | `PASS` when container starts and JDBC connection works |
 | Dialect proof | `PASS` only if `select 1 from dual` succeeds |
-| Framework consumption | `PASS` only if released framework consumes `env://PIRUN_JDBC_CONNECTION` or equivalent external binding |
+| Framework consumption | `PASS` only if released framework consumes `env://JDBC_CONNECTION` or equivalent external binding |
 | Cleanup | `PASS` only if container is removed and no labeled heavy DB containers remain |
 
 If framework external JDBC binding is not consumed, report:
@@ -176,7 +176,7 @@ Expected status model:
 |---|---|
 | Project provisioning | `PASS` when privileged DB2 container starts and JDBC connection works |
 | Dialect proof | `PASS` only if `select 1 from sysibm.sysdummy1` succeeds |
-| Framework consumption | `PASS` only if released framework consumes `env://PIRUN_JDBC_CONNECTION` or equivalent external binding |
+| Framework consumption | `PASS` only if released framework consumes `env://JDBC_CONNECTION` or equivalent external binding |
 | Cleanup | `PASS` only if container is removed and no labeled DB2 containers remain |
 
 If DB2 gates are absent, return:
@@ -207,7 +207,7 @@ provider_bindings:
     runtime_mode: external
     binding_values:
       connection:
-        secret_ref: env://PIRUN_JDBC_CONNECTION
+        secret_ref: env://JDBC_CONNECTION
       dialect: oracle
 ```
 
@@ -219,7 +219,7 @@ provider_bindings:
     runtime_mode: external
     binding_values:
       connection:
-        secret_ref: env://PIRUN_JDBC_CONNECTION
+        secret_ref: env://JDBC_CONNECTION
       dialect: db2
 ```
 

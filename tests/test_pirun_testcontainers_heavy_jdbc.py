@@ -79,7 +79,8 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
         self.assertIn("PropertiesLauncher", cli_text)
         self.assertIn("loader.path", cli_text)
         self.assertIn("loader.main", cli_text)
-        self.assertIn("PIRUN_JDBC_CONNECTION", cli_text)
+        self.assertIn('env.put("JDBC_CONNECTION", jdbcConnection)', cli_text)
+        self.assertNotIn("PIRUN_JDBC_CONNECTION", cli_text)
         self.assertIn("PIRUN_JDBC_USERNAME", cli_text)
         self.assertIn("PIRUN_JDBC_PASSWORD", cli_text)
         self.assertIn("Redactor.redact", cli_text)
@@ -101,7 +102,7 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
 
         self.assertIn("artifacts/usage-kits/usage-kit-v", text)
         self.assertIn("materialize_heavy_jdbc_container", text)
-        self.assertIn("env://PIRUN_JDBC_CONNECTION", text)
+        self.assertIn("env://JDBC_CONNECTION", text)
         self.assertIn("provider_id", text)
         self.assertIn("dialect", text)
 

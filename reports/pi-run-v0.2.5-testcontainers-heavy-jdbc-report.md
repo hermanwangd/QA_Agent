@@ -8,21 +8,23 @@ Validate whether project-owned Oracle Free and DB2 Testcontainers runtimes can b
 
 The test framework release jar does not provision Oracle or DB2. This PI-run project provisions the database container, injects vendor JDBC drivers through the Maven harness, materializes a native JDBC suite, and invokes the released framework jar.
 
-## Current Rerun Summary (2026-07-09 20:52 Asia/Taipei)
+## Current Rerun Summary (2026-07-09 21:00 Asia/Taipei)
 
-This rerun used the local Docker Desktop daemon and the v0.2.5 release asset already stored under `artifacts/release-assets/release-assets-v0.2.5/`.
+This rerun used the Java Testcontainers harness, the local Docker Desktop daemon, and the v0.2.5 release asset already stored under `artifacts/release-assets/release-assets-v0.2.5/`.
 
 | Check | Result | Evidence |
 | --- | --- | --- |
 | Docker daemon | PASS | Docker Server `28.4.0`; `MemTotal=8218316800`; no containers left after the run. |
 | Oracle Testcontainers provisioning | PASS | Oracle Free image `gvenzl/oracle-free:23-slim-faststart`; 3 GiB container memory; dialect probe passed; cleanup passed. |
-| Oracle framework JDBC provider consumption | FAIL, framework issue | Framework exited `1` with `SECRET_RESOLUTION_ERROR` for `env://PIRUN_JDBC_CONNECTION`. |
+| Oracle framework JDBC provider consumption | FAIL, framework issue | Harness materialized `env://JDBC_CONNECTION`, set `JDBC_CONNECTION` in the framework process env, and framework exited `1` with `SECRET_RESOLUTION_ERROR`. |
 | DB2 Testcontainers provisioning | NOT RUN on this machine | Project gate skipped because DB2 license/privileged opt-ins were not set; Docker memory `8218316800` bytes is also below the 8 GiB DB2 gate. |
 
-Current Oracle project report:
+Current Oracle Testcontainers evidence:
 
 ```text
-.pirun/runs/PIRUN-V025-ORACLE-GATE-20260709/jdbc_oracle_container/project_report.json
+.pirun/runs/PIRUN-TC-ORACLE-1783602028780/jdbc_oracle_testcontainers/framework_stdout.txt
+.pirun/runs/PIRUN-TC-ORACLE-1783602028780/jdbc_oracle_testcontainers/environment_bindings/ci.yaml
+testcontainers-heavy-jdbc/target/surefire-reports/pirun.heavyjdbc.HeavyJdbcProviderTestcontainersIT.txt
 ```
 
 Current Oracle framework stdout:
@@ -35,7 +37,7 @@ provider_id: oracle-like-db
 runtime_mode: native
 dialect: oracle
 failure_code: SECRET_RESOLUTION_ERROR
-failure_reason: JDBC secret_ref `env://PIRUN_JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
+failure_reason: JDBC secret_ref `env://JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
 ```
 
 Current DB2 gate report:
@@ -115,7 +117,7 @@ What passed:
 - DB2 Testcontainers provisioning reached framework invocation.
 - Materialized suites used project-owned JDBC binding:
   - `runtime_mode: native`
-  - `connection.secret_ref: env://PIRUN_JDBC_CONNECTION`
+  - `connection.secret_ref: env://JDBC_CONNECTION`
   - `allowed_provisioners: project_docker`
 - Framework JDBC provider runtime was invoked for both Oracle and DB2.
 - Docker cleanup left 0 running containers after the DB2 attempt.
@@ -130,7 +132,7 @@ provider_id: oracle-like-db
 runtime_mode: native
 dialect: oracle
 failure_code: SECRET_RESOLUTION_ERROR
-failure_reason: JDBC secret_ref `env://PIRUN_JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
+failure_reason: JDBC secret_ref `env://JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
 owner_action: Use a supported generated:// provider capability secret ref for local_jdbc or configure a secret resolver.
 ```
 
@@ -144,7 +146,7 @@ provider_id: db2-like-db
 runtime_mode: native
 dialect: db2
 failure_code: SECRET_RESOLUTION_ERROR
-failure_reason: JDBC secret_ref `env://PIRUN_JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
+failure_reason: JDBC secret_ref `env://JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
 owner_action: Use a supported generated:// provider capability secret ref for local_jdbc or configure a secret resolver.
 ```
 
@@ -158,7 +160,7 @@ testcontainers-heavy-jdbc/target/surefire-reports/pirun.heavyjdbc.HeavyJdbcProvi
 
 ## Finding
 
-`v0.2.5` cannot complete project-provisioned Oracle or DB2 JDBC provider acceptance because the framework JDBC provider runtime does not resolve `env://PIRUN_JDBC_CONNECTION`.
+`v0.2.5` cannot complete project-provisioned Oracle or DB2 JDBC provider acceptance because the framework JDBC provider runtime does not resolve `env://JDBC_CONNECTION`.
 
 The project can provision Oracle and DB2, prove direct JDBC connectivity, create the `ORDERS` table, inject vendor JDBC drivers, and materialize framework-valid native JDBC suites. The released framework still only accepts its local/generated JDBC secret path for provider capability execution.
 
@@ -170,12 +172,12 @@ Add JDBC provider secret resolution support for project-supplied environment sec
 
 ```yaml
 connection:
-  secret_ref: env://PIRUN_JDBC_CONNECTION
+  secret_ref: env://JDBC_CONNECTION
 ```
 
 Acceptance for the framework fix:
 
-- `env://PIRUN_JDBC_CONNECTION` resolves at runtime.
+- `env://JDBC_CONNECTION` resolves at runtime.
 - JDBC provider uses the resolved external connection string, not generated H2.
 - Failure output redacts the connection value and password.
 - Oracle Testcontainers run passes with `provider_runtime_executed: true`, `provider_id: oracle-like-db`, and `run_status: passed`.

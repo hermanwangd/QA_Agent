@@ -4,7 +4,7 @@
 
 **Goal:** Add opt-in project-side Oracle and DB2 JDBC container PI-runs that produce provisioning, dialect, framework-consumption, and cleanup evidence without adding heavy database provisioning to the released framework jar.
 
-**Architecture:** Keep heavy database lifecycle ownership in the PI-run project. The runner gates resources and policy first, starts exactly one heavy DB container through the existing Docker CLI style, materializes an external-JDBC suite using `env://PIRUN_JDBC_CONNECTION`, invokes the released framework jar with bounded JVM memory, classifies framework consumption separately from project provisioning, and always cleans up by PI-run labels.
+**Architecture:** Keep heavy database lifecycle ownership in the PI-run project. The runner gates resources and policy first, starts exactly one heavy DB container through the existing Docker CLI style, materializes an external-JDBC suite using `env://JDBC_CONNECTION`, invokes the released framework jar with bounded JVM memory, classifies framework consumption separately from project provisioning, and always cleans up by PI-run labels.
 
 **Tech Stack:** Python 3 stdlib, `unittest`, PyYAML, Docker CLI, released `spec-driven-auto-regression-*.jar`, Oracle/DB2 container-native SQL clients through `docker exec`.
 
@@ -27,7 +27,7 @@
 - Create: `pirun/provisioners/heavy_jdbc.py`
   - Own resource gates, policy gates, lock handling, engine config, container command construction, readiness/dialect probe commands, and result dataclasses.
 - Modify: `pirun/materialize/contract_baseline.py`
-  - Add `materialize_heavy_jdbc_container()` so heavy JDBC uses the existing usage-kit JDBC sample but replaces generated H2 refs with `env://PIRUN_JDBC_CONNECTION`.
+  - Add `materialize_heavy_jdbc_container()` so heavy JDBC uses the existing usage-kit JDBC sample but replaces generated H2 refs with `env://JDBC_CONNECTION`.
 - Create: `pirun/run_heavy_jdbc_container.py`
   - CLI orchestrator for `--db oracle|db2`; writes all evidence files under `.pirun/runs/<run_id>/jdbc_<db>_container/`.
 - Create: `tests/test_pirun_heavy_jdbc_gates.py`
@@ -672,7 +672,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
                 run_dir=run_dir,
                 provider_id="oracle-like-db",
                 dialect="oracle",
-                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                connection_secret_ref="env://JDBC_CONNECTION",
                 profile="ci",
             )
 
@@ -683,7 +683,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
             project_binding = run_dir / "project_bindings" / "oracle-like-db.yaml"
 
             combined = "\n".join(p.read_text() for p in [env_binding, env_profile, execution_profile, test_case])
-            self.assertIn("env://PIRUN_JDBC_CONNECTION", combined)
+            self.assertIn("env://JDBC_CONNECTION", combined)
             self.assertIn("dialect: oracle", combined)
             self.assertIn("allowed_provisioners:\n  - project_docker", combined)
             self.assertIn("project_provisioned_dependency: docker_jdbc_oracle", combined)
@@ -697,7 +697,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
                 run_dir=run_dir,
                 provider_id="db2-like-db",
                 dialect="db2",
-                connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+                connection_secret_ref="env://JDBC_CONNECTION",
                 profile="ci",
             )
 
@@ -706,7 +706,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
 
             self.assertEqual(provider_binding["provider_id"], "db2-like-db")
             self.assertEqual(provider_binding["binding_values"]["dialect"], "db2")
-            self.assertEqual(provider_binding["binding_values"]["connection"]["secret_ref"], "env://PIRUN_JDBC_CONNECTION")
+            self.assertEqual(provider_binding["binding_values"]["connection"]["secret_ref"], "env://JDBC_CONNECTION")
 
 
 if __name__ == "__main__":
@@ -1172,13 +1172,13 @@ def main() -> int:
             run_dir=run_root,
             provider_id=config.provider_id,
             dialect=config.dialect,
-            connection_secret_ref="env://PIRUN_JDBC_CONNECTION",
+            connection_secret_ref="env://JDBC_CONNECTION",
             profile=args.profile,
         )
 
         paths = resolve_framework_paths(args.framework_version, repo_root=REPO_ROOT)
         framework_env = env.copy()
-        framework_env["PIRUN_JDBC_CONNECTION"] = connection_url
+        framework_env["JDBC_CONNECTION"] = connection_url
         proc = subprocess.run(
             [
                 "java",
