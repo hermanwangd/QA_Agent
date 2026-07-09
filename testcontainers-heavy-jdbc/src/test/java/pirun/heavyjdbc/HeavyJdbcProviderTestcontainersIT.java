@@ -149,6 +149,47 @@ class HeavyJdbcProviderTestcontainersIT {
         }
     }
 
+    @Test
+    void db2ContainerMustExecuteCrudWithFrameworkJdbcProvider() throws Exception {
+        assumeHeavyEnabled("db2");
+        String password = envOrDefault("PIRUN_DB2_TEST_PASSWORD", "PirunDb212345");
+        try (Db2Container db2 = new Db2Container(db2Image())
+            .acceptLicense()
+            .withUsername("db2inst1")
+            .withPassword(password)
+            .withDatabaseName("testdb")
+            .withCreateContainerCmdModifier(cmd -> applyResourceLimit(cmd, 6L * GIB, null))
+            .withStartupTimeout(Duration.ofMinutes(15))) {
+            db2.start();
+            assertSql(db2.getJdbcUrl(), db2.getUsername(), db2.getPassword(), "select 1 from sysibm.sysdummy1");
+            ensureOrdersTable(db2.getJdbcUrl(), db2.getUsername(), db2.getPassword(), "db2");
+
+            Path repoRoot = repoRoot();
+            String frameworkVersion = frameworkVersion();
+            Path runDir = SuiteMaterializer.materializeCrud(
+                repoRoot,
+                "PIRUN-TC-DB2-CRUD-" + System.currentTimeMillis(),
+                frameworkVersion,
+                DB2_PROVIDER_ID,
+                "db2",
+                PROFILE
+            );
+
+            FrameworkCli.Result result = FrameworkCli.run(
+                repoRoot,
+                runDir,
+                frameworkVersion,
+                PROFILE,
+                frameworkJdbcConnection("db2", db2.getJdbcUrl(), db2.getUsername(), db2.getPassword()),
+                db2.getUsername(),
+                db2.getPassword()
+            );
+            result.writeTo(runDir);
+            assertFrameworkConsumed(result, DB2_PROVIDER_ID);
+            assertCrudEvidence(repoRoot, frameworkVersion, result);
+        }
+    }
+
     private static void assumeHeavyEnabled(String engine) {
         Map<String, String> env = System.getenv();
         Assumptions.assumeTrue("1".equals(env.get("PIRUN_ENABLE_TESTCONTAINERS_HEAVY_JDBC")),

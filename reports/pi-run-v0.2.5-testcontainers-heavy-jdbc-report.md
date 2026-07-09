@@ -76,7 +76,79 @@ Candidate CRUD conclusion:
 - Oracle JDBC provider CRUD was tested against a real Oracle Testcontainers runtime.
 - The framework consumed the project-provided `env://JDBC_CONNECTION` through `PIRUN_FRAMEWORK_JAR`.
 - The test covered create, read-after-create, update, read-after-update, delete, read-after-delete, and a framework verify check for deleted-row absence.
-- DB2 CRUD was not run on this local 8 GiB-class Docker setup.
+
+## Candidate Explicit DB2 CRUD Rerun Summary (2026-07-09 21:57 Asia/Taipei)
+
+This rerun used the locally built candidate jar and executed the same explicit CRUD suite against a project-owned DB2 Testcontainers runtime.
+
+Command:
+
+```bash
+cd testcontainers-heavy-jdbc
+PATH="/Applications/Docker.app/Contents/Resources/bin:/usr/local/bin:$PATH" \
+DOCKER_CONFIG=/tmp/pirun-docker-config \
+PIRUN_ENABLE_TESTCONTAINERS_HEAVY_JDBC=1 \
+PIRUN_ENABLE_DB2_TESTCONTAINER=1 \
+PIRUN_ACCEPT_DB2_LICENSE=1 \
+PIRUN_ALLOW_PRIVILEGED_DB2=1 \
+PIRUN_FRAMEWORK_VERSION=0.2.5 \
+PIRUN_FRAMEWORK_JAR="/Users/herman_mbp2023/ClawProjects/skills/Spec Driven Auto Regression/target/spec-driven-auto-regression-0.2.5.jar" \
+PIRUN_DB2_TESTCONTAINER_IMAGE=icr.io/db2_community/db2:11.5.8.0 \
+PIRUN_REPO_ROOT=/Users/herman_mbp2023/Documents/test_framework_pirun \
+MAVEN_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=384m" \
+./mvnw -Dtest=HeavyJdbcProviderTestcontainersIT#db2ContainerMustExecuteCrudWithFrameworkJdbcProvider test
+```
+
+JUnit result:
+
+```text
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+Total time: 04:28 min
+```
+
+Framework result:
+
+```text
+run_status: passed
+suite_id: JDBC-CAPABILITY-v0.2
+test_case_id: JDBC-CRUD-TC-001
+passed_count: 1
+provider_runtime_executed: true
+provider_type: jdbc
+provider_id: db2-like-db
+runtime_mode: native
+dialect: db2
+findings:
+  []
+```
+
+DB2 CRUD evidence:
+
+| CRUD step | Framework operation | Result evidence |
+| --- | --- | --- |
+| Create order | `db_seed` / `fixtures/crud_insert_order.sql` | `seed_create_order.yaml`: `affected_rows: 1` |
+| Read created order | `db_query` / `queries/crud_order_by_id_db2.sql` | `query_read_created_order.yaml`: `row_count: 1`, `STATUS: CREATED` |
+| Update order | `db_seed` / `fixtures/crud_update_order.sql` | `seed_update_order.yaml`: `affected_rows: 1` |
+| Read updated order | `db_query` / `queries/crud_order_by_id_db2.sql` | `query_read_updated_order.yaml`: `row_count: 1`, `STATUS: UPDATED` |
+| Delete order | `db_cleanup` / `fixtures/crud_delete_order.sql` | `cleanup_delete_order.yaml`: `affected_rows: 1` |
+| Read deleted order | `db_query` / `queries/crud_order_by_id_db2.sql` | `query_read_deleted_order.yaml`: `row_count: 0` |
+| Verify deleted row absent | `db_record_exists` with `expected_row_count: 0` | `query_deleted_order_record_absent.yaml`: `row_count: 0`, `status: passed` |
+
+Evidence paths:
+
+```text
+.pirun/runs/PIRUN-TC-DB2-CRUD-1783605469500/jdbc_db2_testcontainers/framework_stdout.txt
+.pirun/runs/PIRUN-TC-DB2-CRUD-1783605469500/jdbc_db2_testcontainers/test_case.yaml
+artifacts/usage-kits/usage-kit-v0.2.5/usage-kit/target/provider-capability/jdbc/JDBC-CAPABILITY-v0.2/BATCH-JDBC-20260709135750531-1/RUN-JDBC-20260709135750531-1/result.json
+artifacts/usage-kits/usage-kit-v0.2.5/usage-kit/target/provider-capability/jdbc/JDBC-CAPABILITY-v0.2/BATCH-JDBC-20260709135750531-1/RUN-JDBC-20260709135750531-1/provider-evidence/jdbc/
+```
+
+Candidate DB2 CRUD conclusion:
+
+- DB2 JDBC provider CRUD was tested against a real DB2 Testcontainers runtime.
+- The run required explicit DB2 license and heavy-container opt-ins.
+- The DB2 container was capped at 6 GiB; Maven was capped at 1 GiB; the forked framework JVM was capped at 512 MiB.
+- Docker cleanup left no containers after the run.
 
 ## Candidate Target Jar Rerun Summary (2026-07-09 21:26 Asia/Taipei)
 
@@ -162,7 +234,7 @@ This rerun used the Java Testcontainers harness, the local Docker Desktop daemon
 | Docker daemon | PASS | Docker Server `28.4.0`; `MemTotal=8218316800`; no containers left after the run. |
 | Oracle Testcontainers provisioning | PASS | Oracle Free image `gvenzl/oracle-free:23-slim-faststart`; 3 GiB container memory; dialect probe passed; cleanup passed. |
 | Oracle framework JDBC provider consumption | FAIL, framework issue | Harness materialized `env://JDBC_CONNECTION`, set `JDBC_CONNECTION` in the framework process env, and framework exited `1` with `SECRET_RESOLUTION_ERROR`. |
-| DB2 Testcontainers provisioning | NOT RUN on this machine | Project gate skipped because DB2 license/privileged opt-ins were not set; Docker memory `8218316800` bytes is also below the 8 GiB DB2 gate. |
+| DB2 Testcontainers provisioning | NOT RUN in this release-asset rerun | Project gate skipped because DB2 license/privileged opt-ins were not set for the release-asset rerun. Candidate DB2 CRUD was later verified separately above. |
 
 Release asset Oracle Testcontainers evidence:
 
@@ -309,7 +381,7 @@ The published v0.2.5 release asset cannot complete project-provisioned Oracle or
 
 The project can provision Oracle and DB2, prove direct JDBC connectivity, create the `ORDERS` table, inject vendor JDBC drivers, and materialize framework-valid native JDBC suites. The published release asset still only accepts its local/generated JDBC secret path for provider capability execution.
 
-The local candidate target jar passes the Oracle Testcontainers acceptance path for `env://JDBC_CONNECTION`. DB2 remains unproven on this local machine.
+The local candidate target jar passes both Oracle and DB2 Testcontainers CRUD acceptance paths for project-provided `env://JDBC_CONNECTION`.
 
 This is a framework issue, not a project provisioning issue.
 
