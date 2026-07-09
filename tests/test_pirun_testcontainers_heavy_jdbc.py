@@ -11,6 +11,9 @@ IT_PATH = HARNESS_ROOT / "src" / "test" / "java" / "pirun" / "heavyjdbc" / "Heav
 CLI_PATH = HARNESS_ROOT / "src" / "test" / "java" / "pirun" / "heavyjdbc" / "FrameworkCli.java"
 MATERIALIZER_PATH = HARNESS_ROOT / "src" / "test" / "java" / "pirun" / "heavyjdbc" / "SuiteMaterializer.java"
 README_PATH = HARNESS_ROOT / "README.md"
+MVNW_PATH = HARNESS_ROOT / "mvnw"
+MVNW_CMD_PATH = HARNESS_ROOT / "mvnw.cmd"
+WRAPPER_PROPERTIES_PATH = HARNESS_ROOT / ".mvn" / "wrapper" / "maven-wrapper.properties"
 
 
 def _pom_dependencies() -> set[tuple[str, str]]:
@@ -36,6 +39,17 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
         self.assertIn(("com.oracle.database.jdbc", "ojdbc11"), deps)
         self.assertIn(("com.ibm.db2", "jcc"), deps)
 
+    def test_maven_wrapper_is_project_owned(self):
+        self.assertTrue(MVNW_PATH.exists(), "testcontainers-heavy-jdbc/mvnw must exist")
+        self.assertTrue(MVNW_CMD_PATH.exists(), "testcontainers-heavy-jdbc/mvnw.cmd must exist")
+        self.assertTrue(WRAPPER_PROPERTIES_PATH.exists(), "maven-wrapper.properties must exist")
+        self.assertTrue(MVNW_PATH.stat().st_mode & 0o111, "mvnw must be executable")
+
+        properties = WRAPPER_PROPERTIES_PATH.read_text(encoding="utf-8")
+        self.assertIn("distributionUrl=", properties)
+        self.assertIn("apache-maven", properties)
+        self.assertNotIn("maven-wrapper.jar", properties)
+
     def test_heavy_it_uses_opt_in_gates_before_starting_containers(self):
         text = IT_PATH.read_text(encoding="utf-8")
 
@@ -48,6 +62,11 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
         self.assertIn("PIRUN_ENABLE_DB2_TESTCONTAINER", text)
         self.assertIn("PIRUN_ACCEPT_DB2_LICENSE", text)
         self.assertIn("PIRUN_ALLOW_PRIVILEGED_DB2", text)
+        self.assertIn("withMemory", text)
+        self.assertIn("withShmSize", text)
+        self.assertIn("3L * GIB", text)
+        self.assertIn("6L * GIB", text)
+        self.assertNotIn('withDatabaseName("freepdb1")', text)
         self.assertRegex(text, re.compile(r"assumeHeavyEnabled\(.+oracle", re.DOTALL))
         self.assertRegex(text, re.compile(r"assumeHeavyEnabled\(.+db2", re.DOTALL))
 
@@ -94,7 +113,8 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
         self.assertIn("PIRUN_ACCEPT_DB2_LICENSE=1", text)
         self.assertIn("PIRUN_ALLOW_PRIVILEGED_DB2=1", text)
         self.assertIn("MAVEN_OPTS=\"-Xmx1024m\"", text)
-        self.assertIn("mvn", text)
+        self.assertIn("./mvnw", text)
+        self.assertNotIn(" mvn ", text)
 
 
 if __name__ == "__main__":

@@ -74,7 +74,7 @@ PIRUN_ENABLE_TESTCONTAINERS_HEAVY_JDBC=1 \
 PIRUN_ENABLE_ORACLE_TESTCONTAINER=1 \
 PIRUN_FRAMEWORK_VERSION=0.2.5 \
 MAVEN_OPTS="-Xmx1024m" \
-mvn -Dtest=HeavyJdbcProviderTestcontainersIT#oracleContainerMustBeConsumedByFrameworkJdbcProvider test
+./mvnw -Dtest=HeavyJdbcProviderTestcontainersIT#oracleContainerMustBeConsumedByFrameworkJdbcProvider test
 ```
 
 DB2 requires a larger runner and explicit license/elevated-capability opt-ins; see `testcontainers-heavy-jdbc/README.md`.

@@ -8,7 +8,7 @@ The framework release jar does not bundle Oracle or DB2 JDBC drivers. This harne
 
 - Docker Desktop or another Docker-compatible runtime.
 - Java 17+.
-- Maven available as `mvn`.
+- Maven Wrapper is checked in as `./mvnw`; no global Maven install is required.
 - Local machine must stay under the 8 GB RAM constraint. DB2 should run only on a CI or machine with enough Docker memory.
 
 ## Oracle
@@ -19,7 +19,7 @@ PIRUN_ENABLE_TESTCONTAINERS_HEAVY_JDBC=1 \
 PIRUN_ENABLE_ORACLE_TESTCONTAINER=1 \
 PIRUN_FRAMEWORK_VERSION=0.2.5 \
 MAVEN_OPTS="-Xmx1024m" \
-mvn -Dtest=HeavyJdbcProviderTestcontainersIT#oracleContainerMustBeConsumedByFrameworkJdbcProvider test
+./mvnw -Dtest=HeavyJdbcProviderTestcontainersIT#oracleContainerMustBeConsumedByFrameworkJdbcProvider test
 ```
 
 Optional image override:
@@ -38,7 +38,7 @@ PIRUN_ACCEPT_DB2_LICENSE=1 \
 PIRUN_ALLOW_PRIVILEGED_DB2=1 \
 PIRUN_FRAMEWORK_VERSION=0.2.5 \
 MAVEN_OPTS="-Xmx1024m" \
-mvn -Dtest=HeavyJdbcProviderTestcontainersIT#db2ContainerMustBeConsumedByFrameworkJdbcProvider test
+./mvnw -Dtest=HeavyJdbcProviderTestcontainersIT#db2ContainerMustBeConsumedByFrameworkJdbcProvider test
 ```
 
 Optional image override:

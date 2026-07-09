@@ -8,7 +8,7 @@ from pirun.materialize.contract_baseline import materialize_heavy_jdbc_container
 
 
 class HeavyJdbcMaterializeTests(unittest.TestCase):
-    def test_materialize_oracle_external_jdbc_uses_env_binding_only(self):
+    def test_materialize_oracle_project_jdbc_uses_native_runtime_and_env_binding_only(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = Path(tmp) / "jdbc_oracle_container"
             materialize_heavy_jdbc_container(
@@ -29,12 +29,15 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
             self.assertIn("env://PIRUN_JDBC_CONNECTION", combined)
             self.assertIn("dialect: oracle", combined)
             self.assertIn("provider_instance_ref: provider_instances/oracle_like.yaml", combined)
+            self.assertIn("runtime_mode: native", combined)
+            self.assertIn("allowed_runtime_modes:\n  - native", combined)
             self.assertIn("allowed_provisioners:\n  - project_docker", combined)
             self.assertIn("project_provisioned_dependency: docker_jdbc_oracle", combined)
             self.assertNotIn("generated://", combined)
+            self.assertNotIn("runtime_mode: external", combined)
             self.assertTrue(project_binding.exists())
 
-    def test_materialize_db2_external_jdbc_uses_db2_provider(self):
+    def test_materialize_db2_project_jdbc_uses_db2_provider(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = Path(tmp) / "jdbc_db2_container"
             materialize_heavy_jdbc_container(
@@ -58,7 +61,7 @@ class HeavyJdbcMaterializeTests(unittest.TestCase):
 
             self.assertEqual(provider_binding["provider_id"], "db2-like-db")
             self.assertEqual(provider_binding["provider_instance_ref"], "provider_instances/db2_like.yaml")
-            self.assertEqual(provider_binding["runtime_mode"], "external")
+            self.assertEqual(provider_binding["runtime_mode"], "native")
             self.assertEqual(provider_binding["binding_values"]["dialect"], "db2")
             self.assertEqual(provider_binding["binding_values"]["connection"]["secret_ref"], "env://PIRUN_JDBC_CONNECTION")
             self.assertIn("project_sql_probe", combined)

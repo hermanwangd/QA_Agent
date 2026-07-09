@@ -11,6 +11,8 @@ import java.time.Duration;
 import java.util.Locale;
 import java.util.Map;
 
+import com.github.dockerjava.api.command.CreateContainerCmd;
+import com.github.dockerjava.api.model.HostConfig;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.db2.Db2Container;
@@ -23,6 +25,7 @@ class HeavyJdbcProviderTestcontainersIT {
     private static final String PROFILE = "ci";
     private static final String ORACLE_PROVIDER_ID = "oracle-like-db";
     private static final String DB2_PROVIDER_ID = "db2-like-db";
+    private static final long GIB = 1024L * 1024L * 1024L;
 
     @Test
     void oracleContainerMustBeConsumedByFrameworkJdbcProvider() throws Exception {
@@ -33,7 +36,7 @@ class HeavyJdbcProviderTestcontainersIT {
         try (OracleContainer oracle = new OracleContainer(oracleImage())
             .withUsername("APP")
             .withPassword(password)
-            .withDatabaseName("freepdb1")
+            .withCreateContainerCmdModifier(cmd -> applyResourceLimit(cmd, 3L * GIB, 1L * GIB))
             .withStartupTimeout(Duration.ofMinutes(10))) {
             oracle.start();
             assertSql(oracle.getJdbcUrl(), oracle.getUsername(), oracle.getPassword(), "select 1 from dual");
@@ -75,6 +78,7 @@ class HeavyJdbcProviderTestcontainersIT {
             .withUsername("db2inst1")
             .withPassword(password)
             .withDatabaseName("testdb")
+            .withCreateContainerCmdModifier(cmd -> applyResourceLimit(cmd, 6L * GIB, null))
             .withStartupTimeout(Duration.ofMinutes(15))) {
             db2.start();
             assertSql(db2.getJdbcUrl(), db2.getUsername(), db2.getPassword(), "select 1 from sysibm.sysdummy1");
@@ -165,6 +169,15 @@ class HeavyJdbcProviderTestcontainersIT {
             return exc.getErrorCode() == 955;
         }
         return "42710".equals(state) || exc.getErrorCode() == -601;
+    }
+
+    private static void applyResourceLimit(CreateContainerCmd cmd, long memoryBytes, Long shmSizeBytes) {
+        HostConfig hostConfig = cmd.getHostConfig() == null ? HostConfig.newHostConfig() : cmd.getHostConfig();
+        hostConfig.withMemory(memoryBytes).withMemorySwap(memoryBytes);
+        if (shmSizeBytes != null) {
+            hostConfig.withShmSize(shmSizeBytes);
+        }
+        cmd.withHostConfig(hostConfig);
     }
 
     private static String frameworkJdbcConnection(String engine, String jdbcUrl, String username, String password) {

@@ -379,7 +379,7 @@ def materialize_heavy_jdbc_container(
         {
             "provider_id": provider_id,
             "provider_instance_ref": provider_instance_ref,
-            "runtime_mode": "external",
+            "runtime_mode": "native",
             "binding_values": {
                 "connection": {"secret_ref": connection_secret_ref},
                 "dialect": dialect,
@@ -399,7 +399,7 @@ def materialize_heavy_jdbc_container(
         "require_readiness_evidence": True,
         "allow_framework_managed_dependencies": False,
     }
-    env_profile["dependency_substitution_policy"] = {"allowed_runtime_modes": ["external"]}
+    env_profile["dependency_substitution_policy"] = {"allowed_runtime_modes": ["native"]}
     env_profile["dependency_provisioning_policy"] = {
         "allowed_provisioners": ["project_docker"],
         "startup_policy": "project_before_framework",
@@ -408,7 +408,7 @@ def materialize_heavy_jdbc_container(
     }
     env_profile["providers"] = {
         provider_id: {
-            "runtime_mode": "external",
+            "runtime_mode": "native",
             "binding_keys": {
                 "connection": {"secret_ref": connection_secret_ref},
                 "dialect": {"value": dialect},
