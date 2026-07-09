@@ -339,6 +339,109 @@ def materialize_jdbc_lightweight(
     execution_profile_path.write_text(yaml.safe_dump(execution_profile, sort_keys=False), encoding="utf-8")
 
 
+def materialize_heavy_jdbc_container(
+    *,
+    run_dir: Path,
+    provider_id: str,
+    dialect: str,
+    connection_secret_ref: str,
+    profile: str = "ci",
+    samples_root: Optional[Path] = None,
+) -> None:
+    _copy_source(_source(samples_root, "provider_capability", "jdbc"), run_dir)
+    _rename_profile_file(run_dir / "environment_bindings", "local_jdbc.yaml", f"{profile}.yaml")
+    _rename_profile_file(run_dir / "env_profiles", "local_jdbc.yaml", f"{profile}.yaml")
+    _rename_profile_file(run_dir / "execution_profiles", "local_jdbc.yaml", f"{profile}.yaml")
+
+    suite_path = run_dir / "suite_manifest.yaml"
+    test_case_path = run_dir / "test_case.yaml"
+    env_binding_path = run_dir / "environment_bindings" / f"{profile}.yaml"
+    env_profile_path = run_dir / "env_profiles" / f"{profile}.yaml"
+    execution_profile_path = run_dir / "execution_profiles" / f"{profile}.yaml"
+    provider_instance_ref = _jdbc_provider_instance_ref(dialect)
+    provider_instance_path = run_dir / provider_instance_ref
+
+    _write_suite_policy(
+        suite_path,
+        profile=profile,
+        purpose=f"Project-provisioned Docker {dialect.upper()} JDBC capability verification.",
+    )
+    _write_test_labels(test_case_path, profile=profile, dependency=f"docker_jdbc_{dialect}")
+    if provider_instance_path.exists():
+        _write_provider_labels(provider_instance_path)
+
+    env_binding = yaml.safe_load(env_binding_path.read_text()) or {}
+    env_binding["environment_id"] = f"{profile}-project-docker-jdbc-{dialect}"
+    env_binding["profile"] = profile
+    env_binding["provider_bindings"] = [
+        {
+            "provider_id": provider_id,
+            "provider_instance_ref": provider_instance_ref,
+            "runtime_mode": "external",
+            "binding_values": {
+                "connection": {"secret_ref": connection_secret_ref},
+                "dialect": dialect,
+                "schema": "APP" if dialect == "oracle" else "DB2INST1",
+                "strict_params": True,
+                "query_timeout": "PT10S",
+                "masking_policy": {"redact": ["connection", "password", "secret", "token"]},
+            },
+        }
+    ]
+    env_binding["evidence_policy"] = _local_evidence_policy()
+    env_binding_path.write_text(yaml.safe_dump(env_binding, sort_keys=False), encoding="utf-8")
+
+    env_profile = yaml.safe_load(env_profile_path.read_text()) or {}
+    env_profile["env_profile_id"] = profile
+    env_profile["dependency_policy"] = {
+        "require_readiness_evidence": True,
+        "allow_framework_managed_dependencies": False,
+    }
+    env_profile["dependency_substitution_policy"] = {"allowed_runtime_modes": ["external"]}
+    env_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["project_docker"],
+        "startup_policy": "project_before_framework",
+        "readiness_policy": "project_sql_probe",
+        "cleanup_scope": "project_finally",
+    }
+    env_profile["providers"] = {
+        provider_id: {
+            "runtime_mode": "external",
+            "binding_keys": {
+                "connection": {"secret_ref": connection_secret_ref},
+                "dialect": {"value": dialect},
+                "schema": {"value": "APP" if dialect == "oracle" else "DB2INST1"},
+                "strict_params": {"value": True},
+                "query_timeout": {"value": "PT10S"},
+                "masking_policy": {"value": {"redact": ["connection", "password", "secret", "token"]}},
+            },
+        }
+    }
+    env_profile_path.write_text(yaml.safe_dump(env_profile, sort_keys=False), encoding="utf-8")
+
+    execution_profile = yaml.safe_load(execution_profile_path.read_text()) or {}
+    execution_profile["profile_id"] = profile
+    execution_profile["environment_binding_ref"] = f"environment_bindings/{profile}.yaml"
+    execution_profile["dependency_provisioning_policy"] = {
+        "allowed_provisioners": ["project_docker"],
+        "dependency_types": [f"jdbc_{dialect}_container"],
+        "startup_policy": "project_before_framework",
+        "readiness_policy": "project_sql_probe",
+        "cleanup_scope": "project_finally",
+        "output_binding_keys": ["connection.secret_ref", "dialect", "schema"],
+    }
+    execution_profile["evidence_policy"] = _local_evidence_policy()
+    execution_profile_path.write_text(yaml.safe_dump(execution_profile, sort_keys=False), encoding="utf-8")
+
+    _write_project_binding(
+        run_dir,
+        provider_id=provider_id,
+        provider_type="jdbc",
+        values={"connection": {"secret_ref": connection_secret_ref}, "dialect": dialect},
+        framework_consumption_status="pending_framework_execution",
+    )
+
+
 def materialize_full_contract_baseline(
     *,
     run_dir: Path,
@@ -543,6 +646,12 @@ def _write_project_binding(
         yaml.safe_dump(payload, sort_keys=False),
         encoding="utf-8",
     )
+
+
+def _jdbc_provider_instance_ref(dialect: str) -> str:
+    if dialect == "db2":
+        return "provider_instances/db2_like.yaml"
+    return "provider_instances/oracle_like.yaml"
 
 
 def _rename_profile_file(directory: Path, old_name: str, new_name: str) -> None:
