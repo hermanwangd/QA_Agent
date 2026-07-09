@@ -33,3 +33,7 @@ python3 -m unittest discover -s tests
 python3 pirun/verify_release_assets.py --framework-version 0.2.5 --output-dir reports
 python3 pirun/inspect_usage_kit.py --framework-version 0.2.5 --output-dir reports
 ```
+
+## Key Reports
+
+- `reports/pi-run-heavy-jdbc-container-proposal.md`: isolated Oracle/DB2 JDBC container PI-run proposal with resource gates, runtime boundary, and framework-consumption evidence rules.
