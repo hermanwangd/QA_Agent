@@ -4,9 +4,18 @@ Date: 2026-07-09 Asia/Taipei
 
 ## Scope
 
-Validate whether project-owned Oracle Free and DB2 Testcontainers runtimes can be used to test the released framework JDBC provider in `spec-driven-auto-regression-0.2.5.jar`.
+Validate whether project-owned Oracle Free and DB2 Testcontainers runtimes can be used to test the framework JDBC provider. This report separates the already-published `spec-driven-auto-regression-0.2.5.jar` release asset from the later locally built framework candidate jar.
 
 The test framework jar does not provision Oracle or DB2. This PI-run project provisions the database container, injects vendor JDBC drivers through the Maven harness, materializes a native JDBC suite, and invokes the selected framework jar.
+
+## Current Decision Summary
+
+| Target | Oracle Testcontainers | DB2 Testcontainers | Release decision |
+| --- | --- | --- | --- |
+| Published v0.2.5 release asset | FAIL: `SECRET_RESOLUTION_ERROR` for `env://JDBC_CONNECTION` | NOT RUN in the release-asset rerun | Not accepted for external JDBC provider coverage. |
+| Local framework candidate jar | PASS: explicit CRUD suite | PASS: explicit CRUD suite | Fix candidate is valid, but not a published release asset. |
+
+Release readiness remains blocked until a newly published release asset containing the JDBC `env://JDBC_CONNECTION` fix is produced and rerun through the same Oracle and DB2 heavy-JDBC acceptance path.
 
 ## Candidate Explicit CRUD Rerun Summary (2026-07-09 21:43 Asia/Taipei)
 
@@ -222,7 +231,7 @@ findings:
 Candidate conclusion:
 
 - The target jar fixes Oracle JDBC `env://JDBC_CONNECTION` consumption for project-provisioned Testcontainers.
-- DB2 was not rerun on this local 8 GiB-class Docker setup.
+- This Oracle-only candidate rerun did not include DB2, but the later explicit DB2 CRUD rerun in this report passed against the same candidate jar.
 - This is candidate-build evidence, not published release-asset evidence.
 
 ## Release Asset Rerun Summary (2026-07-09 21:00 Asia/Taipei)
@@ -377,24 +386,24 @@ testcontainers-heavy-jdbc/target/surefire-reports/pirun.heavyjdbc.HeavyJdbcProvi
 
 ## Finding
 
-The published v0.2.5 release asset cannot complete project-provisioned Oracle or DB2 JDBC provider acceptance because the framework JDBC provider runtime does not resolve `env://JDBC_CONNECTION`.
+The published v0.2.5 release asset cannot complete project-provisioned Oracle or DB2 JDBC provider acceptance because the framework JDBC provider runtime in that published asset does not resolve `env://JDBC_CONNECTION`.
 
 The project can provision Oracle and DB2, prove direct JDBC connectivity, create the `ORDERS` table, inject vendor JDBC drivers, and materialize framework-valid native JDBC suites. The published release asset still only accepts its local/generated JDBC secret path for provider capability execution.
 
-The local candidate target jar passes both Oracle and DB2 Testcontainers CRUD acceptance paths for project-provided `env://JDBC_CONNECTION`.
+The local candidate target jar passes both Oracle and DB2 Testcontainers CRUD acceptance paths for project-provided `env://JDBC_CONNECTION`, so the framework fix has been proven before publication.
 
 This is a framework issue, not a project provisioning issue.
 
-## Framework Fix Required
+## Framework Release Action Required
 
-For the published release asset, add JDBC provider secret resolution support for project-supplied environment secret refs:
+For the next published release asset, include JDBC provider secret resolution support for project-supplied environment secret refs:
 
 ```yaml
 connection:
   secret_ref: env://JDBC_CONNECTION
 ```
 
-Acceptance for the framework fix:
+Acceptance for the published release asset:
 
 - `env://JDBC_CONNECTION` resolves at runtime.
 - JDBC provider uses the resolved external connection string, not generated H2.
@@ -405,6 +414,6 @@ Acceptance for the framework fix:
 
 ## Project Status
 
-The project-side Testcontainers harness is ready to rerun against a published release after the framework supports JDBC `env://` secret refs.
+The project-side Testcontainers harness is ready to rerun against a newly published release after the framework ships JDBC `env://` secret refs in a release asset.
 
-For the 2026-07-09 candidate target jar rerun, Oracle reached the framework and passed. DB2 was intentionally not started on this 8 GiB-class local Docker setup.
+For the 2026-07-09 candidate target jar reruns, Oracle and DB2 both reached the framework and passed explicit CRUD coverage. These results are candidate-build evidence only; they do not replace release-asset acceptance.
