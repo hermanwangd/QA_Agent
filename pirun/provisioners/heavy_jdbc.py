@@ -174,6 +174,34 @@ def build_heavy_jdbc_run_command(
     )
 
 
+def jdbc_connection_url(engine: str, host_port: int, *, service_name: str | None = None) -> str:
+    if engine == "oracle":
+        service = service_name or config_for_engine("oracle").service_name or "FREEPDB1"
+        return f"jdbc:oracle:thin:@//127.0.0.1:{host_port}/{service}"
+    if engine == "db2":
+        return f"jdbc:db2://127.0.0.1:{host_port}/testdb"
+    raise ValueError(f"unsupported heavy JDBC engine: {engine}")
+
+
+def dialect_probe_exec_command(engine: str, *, password: str) -> list[str]:
+    if engine == "oracle":
+        sql = (
+            "printf 'set heading off feedback off\\n"
+            "select 1 from dual;\\n"
+            "exit\\n' | sqlplus -L -S APP/"
+            f"{password}@localhost/FREEPDB1"
+        )
+        return ["bash", "-lc", sql]
+    if engine == "db2":
+        sql = (
+            "su - db2inst1 -c \""
+            f"db2 connect to testdb user db2inst1 using {password} >/dev/null && "
+            "db2 -x 'select 1 from sysibm.sysdummy1'\""
+        )
+        return ["bash", "-lc", sql]
+    raise ValueError(f"unsupported heavy JDBC engine: {engine}")
+
+
 class HeavyJdbcLock:
     def __init__(self, path: Path):
         self.path = path

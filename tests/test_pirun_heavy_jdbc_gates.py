@@ -6,7 +6,9 @@ from pirun.provisioners.heavy_jdbc import (
     BYTES_PER_GIB,
     HeavyJdbcLock,
     build_heavy_jdbc_run_command,
+    dialect_probe_exec_command,
     evaluate_resource_gate,
+    jdbc_connection_url,
     parse_docker_port,
 )
 
@@ -110,6 +112,22 @@ class HeavyJdbcGateTests(unittest.TestCase):
         self.assertIn("DB2INST1_PASSWORD=Secret-12345", joined)
         self.assertIn("DBNAME=testdb", joined)
         self.assertIn("icr.io/db2_community/db2", joined)
+
+    def test_jdbc_connection_url_uses_engine_specific_format(self):
+        self.assertEqual(
+            jdbc_connection_url("oracle", 51521, service_name="FREEPDB1"),
+            "jdbc:oracle:thin:@//127.0.0.1:51521/FREEPDB1",
+        )
+        self.assertEqual(jdbc_connection_url("db2", 55000), "jdbc:db2://127.0.0.1:55000/testdb")
+
+    def test_dialect_probe_commands_use_engine_specific_sql(self):
+        oracle = " ".join(dialect_probe_exec_command("oracle", password="Secret-12345"))
+        db2 = " ".join(dialect_probe_exec_command("db2", password="Secret-12345"))
+
+        self.assertIn("select 1 from dual", oracle)
+        self.assertIn("sqlplus", oracle)
+        self.assertIn("select 1 from sysibm.sysdummy1", db2)
+        self.assertIn("db2 connect to testdb", db2)
 
 
 if __name__ == "__main__":
