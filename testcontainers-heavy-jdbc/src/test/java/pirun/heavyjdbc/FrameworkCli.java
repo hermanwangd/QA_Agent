@@ -55,18 +55,22 @@ final class FrameworkCli {
         env.put("PIRUN_JDBC_CONNECTION", jdbcConnection);
         env.put("PIRUN_JDBC_USERNAME", username);
         env.put("PIRUN_JDBC_PASSWORD", password);
+        List<String> secrets = List.of(jdbcConnection, password);
 
         Process process = pb.start();
         boolean finished = process.waitFor(Duration.ofMinutes(3).toSeconds(), TimeUnit.SECONDS);
         if (!finished) {
             process.destroyForcibly();
             process.waitFor(10, TimeUnit.SECONDS);
-            String stdout = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            String stderr = new String(process.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
-            return new Result(124, stdout, stderr + "\nframework_timeout: PT3M", command);
+            String stdout = Redactor.redact(new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8), secrets);
+            String stderr = Redactor.redact(
+                new String(process.getErrorStream().readAllBytes(), StandardCharsets.UTF_8) + "\nframework_timeout: PT3M",
+                secrets
+            );
+            return new Result(124, stdout, stderr, command);
         }
-        String stdout = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-        String stderr = new String(process.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
+        String stdout = Redactor.redact(new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8), secrets);
+        String stderr = Redactor.redact(new String(process.getErrorStream().readAllBytes(), StandardCharsets.UTF_8), secrets);
         return new Result(process.exitValue(), stdout, stderr, command);
     }
 

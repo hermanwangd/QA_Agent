@@ -9,6 +9,7 @@ HARNESS_ROOT = REPO_ROOT / "testcontainers-heavy-jdbc"
 POM_PATH = HARNESS_ROOT / "pom.xml"
 IT_PATH = HARNESS_ROOT / "src" / "test" / "java" / "pirun" / "heavyjdbc" / "HeavyJdbcProviderTestcontainersIT.java"
 CLI_PATH = HARNESS_ROOT / "src" / "test" / "java" / "pirun" / "heavyjdbc" / "FrameworkCli.java"
+REDACTOR_PATH = HARNESS_ROOT / "src" / "test" / "java" / "pirun" / "heavyjdbc" / "Redactor.java"
 MATERIALIZER_PATH = HARNESS_ROOT / "src" / "test" / "java" / "pirun" / "heavyjdbc" / "SuiteMaterializer.java"
 README_PATH = HARNESS_ROOT / "README.md"
 MVNW_PATH = HARNESS_ROOT / "mvnw"
@@ -47,6 +48,7 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
 
         properties = WRAPPER_PROPERTIES_PATH.read_text(encoding="utf-8")
         self.assertIn("distributionUrl=", properties)
+        self.assertRegex(properties, re.compile(r"^distributionSha256Sum=[0-9a-f]{64}$", re.MULTILINE))
         self.assertIn("apache-maven", properties)
         self.assertNotIn("maven-wrapper.jar", properties)
 
@@ -80,10 +82,19 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
         self.assertIn("PIRUN_JDBC_CONNECTION", cli_text)
         self.assertIn("PIRUN_JDBC_USERNAME", cli_text)
         self.assertIn("PIRUN_JDBC_PASSWORD", cli_text)
+        self.assertIn("Redactor.redact", cli_text)
         self.assertIn("provider_runtime_executed: true", it_text)
         self.assertIn("provider_runtime_invoked: true", it_text)
         self.assertIn("provider_ids:", it_text)
         self.assertIn("fail(", it_text)
+
+    def test_framework_output_artifacts_are_redacted(self):
+        self.assertTrue(REDACTOR_PATH.exists(), "Redactor.java must exist")
+        cli_text = CLI_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("List.of(jdbcConnection, password)", cli_text)
+        self.assertIn("new Result(process.exitValue(), stdout, stderr, command)", cli_text)
+        self.assertNotIn("new Result(process.exitValue(), rawStdout, rawStderr, command)", cli_text)
 
     def test_materializer_uses_release_usage_kit_samples_and_external_binding(self):
         text = MATERIALIZER_PATH.read_text(encoding="utf-8")

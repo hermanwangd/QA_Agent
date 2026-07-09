@@ -69,6 +69,7 @@
                 <version>${maven.surefire.version}</version>
                 <configuration>
                     <includes>
+                        <include>**/*Test.java</include>
                         <include>**/*IT.java</include>
                     </includes>
                     <argLine>-Xmx1024m</argLine>
