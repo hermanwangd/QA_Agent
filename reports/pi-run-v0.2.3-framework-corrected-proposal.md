@@ -56,9 +56,9 @@ Observed v0.2.5 additions:
 
 | Area | Status | Note |
 |---|---:|---|
-| Runnable release usage-kit matrix | PASS | 36 suites and 108 commands executed with 0 unexpected failures. |
-| Project-provisioned WireMock external `base_url` consumption | NOT_PROVEN_WITH_FRAMEWORK_ISSUE | Framework run passes, but external `base_url` is still not proven consumed. |
-| Project-provisioned Oracle/DB2 JDBC external `env://` connection consumption | NOT_PROVEN_WITH_FRAMEWORK_ISSUE | Oracle and DB2 Testcontainers reach framework invocation, but JDBC runtime fails with `SECRET_RESOLUTION_ERROR` for `env://PIRUN_JDBC_CONNECTION`. |
+| Runnable release usage-kit matrix | PASS | 36 suites and 108 commands executed with 0 unexpected failures; support-status split still needs release-gate consistency checks. |
+| Project-provisioned WireMock external `base_url` consumption | NOT_PROVEN_WITH_FRAMEWORK_ISSUE | Framework run passes, but external `base_url` is still not proven consumed by the provider runtime. |
+| Project-provisioned Oracle/DB2 JDBC external `env://` connection consumption | NOT_PROVEN_WITH_FRAMEWORK_ISSUE | Oracle and DB2 Testcontainers reach framework invocation, but JDBC runtime fails with `SECRET_RESOLUTION_ERROR` for `env://JDBC_CONNECTION`. |
 | Raw secret scan | PASS | 766 files scanned, 0 findings. |
 
 ## Framework Issue Backlog
@@ -71,10 +71,10 @@ Target release convention: `post-v0.2.5 next release` means the next framework r
 |---|---|---|---:|---|
 | Public `pi-run` CLI surface | v0.2.3 | post-v0.2.5 next release | `GAP` | Remove from framework help/docs/usage-kit workflows, or block as non-public project orchestration. |
 | Direct public RP-mode | v0.2.3 | post-v0.2.5 next release | `GAP` | Remove as an obsolete public runtime path, or hide as compatibility-only behavior with a structured deprecated/blocking result. |
-| Missing `report` / `validate-evidence` release verification commands | v0.2.3, v0.2.5 | post-v0.2.5 next release | `GAP` | Add positive and negative release verification commands and fixtures for both commands. |
+| Missing or incomplete `report` / `validate-evidence` release verification commands | v0.2.3; partially improved in v0.2.5 | post-v0.2.5 next release | `PARTIAL_RELEASE_GATE` | Keep already-added report/evidence checks and promote positive plus negative fixtures to mandatory release verification. |
 | `report --format json` public contract ambiguity | v0.2.3, v0.2.5 | post-v0.2.5 next release | `BLOCKED_FRAMEWORK_UNSUPPORTED_FORMAT` | Keep JSON outside the public report contract unless explicitly reintroduced with passing release verification; unsupported JSON must exit `2`. |
 | Project-provisioned WireMock external `base_url` | v0.2.3, v0.2.5 | post-v0.2.5 next release | `NOT_PROVEN_WITH_FRAMEWORK_ISSUE` | Support external binding values such as `base_url`, prove the runtime consumed that URL, and fail validation only for missing, malformed, or secret-bearing values. |
-| Project-provisioned JDBC external `env://` connection secret ref | v0.2.5 | post-v0.2.5 next release | `NOT_PROVEN_WITH_FRAMEWORK_ISSUE` | Resolve project-supplied JDBC connection secret refs such as `env://PIRUN_JDBC_CONNECTION`, consume the resolved external connection in JDBC runtime, and redact the connection/password in all evidence. |
+| Project-provisioned JDBC external `env://` connection secret ref | v0.2.5 | post-v0.2.5 next release | `NOT_PROVEN_WITH_FRAMEWORK_ISSUE` | Resolve project-supplied JDBC connection secret refs such as `env://JDBC_CONNECTION`, consume the resolved external connection in JDBC runtime, and redact the connection/password in all evidence. |
 | Provider support matrix drift control | v0.2.3, v0.2.5 | post-v0.2.5 next release | `GAP` | Generate and enforce registry/contracts/support-matrix/sample consistency during release verification. |
 | `grpc_client` sample gap | v0.2.3 | already improved in v0.2.5; keep regression gate | `PASS_IN_V0.2.5` | Keep executable release usage-kit samples and enforce support matrix consistency so the gap does not regress. |
 | `rest_client` sample gap | v0.2.3 | already improved in v0.2.5; keep regression gate | `PASS_IN_V0.2.5` | Keep executable release usage-kit samples and enforce support matrix consistency so the gap does not regress. |
@@ -83,7 +83,7 @@ Target release convention: `post-v0.2.5 next release` means the next framework r
 | `external_runner` support truthfulness | v0.2.3, v0.2.5 | post-v0.2.5 next release | `BLOCKED_FRAMEWORK_CONTRACT_ONLY` | Add executable release usage-kit samples if supported; otherwise keep explicit `contract_only`/`unsupported` status and block before dispatch. |
 | `kubernetes_runtime` support truthfulness | v0.2.3, v0.2.5 | post-v0.2.5 next release | `BLOCKED_FRAMEWORK_CONTRACT_ONLY` | Add executable release usage-kit samples if supported; otherwise keep explicit `contract_only`/`unsupported` status and block before dispatch. |
 | `vm_runtime` support truthfulness | v0.2.3, v0.2.5 | post-v0.2.5 next release | `BLOCKED_FRAMEWORK_CONTRACT_ONLY` | Add executable release usage-kit samples if supported; otherwise keep explicit `contract_only`/`unsupported` status and block before dispatch. |
-| Kafka / IBM MQ remaining lifecycle claims | v0.2.3, v0.2.5 | post-v0.2.5 next release | `PARTIAL_PASS_WITH_CONTRACT_ONLY_ROWS` | Keep working native samples passing; either complete remaining claimed lifecycle modes or downgrade/remove unsupported lifecycle claims. |
+| Kafka / IBM MQ remaining runtime coverage claims | v0.2.3, v0.2.5 | post-v0.2.5 next release | `PARTIAL_PASS_WITH_CONTRACT_ONLY_ROWS` | Keep working executable samples passing; either complete remaining claimed runtime/profile coverage rows or remove/downgrade unsupported claims. |
 | `kafka_messaging/*` deprecated alias | v0.2.3, v0.2.5 | post-v0.2.5 next release | `BLOCKED_DEPRECATED_ALIAS` | Remove from public registry/docs/samples or keep hidden compatibility-only behavior that cannot be used by new artifacts. |
 | Safety-policy blocking in public provider accounting | v0.2.3 | post-v0.2.5 next release | `CONTRACT_CORRECTION` | Keep `BLOCKED_SAFETY_POLICY` absent; unsupported command-capable provider claims must be sample gaps, explicit blocks, or downgraded/removed claims. |
 | Evidence/report raw secret publication guardrail | v0.2.3, v0.2.5 | post-v0.2.5 next release | `REQUIRED_FRAMEWORK_GUARDRAIL` | `validate-evidence` and `report` must fail or redact before publishing raw secrets from provider evidence. |
@@ -95,14 +95,14 @@ The next framework release after v0.2.5 is not a small documentation patch. It i
 
 - public provider support is represented by one field: `support_status`;
 - `native`, `ephemeral`, `framework_managed`, and `external` are not public provider support modes;
-- Kafka and IBM MQ support claims cannot be marked `supported` unless executable suite-mode samples pass for the claimed lifecycle;
+- Kafka and IBM MQ provider types cannot be marked `supported` unless they have runtime implementation and executable suite-mode samples; unverified runtime/profile coverage must be documented separately and must not become a public support status;
 - `report --format json` is not part of the public report contract unless it is explicitly reintroduced with passing release verification.
 
 Public provider support statuses:
 
 | `support_status` | Meaning |
 |---|---|
-| `supported` | Public contract exists, runtime implementation exists, executable usage-kit sample exists, and release verification passes. |
+| `supported` | Public contract exists, runtime implementation exists, at least one CI-verifiable executable usage-kit sample exists, and release verification passes. |
 | `contract_only` | Public contract exists, but runtime execution is not available; validation must block before dispatch. |
 | `deprecated` | Compatibility-only provider or alias; new artifacts and samples must not use it. |
 | `unsupported` | Not part of the public provider capability surface. |
@@ -233,15 +233,15 @@ Required change:
   - support matrix status conflicts with provider contract, implementation, or sample evidence;
   - a `contract_only` provider is dispatched into runtime execution;
   - a `deprecated` provider or alias is used by new samples;
-  - a `supported` provider has no executable release usage-kit sample;
+  - a `supported` provider has no CI-verifiable executable release usage-kit sample;
   - a `supported` provider sample cannot pass validate, run, report, and validate-evidence verification.
 
 Provider semantics to preserve:
 
 | Provider | Target status | Release policy |
 |---|---|---|
-| `kafka` | `supported` only for verified lifecycle modes | Runtime implementation and executable usage-kit samples are required for every claimed lifecycle. |
-| `ibm_mq` | `supported` only for verified lifecycle modes | Runtime implementation and executable usage-kit samples are required for every claimed lifecycle. |
+| `kafka` | `supported` at provider-type level when the supported definition is met | Runtime implementation and executable usage-kit samples are required for each runtime/profile coverage row claimed by docs or samples. |
+| `ibm_mq` | `supported` at provider-type level when the supported definition is met | Runtime implementation and executable usage-kit samples are required for each runtime/profile coverage row claimed by docs or samples. |
 | `kafka_messaging` | `deprecated` | Compatibility only; new artifacts must use `kafka`. |
 | `shell_command` | `supported` or `contract_only` | Must have executable samples if supported; otherwise block before dispatch. |
 | `external_runner` | `supported` or `contract_only` | Must have executable samples if supported; otherwise block before dispatch. |
@@ -289,13 +289,13 @@ raw_secret_in_provider_evidence = validate-evidence/report fail
 
 ## FW-P0-005: Complete `report` and `validate-evidence` Release Coverage
 
-Observed in: `v0.2.3`, `v0.2.5`.
+Observed in: `v0.2.3`; partially improved in `v0.2.5`.
 
 Target release: post-v0.2.5 next framework release.
 
 Problem:
 
-`usage-kit-v0.2.3/release/verification_commands.md` covers `validate` and `run`, but not `report` or `validate-evidence`.
+`usage-kit-v0.2.3/release/verification_commands.md` covers `validate` and `run`, but not `report` or `validate-evidence`. Later framework verification added some report/evidence checks, but the next release should treat them as first-class release gates with both positive and negative fixtures.
 
 Project-side pi-run also proved that v0.2.3 returns exit `2` for `report --format json` with unsupported format.
 
@@ -352,38 +352,42 @@ build_provenance: not_proven
 release_decision: accepted_with_integrity_limitation
 ```
 
-## FW-P0-007: Complete or Downgrade Kafka and IBM MQ Lifecycle Claims
+## FW-P0-007: Complete or Downgrade Kafka and IBM MQ Runtime Coverage Claims
 
-Observed in: `v0.2.3`; partially improved in `v0.2.5` with remaining contract-only lifecycle rows.
+Observed in: `v0.2.3`; partially improved in `v0.2.5` with remaining contract-only runtime/profile coverage rows.
 
 Target release: post-v0.2.5 next framework release.
 
 Problem:
 
-v0.2.3 accounts for Kafka and IBM MQ provider observations as `BLOCKED_FRAMEWORK_CONTRACT_ONLY`. v0.2.5 adds executable Kafka and IBM MQ suite-mode samples for some paths, but still reports remaining contract-only lifecycle rows such as `kafka/ephemeral` and `ibm_mq/ephemeral`.
+v0.2.3 accounts for Kafka and IBM MQ provider observations as `BLOCKED_FRAMEWORK_CONTRACT_ONLY`. v0.2.5 adds executable Kafka and IBM MQ suite-mode samples for some paths, but still reports remaining contract-only runtime/profile coverage rows such as `kafka/ephemeral` and `ibm_mq/ephemeral`.
 
-The framework proposal target is truthfulness and executable support: every Kafka or IBM MQ lifecycle claim must either execute through suite-mode with project-provided connection materialization when needed, or be downgraded/removed from the supported surface.
+The framework proposal target is truthfulness and executable support: every Kafka or IBM MQ runtime/profile coverage claim must either execute through suite-mode with project-provided connection materialization when needed, or be downgraded/removed from the documented release coverage.
 
-This is a target-release gate, not a stretch item. If a lifecycle cannot pass executable release verification, the target release must not publish that lifecycle as `supported`.
+This is a target-release gate, not a stretch item. Provider type `support_status` remains provider-level. If a runtime/profile coverage row cannot pass executable release verification, the target release must not present that row as supported release coverage.
 
-`native` and `ephemeral` are server lifecycle descriptors, not substitutes for evidence. The provider support claim is only valid for lifecycle modes that pass release verification:
+`native` and `ephemeral` are server-side or environment descriptors, not public provider support statuses and not substitutes for evidence. Provider type support and runtime/profile release coverage must be reported separately:
 
 ```yaml
 kafka:
-  support_status: supported only for verified lifecycle modes
+  support_status: supported
+  verified_runtime_coverage: [native]
+  unverified_runtime_coverage: [ephemeral]
 ibm_mq:
-  support_status: supported only for verified lifecycle modes
+  support_status: supported
+  verified_runtime_coverage: [native]
+  unverified_runtime_coverage: [ephemeral]
 ```
 
 Required change:
 
 - Keep verified Kafka runtime execution paths working.
 - Keep verified IBM MQ runtime execution paths working.
-- Implement any remaining claimed Kafka/IBM MQ lifecycle modes, or publish them as `contract_only`/`unsupported` with validation blocking before dispatch.
+- Implement any remaining claimed Kafka/IBM MQ runtime/profile coverage rows, or remove/downgrade them from release coverage with validation blocking before dispatch when they are attempted.
 - Accept project-provided connection/binding material such as host, port, credentials, queue/topic/channel/manager names, and generated connection URLs without the framework owning Docker/Testcontainers provisioning.
-- Add executable release usage-kit suite-mode samples for every Kafka/IBM MQ lifecycle mode claimed as `supported`.
+- Add executable release usage-kit suite-mode samples for every Kafka/IBM MQ runtime/profile coverage row claimed as release-verified.
 - Keep v0.2.3-style contract-only blocking only as the pre-implementation behavior, not as the target outcome.
-- If a lifecycle mode cannot pass executable release verification, that lifecycle mode must not be published as `supported`.
+- If a runtime/profile coverage row cannot pass executable release verification, that row must not be published as verified release coverage.
 
 Minimum Kafka runtime slice:
 
@@ -407,27 +411,31 @@ Acceptance:
 
 ```yaml
 kafka:
-  supported_lifecycle_modes:
+  support_status: supported
+  verified_runtime_coverage:
     native:
       release_usage_kit_sample: pass
       validate: pass
       run: pass
       report: pass
       validate_evidence: pass
-  unsupported_or_contract_only_lifecycle_modes_block_before_dispatch: true
+  unverified_runtime_coverage_not_presented_as_supported: true
+  unsupported_or_contract_only_runtime_coverage_blocks_before_dispatch: true
 ibm_mq:
-  supported_lifecycle_modes:
+  support_status: supported
+  verified_runtime_coverage:
     native:
       release_usage_kit_sample: pass
       validate: pass
       run: pass
       report: pass
       validate_evidence: pass
-  unsupported_or_contract_only_lifecycle_modes_block_before_dispatch: true
+  unverified_runtime_coverage_not_presented_as_supported: true
+  unsupported_or_contract_only_runtime_coverage_blocks_before_dispatch: true
 
 framework_owns_provisioning: false
 framework_consumes_project_bindings: true
-contract_only_lifecycle_claims_are_explicit: true
+contract_only_runtime_coverage_claims_are_explicit: true
 ```
 
 ## FW-P0-008: Support Project-provisioned JDBC `env://` Connection Secret Refs
@@ -441,7 +449,7 @@ Problem:
 v0.2.5 Oracle and DB2 Testcontainers PI-run attempts proved that project-side heavy JDBC provisioning can reach framework invocation, but the framework JDBC provider runtime exits with `SECRET_RESOLUTION_ERROR`:
 
 ```text
-failure_reason: JDBC secret_ref `env://PIRUN_JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
+failure_reason: JDBC secret_ref `env://JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
 ```
 
 Evidence:
@@ -453,7 +461,7 @@ Evidence:
 Required change:
 
 - Add one framework secret resolver path used by provider runtimes for all contract-declared `secret_ref` binding keys.
-- Resolve JDBC `connection.secret_ref` values from project-supplied environment references such as `env://PIRUN_JDBC_CONNECTION`.
+- Resolve JDBC `connection.secret_ref` values from project-supplied environment references such as `env://JDBC_CONNECTION`.
 - Pass the resolved external JDBC connection material into the JDBC provider runtime.
 - Keep Docker/Testcontainers provisioning outside the framework jar.
 - Preserve project-owned driver provisioning through classpath or documented runtime extension points.
@@ -478,7 +486,7 @@ The minimum supported shape for the target release is the full connection secret
 ```yaml
 binding_values:
   connection:
-    secret_ref: env://PIRUN_JDBC_CONNECTION
+    secret_ref: env://JDBC_CONNECTION
 ```
 
 The target release may pass `FW-P0-008` with the full connection ref only. Split JDBC URL/user/credential refs are future contract work unless the provider contract explicitly declares those fields and adds matching release verification.
@@ -489,7 +497,7 @@ Acceptance:
 oracle_heavy_jdbc:
   framework_owns_provisioning: false
   framework_consumes_project_connection_ref: true
-  secret_ref: env://PIRUN_JDBC_CONNECTION
+  secret_ref: env://JDBC_CONNECTION
   provider_runtime_executed: true
   provider_id: oracle-like-db
   run_status: passed
@@ -497,7 +505,7 @@ oracle_heavy_jdbc:
 db2_heavy_jdbc:
   framework_owns_provisioning: false
   framework_consumes_project_connection_ref: true
-  secret_ref: env://PIRUN_JDBC_CONNECTION
+  secret_ref: env://JDBC_CONNECTION
   provider_runtime_executed: true
   provider_id: db2-like-db
   run_status: passed
@@ -511,7 +519,7 @@ Executable release verification:
 ```text
 validate external_jdbc_env_secret_ref suite: exit 0
 run --dry-run external_jdbc_env_secret_ref suite: exit 0
-run external_jdbc_env_secret_ref suite with project-provided PIRUN_JDBC_CONNECTION: exit 0
+run external_jdbc_env_secret_ref suite with project-provided JDBC_CONNECTION: exit 0
 report --result <external_jdbc_result_json> --format text: exit 0, no raw connection value
 report --result <external_jdbc_result_json> --format yaml: exit 0, no raw connection value
 validate-evidence --result <external_jdbc_result_json>: exit 0
@@ -521,8 +529,8 @@ Negative release verification:
 
 ```text
 validate malformed env secret ref URI: exit 1, owner-actionable validation error
-run missing PIRUN_JDBC_CONNECTION: exit 1, SECRET_RESOLUTION_ERROR
-run blank PIRUN_JDBC_CONNECTION: exit 1, SECRET_RESOLUTION_ERROR
+run missing JDBC_CONNECTION: exit 1, SECRET_RESOLUTION_ERROR
+run blank JDBC_CONNECTION: exit 1, SECRET_RESOLUTION_ERROR
 run unsupported secret ref scheme: exit 1 or validate exit 1, UNSUPPORTED_SECRET_REF_SCHEME
 report result containing raw JDBC credential material: exit 1 or redacted output before publication
 validate-evidence result containing raw JDBC credential material: exit 1
@@ -535,8 +543,8 @@ validate-evidence result containing raw JDBC credential material: exit 1
 - Provider support matrix generated from registry/contracts/samples using `support_status`.
 - Added `report` and `validate-evidence` release verification commands.
 - Removed JSON report format from the public contract unless explicitly reintroduced with passing release verification, while keeping unsupported-format behavior owner-actionable.
-- Added release usage-kit samples or explicit `contract_only`/`deprecated`/`unsupported` declarations for currently uncovered provider/lifecycle claims.
-- Completed or downgraded Kafka and IBM MQ lifecycle claims, with executable suite-mode samples for every lifecycle published as `supported`.
+- Added release usage-kit samples or explicit `contract_only`/`deprecated`/`unsupported` declarations for currently uncovered provider runtime/profile coverage claims.
+- Completed or downgraded Kafka and IBM MQ runtime/profile coverage claims, with executable suite-mode samples for every coverage row published as release-verified.
 - Added contract-declared `env://` secret-ref resolution for project-provisioned external database runtimes.
 - Removed framework-level safety policy blocking from public provider support claims.
 - Added command-capable provider sample coverage checks.
@@ -557,7 +565,8 @@ report negative cases: EXPECTED_FAIL
 report --format json: exit 2 unsupported format unless explicitly reintroduced with passing release verification
 validate-evidence positive cases: PASS
 validate-evidence negative cases: EXPECTED_FAIL
-Kafka/IBM MQ lifecycle claims: supported only after executable suite-mode verification, otherwise contract_only/unsupported
+Kafka/IBM MQ provider support: provider-level support_status stays separate from runtime/profile coverage
+Kafka/IBM MQ runtime/profile coverage claims: release-verified only after executable suite-mode verification, otherwise removed/downgraded/blocked
 project-provisioned JDBC env:// connection ref: PASS, consumed by runtime
 project-provisioned JDBC env:// negative cases: EXPECTED_FAIL with owner-actionable errors
 usage-kit sample gaps: none for supported provider claims, or explicitly blocked/downgraded
