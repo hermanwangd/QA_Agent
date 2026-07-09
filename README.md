@@ -42,6 +42,8 @@ python3 pirun/inspect_usage_kit.py --framework-version 0.2.5 --output-dir report
 
 Oracle and DB2 container runs are manual opt-in checks. They are not part of the default unit test suite or `full-contract-baseline`, and provisioning is owned by this PI-run project rather than the framework jar.
 
+Acceptance `PASS` means the released framework JDBC provider consumed the external JDBC binding and executed successfully. If the DB container starts but framework JDBC consumption is not proven, the run is reported as `PROJECT_PROVISIONING_PASS_FRAMEWORK_CONSUMPTION_NOT_PROVEN` and exits non-zero.
+
 Oracle:
 
 ```bash

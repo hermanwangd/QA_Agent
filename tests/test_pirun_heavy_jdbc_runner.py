@@ -7,6 +7,7 @@ from pirun.docker_cli import CommandResult
 from pirun.provisioners.heavy_jdbc import BYTES_PER_GIB, GateResult
 from pirun.run_heavy_jdbc_container import (
     classify_result,
+    exit_code_for_classification,
     wait_for_dialect_probe,
     write_run_report,
     write_skip_report,
@@ -64,6 +65,14 @@ class HeavyJdbcRunnerTests(unittest.TestCase):
                 cleanup_passed=True,
             ),
             "PASS",
+        )
+
+    def test_exit_code_marks_unproven_framework_consumption_as_failure(self):
+        self.assertEqual(exit_code_for_classification("PASS"), 0)
+        self.assertEqual(exit_code_for_classification("SKIPPED_POLICY_GATE"), 0)
+        self.assertEqual(
+            exit_code_for_classification("PROJECT_PROVISIONING_PASS_FRAMEWORK_CONSUMPTION_NOT_PROVEN"),
+            1,
         )
 
     def test_wait_for_dialect_probe_retries_until_sql_succeeds(self):

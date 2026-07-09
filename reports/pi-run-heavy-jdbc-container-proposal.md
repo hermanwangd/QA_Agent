@@ -117,6 +117,8 @@ PROJECT_PROVISIONING_PASS
 FRAMEWORK_CONSUMPTION_NOT_PROVEN
 ```
 
+This is not an acceptance pass for the JDBC provider objective. The command must exit non-zero unless framework JDBC provider consumption is proven.
+
 ## DB2 Mode
 
 Recommended image:
@@ -266,7 +268,7 @@ Oracle acceptance:
 - `select 1 from dual` succeeds.
 - Seed/query/cleanup succeeds.
 - Framework is invoked with external JDBC binding.
-- Framework consumption is either proven or explicitly classified as `FRAMEWORK_CONSUMPTION_NOT_PROVEN`.
+- Framework consumption is proven; `FRAMEWORK_CONSUMPTION_NOT_PROVEN` is a non-acceptance result.
 - Cleanup leaves zero labeled Oracle containers.
 
 DB2 acceptance:
@@ -278,7 +280,7 @@ DB2 acceptance:
 - `select 1 from sysibm.sysdummy1` succeeds.
 - Seed/query/cleanup succeeds.
 - Framework is invoked with external JDBC binding.
-- Framework consumption is either proven or explicitly classified as `FRAMEWORK_CONSUMPTION_NOT_PROVEN`.
+- Framework consumption is proven; `FRAMEWORK_CONSUMPTION_NOT_PROVEN` is a non-acceptance result.
 - Cleanup leaves zero labeled DB2 containers.
 
 ## Recommended Rollout

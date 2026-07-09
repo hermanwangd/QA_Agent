@@ -1238,7 +1238,7 @@ def main() -> int:
         result_classification=classification,
         gate=gate,
     )
-    return 0 if classification in {"PASS", "PROJECT_PROVISIONING_PASS_FRAMEWORK_CONSUMPTION_NOT_PROVEN"} else 1
+    return 0 if classification == "PASS" or classification.startswith("SKIPPED_") else 1
 
 
 if __name__ == "__main__":
@@ -1438,8 +1438,8 @@ python3 pirun/run_heavy_jdbc_container.py --db oracle --framework-version 0.2.5
 Expected:
 
 ```text
-Exit code 0.
-project_report.json result_classification is PASS or PROJECT_PROVISIONING_PASS_FRAMEWORK_CONSUMPTION_NOT_PROVEN.
+Exit code 0 only when project_report.json result_classification is PASS.
+If result_classification is PROJECT_PROVISIONING_PASS_FRAMEWORK_CONSUMPTION_NOT_PROVEN, exit code is non-zero because framework JDBC provider consumption was not proven.
 dialect_probe.yaml dialect_probe_status is passed.
 cleanup_evidence.yaml cleanup_status is passed.
 ```
@@ -1505,8 +1505,8 @@ python3 pirun/run_heavy_jdbc_container.py --db db2 --framework-version 0.2.5
 Expected:
 
 ```text
-Exit code 0.
-project_report.json result_classification is PASS or PROJECT_PROVISIONING_PASS_FRAMEWORK_CONSUMPTION_NOT_PROVEN.
+Exit code 0 only when project_report.json result_classification is PASS.
+If result_classification is PROJECT_PROVISIONING_PASS_FRAMEWORK_CONSUMPTION_NOT_PROVEN, exit code is non-zero because framework JDBC provider consumption was not proven.
 dialect_probe.yaml dialect_probe_status is passed.
 cleanup_evidence.yaml cleanup_status is passed.
 ```

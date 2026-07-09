@@ -87,6 +87,12 @@ def classify_result(
     return "PASS"
 
 
+def exit_code_for_classification(classification: str) -> int:
+    if classification == "PASS" or classification.startswith("SKIPPED_"):
+        return 0
+    return 1
+
+
 def framework_consumed_external_jdbc(stdout: str, provider_id: str, exit_code: int | None) -> bool:
     runtime_executed = "provider_runtime_executed: true" in stdout or "provider_runtime_invoked: true" in stdout
     return bool(exit_code == 0 and runtime_executed and f"provider_id: {provider_id}" in stdout)
@@ -354,7 +360,7 @@ def main() -> int:
         result_classification=classification,
         gate=gate,
     )
-    return 0 if classification in {"PASS", "PROJECT_PROVISIONING_PASS_FRAMEWORK_CONSUMPTION_NOT_PROVEN"} else 1
+    return exit_code_for_classification(classification)
 
 
 if __name__ == "__main__":
