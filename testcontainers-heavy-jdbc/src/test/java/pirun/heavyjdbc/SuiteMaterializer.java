@@ -20,6 +20,45 @@ final class SuiteMaterializer {
         String dialect,
         String profile
     ) throws IOException, InterruptedException {
+        return materializeWithFunction(
+            repoRoot,
+            runId,
+            frameworkVersion,
+            providerId,
+            dialect,
+            profile,
+            "materialize_heavy_jdbc_container"
+        );
+    }
+
+    static Path materializeCrud(
+        Path repoRoot,
+        String runId,
+        String frameworkVersion,
+        String providerId,
+        String dialect,
+        String profile
+    ) throws IOException, InterruptedException {
+        return materializeWithFunction(
+            repoRoot,
+            runId,
+            frameworkVersion,
+            providerId,
+            dialect,
+            profile,
+            "materialize_heavy_jdbc_crud_container"
+        );
+    }
+
+    private static Path materializeWithFunction(
+        Path repoRoot,
+        String runId,
+        String frameworkVersion,
+        String providerId,
+        String dialect,
+        String profile,
+        String materializerFunction
+    ) throws IOException, InterruptedException {
         Path runDir = repoRoot
             .resolve(".pirun")
             .resolve("runs")
@@ -37,9 +76,10 @@ final class SuiteMaterializer {
             repo_root = Path(sys.argv[1]).resolve()
             sys.path.insert(0, str(repo_root))
 
-            from pirun.materialize.contract_baseline import materialize_heavy_jdbc_container
+            from pirun.materialize import contract_baseline
 
-            materialize_heavy_jdbc_container(
+            materializer = getattr(contract_baseline, sys.argv[7])
+            materializer(
                 run_dir=Path(sys.argv[2]),
                 provider_id=sys.argv[3],
                 dialect=sys.argv[4],
@@ -59,7 +99,8 @@ final class SuiteMaterializer {
                 providerId,
                 dialect,
                 profile,
-                samplesRoot.toString()
+                samplesRoot.toString(),
+                materializerFunction
             )
         );
         pb.directory(repoRoot.toFile());

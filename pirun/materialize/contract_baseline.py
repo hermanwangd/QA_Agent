@@ -444,6 +444,27 @@ def materialize_heavy_jdbc_container(
     )
 
 
+def materialize_heavy_jdbc_crud_container(
+    *,
+    run_dir: Path,
+    provider_id: str,
+    dialect: str,
+    connection_secret_ref: str,
+    profile: str = "ci",
+    samples_root: Optional[Path] = None,
+) -> None:
+    materialize_heavy_jdbc_container(
+        run_dir=run_dir,
+        provider_id=provider_id,
+        dialect=dialect,
+        connection_secret_ref=connection_secret_ref,
+        profile=profile,
+        samples_root=samples_root,
+    )
+    _retarget_heavy_jdbc_crud_test_case(run_dir, provider_id=provider_id, dialect=dialect)
+    _write_heavy_jdbc_crud_sql(run_dir, dialect=dialect)
+
+
 def materialize_full_contract_baseline(
     *,
     run_dir: Path,
@@ -645,6 +666,154 @@ def _write_heavy_jdbc_sql(run_dir: Path, *, dialect: str) -> None:
                     "",
                 ]
             ),
+            encoding="utf-8",
+        )
+        return
+    raise ValueError(f"unsupported heavy JDBC dialect: {dialect}")
+
+
+def _retarget_heavy_jdbc_crud_test_case(run_dir: Path, *, provider_id: str, dialect: str) -> None:
+    test_case_path = run_dir / "test_case.yaml"
+    test_case = yaml.safe_load(test_case_path.read_text()) or {}
+    target_key = "db2_like_db" if dialect == "db2" else "oracle_like_db"
+    query_name = f"crud_order_by_id_{dialect}.sql"
+
+    test_case["test_case_id"] = "JDBC-CRUD-TC-001"
+    test_case["title"] = f"JDBC {dialect.upper()} explicit CRUD provider capability"
+    test_case["targets"] = {target_key: {"provider_id": provider_id}}
+    test_case["data"] = {
+        "crud_insert": {"ref": "fixtures/crud_insert_order.sql"},
+        "crud_update": {"ref": "fixtures/crud_update_order.sql"},
+        "crud_delete": {"ref": "fixtures/crud_delete_order.sql"},
+        "crud_query": {"ref": f"queries/{query_name}"},
+        "crud_expected": {"ref": "expected_results/crud_expected.json"},
+        "crud_deleted_expected": {"ref": "expected_results/crud_deleted_expected.json"},
+    }
+    test_case.pop("setup", None)
+    test_case["execute"] = {
+        "operations": [
+            _crud_sql_operation("create_order", target_key, "db_seed", "${data.crud_insert}"),
+            _crud_query_operation("read_created_order", target_key, query_name),
+            _crud_sql_operation("update_order", target_key, "db_seed", "${data.crud_update}"),
+            _crud_query_operation("read_updated_order", target_key, query_name),
+            _crud_sql_operation("delete_order", target_key, "db_cleanup", "${data.crud_delete}"),
+            _crud_query_operation("read_deleted_order", target_key, query_name),
+        ]
+    }
+    test_case["verify"] = {
+        "checks": [
+            {
+                "id": "deleted_order_record_absent",
+                "type": "db_record_exists",
+                "target": target_key,
+                "query": {"ref": f"queries/{query_name}"},
+                "expected_ref": "expected_results/crud_deleted_expected.json",
+                "options": {"timeout": "PT20S", "poll_interval": "PT2S"},
+            }
+        ]
+    }
+    test_case["cleanup"] = {
+        "operations": [
+            _crud_sql_operation("cleanup_order_safety", target_key, "db_cleanup", "${data.crud_delete}")
+        ]
+    }
+    test_case["evidence"] = {
+        "required": [
+            "provider-evidence/jdbc/seed_create_order.yaml",
+            "provider-evidence/jdbc/query_read_created_order.yaml",
+            "provider-evidence/jdbc/seed_update_order.yaml",
+            "provider-evidence/jdbc/query_read_updated_order.yaml",
+            "provider-evidence/jdbc/cleanup_delete_order.yaml",
+            "provider-evidence/jdbc/query_read_deleted_order.yaml",
+        ]
+    }
+    test_case_path.write_text(yaml.safe_dump(test_case, sort_keys=False), encoding="utf-8")
+
+
+def _crud_sql_operation(operation_id: str, target_key: str, operation: str, sql_ref: str) -> dict:
+    return {
+        "id": operation_id,
+        "target": target_key,
+        "operation": operation,
+        "inputs": {
+            "sql_ref": {"ref": sql_ref},
+            "params.order_id": {"ref": "expected_results/crud_expected.json#/order_id"},
+        },
+        "outputs": {
+            "affected_rows": "affected_rows",
+            "duration_ms": "duration_ms",
+        },
+    }
+
+
+def _crud_query_operation(operation_id: str, target_key: str, query_name: str) -> dict:
+    return {
+        "id": operation_id,
+        "target": target_key,
+        "operation": "db_query",
+        "inputs": {
+            "query_ref": {"ref": f"queries/{query_name}"},
+            "params.order_id": {"ref": "expected_results/crud_expected.json#/order_id"},
+        },
+        "outputs": {
+            "row_count": "row_count",
+            "sample_rows": "sample_rows",
+            "duration_ms": "duration_ms",
+            "query_evidence_ref": "query_evidence_ref",
+        },
+    }
+
+
+def _write_heavy_jdbc_crud_sql(run_dir: Path, *, dialect: str) -> None:
+    expected_path = run_dir / "expected_results" / "crud_expected.json"
+    expected_path.write_text(
+        json.dumps(
+            {
+                "order_id": "ORD-CRUD-001",
+                "created_status": "CREATED",
+                "updated_status": "UPDATED",
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    deleted_expected_path = run_dir / "expected_results" / "crud_deleted_expected.json"
+    deleted_expected_path.write_text(
+        json.dumps(
+            {
+                "order_id": "ORD-CRUD-001",
+                "expected_row_count": 0,
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    query_path = run_dir / "queries" / f"crud_order_by_id_{dialect}.sql"
+    query_path.write_text("select ORDER_ID, STATUS from ORDERS where ORDER_ID = :order_id\n", encoding="utf-8")
+    delete_path = run_dir / "fixtures" / "crud_delete_order.sql"
+    delete_path.write_text("delete from ORDERS where ORDER_ID = :order_id\n", encoding="utf-8")
+
+    insert_path = run_dir / "fixtures" / "crud_insert_order.sql"
+    update_path = run_dir / "fixtures" / "crud_update_order.sql"
+    if dialect == "oracle":
+        insert_path.write_text(
+            "insert into ORDERS (ORDER_ID, STATUS) values (:order_id, 'CREATED')\n",
+            encoding="utf-8",
+        )
+        update_path.write_text(
+            "update ORDERS set STATUS = 'UPDATED' where ORDER_ID = :order_id\n",
+            encoding="utf-8",
+        )
+        return
+    if dialect == "db2":
+        insert_path.write_text(
+            "insert into ORDERS (ORDER_ID, STATUS) values (cast(:order_id as varchar(64)), 'CREATED')\n",
+            encoding="utf-8",
+        )
+        update_path.write_text(
+            "update ORDERS set STATUS = 'UPDATED' where ORDER_ID = cast(:order_id as varchar(64))\n",
             encoding="utf-8",
         )
         return

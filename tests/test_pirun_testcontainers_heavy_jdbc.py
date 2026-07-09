@@ -112,6 +112,15 @@ class TestcontainersHeavyJdbcHarnessTests(unittest.TestCase):
         self.assertIn("provider_id", text)
         self.assertIn("dialect", text)
 
+    def test_heavy_it_has_oracle_crud_acceptance_path(self):
+        it_text = IT_PATH.read_text(encoding="utf-8")
+        materializer_text = MATERIALIZER_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("oracleContainerMustExecuteCrudWithFrameworkJdbcProvider", it_text)
+        self.assertIn("materializeCrud", it_text)
+        self.assertIn("JDBC-CRUD-TC-001", it_text)
+        self.assertIn("materialize_heavy_jdbc_crud_container", materializer_text)
+
     def test_process_timeout_is_handled_before_stream_reads(self):
         for path in [CLI_PATH, MATERIALIZER_PATH]:
             text = path.read_text(encoding="utf-8")

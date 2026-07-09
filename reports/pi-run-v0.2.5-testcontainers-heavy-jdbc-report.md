@@ -8,6 +8,76 @@ Validate whether project-owned Oracle Free and DB2 Testcontainers runtimes can b
 
 The test framework jar does not provision Oracle or DB2. This PI-run project provisions the database container, injects vendor JDBC drivers through the Maven harness, materializes a native JDBC suite, and invokes the selected framework jar.
 
+## Candidate Explicit CRUD Rerun Summary (2026-07-09 21:43 Asia/Taipei)
+
+This rerun used the locally built candidate jar provided by the framework project and executed an explicit Oracle Testcontainers CRUD suite.
+
+Candidate jar:
+
+```text
+/Users/herman_mbp2023/ClawProjects/skills/Spec Driven Auto Regression/target/spec-driven-auto-regression-0.2.5.jar
+```
+
+Command:
+
+```bash
+cd testcontainers-heavy-jdbc
+PATH="/Applications/Docker.app/Contents/Resources/bin:/usr/local/bin:$PATH" \
+DOCKER_CONFIG=/tmp/pirun-docker-config \
+PIRUN_ENABLE_TESTCONTAINERS_HEAVY_JDBC=1 \
+PIRUN_ENABLE_ORACLE_TESTCONTAINER=1 \
+PIRUN_FRAMEWORK_VERSION=0.2.5 \
+PIRUN_FRAMEWORK_JAR="/Users/herman_mbp2023/ClawProjects/skills/Spec Driven Auto Regression/target/spec-driven-auto-regression-0.2.5.jar" \
+PIRUN_ORACLE_TESTCONTAINER_IMAGE=gvenzl/oracle-free:23-slim-faststart \
+PIRUN_REPO_ROOT=/Users/herman_mbp2023/Documents/test_framework_pirun \
+MAVEN_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=384m" \
+./mvnw -Dtest=HeavyJdbcProviderTestcontainersIT#oracleContainerMustExecuteCrudWithFrameworkJdbcProvider test
+```
+
+Framework result:
+
+```text
+run_status: passed
+suite_id: JDBC-CAPABILITY-v0.2
+test_case_id: JDBC-CRUD-TC-001
+passed_count: 1
+provider_runtime_executed: true
+provider_type: jdbc
+provider_id: oracle-like-db
+runtime_mode: native
+dialect: oracle
+findings:
+  []
+```
+
+CRUD evidence:
+
+| CRUD step | Framework operation | Result evidence |
+| --- | --- | --- |
+| Create order | `db_seed` / `fixtures/crud_insert_order.sql` | `seed_create_order.yaml`: `affected_rows: 1` |
+| Read created order | `db_query` / `queries/crud_order_by_id_oracle.sql` | `query_read_created_order.yaml`: `row_count: 1`, `STATUS: CREATED` |
+| Update order | `db_seed` / `fixtures/crud_update_order.sql` | `seed_update_order.yaml`: `affected_rows: 1` |
+| Read updated order | `db_query` / `queries/crud_order_by_id_oracle.sql` | `query_read_updated_order.yaml`: `row_count: 1`, `STATUS: UPDATED` |
+| Delete order | `db_cleanup` / `fixtures/crud_delete_order.sql` | `cleanup_delete_order.yaml`: `affected_rows: 1` |
+| Read deleted order | `db_query` / `queries/crud_order_by_id_oracle.sql` | `query_read_deleted_order.yaml`: `row_count: 0` |
+| Verify deleted row absent | `db_record_exists` with `expected_row_count: 0` | `query_deleted_order_record_absent.yaml`: `row_count: 0`, `status: passed` |
+
+Evidence paths:
+
+```text
+.pirun/runs/PIRUN-TC-ORACLE-CRUD-1783604592863/jdbc_oracle_testcontainers/framework_stdout.txt
+.pirun/runs/PIRUN-TC-ORACLE-CRUD-1783604592863/jdbc_oracle_testcontainers/test_case.yaml
+artifacts/usage-kits/usage-kit-v0.2.5/usage-kit/target/provider-capability/jdbc/JDBC-CAPABILITY-v0.2/BATCH-JDBC-20260709134313939-1/RUN-JDBC-20260709134313939-1/result.json
+artifacts/usage-kits/usage-kit-v0.2.5/usage-kit/target/provider-capability/jdbc/JDBC-CAPABILITY-v0.2/BATCH-JDBC-20260709134313939-1/RUN-JDBC-20260709134313939-1/provider-evidence/jdbc/
+```
+
+Candidate CRUD conclusion:
+
+- Oracle JDBC provider CRUD was tested against a real Oracle Testcontainers runtime.
+- The framework consumed the project-provided `env://JDBC_CONNECTION` through `PIRUN_FRAMEWORK_JAR`.
+- The test covered create, read-after-create, update, read-after-update, delete, read-after-delete, and a framework verify check for deleted-row absence.
+- DB2 CRUD was not run on this local 8 GiB-class Docker setup.
+
 ## Candidate Target Jar Rerun Summary (2026-07-09 21:26 Asia/Taipei)
 
 This rerun used the locally built candidate jar provided by the framework project, not the GitHub release asset jar.
@@ -169,7 +239,7 @@ MAVEN_OPTS="-Xmx1024m" \
 - Docker memory: 8,218,316,800 bytes.
 - Running containers before DB2 attempt: none.
 - Running containers after DB2 attempt: none.
-- Oracle image used by Testcontainers: `gvenzl/oracle-free:slim-faststart`.
+- Oracle image used by Testcontainers: `gvenzl/oracle-free:23-slim-faststart`.
 - DB2 image used by Testcontainers: `icr.io/db2_community/db2:11.5.8.0`.
 - Oracle container memory limit in harness: 3 GiB, shm 1 GiB.
 - DB2 container memory limit in harness: 6 GiB.

@@ -2,6 +2,7 @@ package pirun.heavyjdbc;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -64,6 +65,45 @@ class HeavyJdbcProviderTestcontainersIT {
             );
             result.writeTo(runDir);
             assertFrameworkConsumed(result, ORACLE_PROVIDER_ID);
+        }
+    }
+
+    @Test
+    void oracleContainerMustExecuteCrudWithFrameworkJdbcProvider() throws Exception {
+        assumeHeavyEnabled("oracle");
+        String password = envOrDefault("PIRUN_ORACLE_TEST_PASSWORD", "PirunOracle12345");
+        try (OracleContainer oracle = new OracleContainer(oracleImage())
+            .withUsername("APP")
+            .withPassword(password)
+            .withCreateContainerCmdModifier(cmd -> applyResourceLimit(cmd, 3L * GIB, 1L * GIB))
+            .withStartupTimeout(Duration.ofMinutes(10))) {
+            oracle.start();
+            assertSql(oracle.getJdbcUrl(), oracle.getUsername(), oracle.getPassword(), "select 1 from dual");
+            ensureOrdersTable(oracle.getJdbcUrl(), oracle.getUsername(), oracle.getPassword(), "oracle");
+
+            Path repoRoot = repoRoot();
+            String frameworkVersion = frameworkVersion();
+            Path runDir = SuiteMaterializer.materializeCrud(
+                repoRoot,
+                "PIRUN-TC-ORACLE-CRUD-" + System.currentTimeMillis(),
+                frameworkVersion,
+                ORACLE_PROVIDER_ID,
+                "oracle",
+                PROFILE
+            );
+
+            FrameworkCli.Result result = FrameworkCli.run(
+                repoRoot,
+                runDir,
+                frameworkVersion,
+                PROFILE,
+                frameworkJdbcConnection("oracle", oracle.getJdbcUrl(), oracle.getUsername(), oracle.getPassword()),
+                oracle.getUsername(),
+                oracle.getPassword()
+            );
+            result.writeTo(runDir);
+            assertFrameworkConsumed(result, ORACLE_PROVIDER_ID);
+            assertCrudEvidence(repoRoot, frameworkVersion, result);
         }
     }
 
@@ -139,6 +179,46 @@ class HeavyJdbcProviderTestcontainersIT {
         if (!runtimeExecuted || !providerSeen) {
             fail("framework JDBC provider consumption not proven for " + providerId + "\n" + result.stdout());
         }
+    }
+
+    private static void assertCrudEvidence(Path repoRoot, String frameworkVersion, FrameworkCli.Result result)
+        throws Exception {
+        if (!result.stdout().contains("JDBC-CRUD-TC-001")) {
+            fail("framework output did not execute JDBC-CRUD-TC-001\n" + result.stdout());
+        }
+        Path evidenceDir = usageKitRoot(repoRoot, frameworkVersion).resolve(stdoutValue(result.stdout(), "evidence_dir"));
+        assertEvidenceContains(evidenceDir, "provider-evidence/jdbc/seed_create_order.yaml", "affected_rows: 1");
+        assertEvidenceContains(evidenceDir, "provider-evidence/jdbc/query_read_created_order.yaml", "STATUS: CREATED");
+        assertEvidenceContains(evidenceDir, "provider-evidence/jdbc/seed_update_order.yaml", "affected_rows: 1");
+        assertEvidenceContains(evidenceDir, "provider-evidence/jdbc/query_read_updated_order.yaml", "STATUS: UPDATED");
+        assertEvidenceContains(evidenceDir, "provider-evidence/jdbc/cleanup_delete_order.yaml", "affected_rows: 1");
+        assertEvidenceContains(evidenceDir, "provider-evidence/jdbc/query_read_deleted_order.yaml", "row_count: 0");
+        assertEvidenceContains(evidenceDir, "provider-evidence/jdbc/query_deleted_order_record_absent.yaml", "row_count: 0");
+    }
+
+    private static void assertEvidenceContains(Path evidenceDir, String relativePath, String expected) throws Exception {
+        Path path = evidenceDir.resolve(relativePath);
+        String text = Files.readString(path);
+        if (!text.contains(expected)) {
+            fail("expected " + relativePath + " to contain " + expected + "\n" + text);
+        }
+    }
+
+    private static Path usageKitRoot(Path repoRoot, String frameworkVersion) {
+        return repoRoot
+            .resolve("artifacts/usage-kits/usage-kit-v" + frameworkVersion)
+            .resolve("usage-kit");
+    }
+
+    private static String stdoutValue(String stdout, String key) {
+        String prefix = key + ": ";
+        for (String line : stdout.split("\\R")) {
+            if (line.startsWith(prefix)) {
+                return line.substring(prefix.length()).trim();
+            }
+        }
+        fail("framework stdout did not contain " + key + "\n" + stdout);
+        return "";
     }
 
     private static void assertSql(String jdbcUrl, String username, String password, String sql) throws SQLException {
