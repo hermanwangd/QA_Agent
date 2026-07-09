@@ -56,6 +56,7 @@ These are framework-owned issues found by the project-side v0.2.3 pi-run. They m
 | `ibm_mq` | `BLOCKED_FRAMEWORK_CONTRACT_ONLY` | Complete IBM MQ runtime implementation and release executable suite-mode verification samples; publish `ibm_mq.support_status = supported` only after verification passes. |
 | `report --format json` | `BLOCKED_FRAMEWORK_UNSUPPORTED_FORMAT` | Remove JSON from the v0.2.4 public report contract and keep `--format json` as unsupported exit `2`; JSON can be reconsidered in a later release. |
 | Project-provisioned WireMock external `base_url` | `NOT_PROVEN` with framework issue | Support external binding values such as `base_url`, prove the runtime consumed that URL, and fail validation only for missing, malformed, or secret-bearing values. |
+| Project-provisioned JDBC external `env://` connection secret ref | `NOT_PROVEN` with framework issue | Resolve project-supplied JDBC connection secret refs such as `env://PIRUN_JDBC_CONNECTION`, consume the resolved external connection in JDBC runtime, and redact the connection/password in all evidence. |
 | Provider support matrix drift control | `GAP` | Generate and enforce registry/contracts/support-matrix/sample consistency during release verification. |
 | `grpc_client` | `BLOCKED_USAGE_KIT_SAMPLE_GAP` | Add release usage-kit samples or downgrade/remove unsupported `support_status` claims. |
 | `rest_client` | `BLOCKED_USAGE_KIT_SAMPLE_GAP` | Add release usage-kit samples or downgrade/remove unsupported `support_status` claims. |
@@ -377,6 +378,54 @@ framework_consumes_project_bindings: true
 contract_only_after_release: false
 ```
 
+## FW-P0-008: Support Project-provisioned JDBC `env://` Connection Secret Refs
+
+Problem:
+
+v0.2.5 Oracle and DB2 Testcontainers PI-run attempts proved that project-side heavy JDBC provisioning can reach framework invocation, but the framework JDBC provider runtime exits with `SECRET_RESOLUTION_ERROR`:
+
+```text
+failure_reason: JDBC secret_ref `env://PIRUN_JDBC_CONNECTION` cannot be resolved by local provider capability runtime.
+```
+
+Evidence:
+
+- Oracle: `.pirun/runs/PIRUN-TC-ORACLE-1783593641329/jdbc_oracle_testcontainers/framework_stdout.txt`
+- DB2: `.pirun/runs/PIRUN-TC-DB2-1783595732804/jdbc_db2_testcontainers/framework_stdout.txt`
+- Report: `reports/pi-run-v0.2.5-testcontainers-heavy-jdbc-report.md`
+
+Required change:
+
+- Resolve JDBC `connection.secret_ref` values from project-supplied environment references such as `env://PIRUN_JDBC_CONNECTION`.
+- Pass the resolved external JDBC connection string into the JDBC provider runtime.
+- Keep Docker/Testcontainers provisioning outside the framework jar.
+- Preserve project-owned driver provisioning through classpath or documented runtime extension points.
+- Redact the resolved connection string, username/password fragments, and provider evidence before stdout/stderr/report publication.
+- Return owner-actionable validation errors when an `env://` secret ref is missing, blank, or unsupported.
+
+Acceptance:
+
+```yaml
+oracle_heavy_jdbc:
+  framework_owns_provisioning: false
+  framework_consumes_project_connection_ref: true
+  secret_ref: env://PIRUN_JDBC_CONNECTION
+  provider_runtime_executed: true
+  provider_id: oracle-like-db
+  run_status: passed
+
+db2_heavy_jdbc:
+  framework_owns_provisioning: false
+  framework_consumes_project_connection_ref: true
+  secret_ref: env://PIRUN_JDBC_CONNECTION
+  provider_runtime_executed: true
+  provider_id: db2-like-db
+  run_status: passed
+
+raw_connection_secret_in_evidence: false
+missing_env_secret_ref: owner_actionable_failure
+```
+
 ## Framework Deliverables
 
 - Updated CLI help and compatibility behavior.
@@ -386,6 +435,7 @@ contract_only_after_release: false
 - Removed JSON report format from the v0.2.4 public contract while keeping unsupported-format behavior owner-actionable.
 - Added release usage-kit samples or explicit `contract_only`/`deprecated`/`unsupported` declarations for currently uncovered provider claims, except Kafka/IBM MQ which must be implemented as `supported`.
 - Completed Kafka and IBM MQ runtime implementation with executable suite-mode samples.
+- Added JDBC `env://` secret-ref resolution for project-provisioned external database runtimes.
 - Removed framework-level safety policy blocking from public provider support claims.
 - Added command-capable provider sample coverage checks.
 - Clear release integrity metadata.
@@ -406,6 +456,7 @@ report --format json: exit 2 unsupported format, not a public v0.2.4 contract
 validate-evidence positive cases: PASS
 validate-evidence negative cases: EXPECTED_FAIL
 Kafka/IBM MQ support_status: supported after executable suite-mode verification
+project-provisioned JDBC env:// connection ref: PASS, consumed by runtime
 usage-kit sample gaps: none for supported provider claims, or explicitly blocked/downgraded
 release asset checksum metadata: present
 release asset raw signature metadata: present

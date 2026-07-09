@@ -13,6 +13,7 @@ Status: Verified for release-asset-only project-side pi-run. Framework-owned lim
 - Evidence/report command matrix: `reports/pi-run-v0.2.5-evidence-command-matrix.md`
 - Docker cleanup check: `reports/pi-run-v0.2.5-docker-cleanup-check.md`
 - Raw secret scan: `reports/pi-run-v0.2.5-raw-secret-scan.md`
+- Heavy JDBC Testcontainers check: `reports/pi-run-v0.2.5-testcontainers-heavy-jdbc-report.md`
 
 ## Acceptance Summary
 
@@ -29,9 +30,10 @@ Status: Verified for release-asset-only project-side pi-run. Framework-owned lim
 | Project-provisioned NATS | `PASS` | `PIRUN-V025-NATS-1` executed with `framework_runtime_executed`. |
 | Project-provisioned WireMock external `base_url` | `NOT_PROVEN_WITH_FRAMEWORK_ISSUE` | Project WireMock starts and framework run passes, but external `base_url` is still not consumed by framework capability runtime. |
 | Lightweight JDBC | `PASS` | `PIRUN-V025-JDBC-1` executed with `framework_runtime_executed`; no Oracle XE class container used. |
+| Project-provisioned Oracle/DB2 heavy JDBC | `NOT_PROVEN_WITH_FRAMEWORK_ISSUE` | Oracle and DB2 Testcontainers reached framework invocation, but both failed with `SECRET_RESOLUTION_ERROR` for `env://PIRUN_JDBC_CONNECTION`. |
 | Full contract baseline | `PASS_WITH_WIREMOCK_LIMITATION` | NATS and JDBC consumed; WireMock external `base_url` still not consumed. |
 | Docker cleanup | `PASS` | 0 leftover containers for all final v0.2.5 run IDs. |
-| Raw secret scan | `PASS` | 707 files scanned, 0 findings. |
+| Raw secret scan | `PASS` | 766 files scanned, 0 findings. |
 
 ## Function Coverage Summary
 
@@ -56,6 +58,7 @@ These do not block the project-side pi-run result because they are recorded as e
 - Release verification docs still miss `report` and `validate-evidence` commands.
 - `report --format json` still exits `2` and is recorded as `BLOCKED_FRAMEWORK_UNSUPPORTED_FORMAT`.
 - Project-provisioned WireMock external `base_url` still is not consumed by framework runtime evidence.
+- Project-provisioned Oracle/DB2 JDBC external `env://PIRUN_JDBC_CONNECTION` is not resolved by framework provider capability runtime.
 - 11 provider/runtime rows remain `BLOCKED_FRAMEWORK_CONTRACT_ONLY`:
   - `external_runner/native`
   - `external_runner/stub`
@@ -85,4 +88,5 @@ python3 pirun/run_contract_baseline.py --framework-version 0.2.5 --profile ci --
 python3 pirun/run_contract_baseline.py --framework-version 0.2.5 --profile ci --mode jdbc-lightweight --run-id PIRUN-V025-JDBC-1
 python3 pirun/run_contract_baseline.py --framework-version 0.2.5 --profile ci --mode full-contract-baseline --run-id PIRUN-V025-FULL-1
 python3 pirun/scan_raw_secrets.py --framework-version 0.2.5 --output-dir reports reports .pirun/runs
+PATH="/Applications/Docker.app/Contents/Resources/bin:/usr/local/bin:/opt/homebrew/bin:$PATH" PIRUN_ENABLE_TESTCONTAINERS_HEAVY_JDBC=1 PIRUN_ENABLE_DB2_TESTCONTAINER=1 PIRUN_ACCEPT_DB2_LICENSE=1 PIRUN_ALLOW_PRIVILEGED_DB2=1 PIRUN_FRAMEWORK_VERSION=0.2.5 MAVEN_OPTS="-Xmx1024m" ./mvnw -Dtest=HeavyJdbcProviderTestcontainersIT#db2ContainerMustBeConsumedByFrameworkJdbcProvider test
 ```

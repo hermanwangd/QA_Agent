@@ -10,5 +10,7 @@ Status: `PASS`
 | `PIRUN-V025-WIREMOCK-1` | `0` |
 | `PIRUN-V025-JDBC-1` | `0` |
 | `PIRUN-V025-FULL-1` | `0` |
+| `PIRUN-TC-ORACLE-1783593641329` | `0` |
+| `PIRUN-TC-DB2-1783595732804` | `0` |
 
 All project-side provisioning runs cleaned up their Docker containers.
